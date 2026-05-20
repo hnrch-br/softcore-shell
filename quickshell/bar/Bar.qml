@@ -32,7 +32,7 @@ Scope {
 		Rectangle {
 			id: topLeft
 			implicitHeight: 35
-			implicitWidth: (QsWindow.window.width / 2) - 350
+			implicitWidth: (QsWindow.window.width / 2) - 470
 			color: root.mColor
 			bottomRightRadius: 15
 			anchors {
@@ -132,7 +132,7 @@ Scope {
 		// Left Corner
 		Corner { 
 			id: leftCorner
-			x: ( QsWindow.window.width / 2 ) - 350
+			x: ( QsWindow.window.width / 2 ) - 470
 			y: 0
 		}
 		
