@@ -381,14 +381,6 @@ hl.window_rule({
     size = { 300, 200 },
 })
 
--- Kitty float
-hl.window_rule({
-    name = "kitty-float",
-    match = { class = "kitty" },
-    float = true,
-    size = { 850, 500 },
-})
-
 ----------------------
 ---- APPLICATIONS ----
 ----------------------
