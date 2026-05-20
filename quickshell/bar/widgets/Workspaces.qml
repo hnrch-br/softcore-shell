@@ -7,7 +7,7 @@ import QtQuick.Layouts
 RowLayout {
 	anchors.top: parent.top
 	Repeater {
-		model: 5
+		model: 9
 		Rectangle {
 			id: wsRect
 			property var ws: Hyprland.workspaces.values.find(w => w.id === index + 1)
