@@ -69,7 +69,6 @@ RowLayout {
 			anchors.fill: parent
 			cursorShape: Qt.PointingHandCursor
 			hoverEnabled: true
-			onClicked: trayToggled()
 		}
 		Layout.rightMargin: 5
 	}
