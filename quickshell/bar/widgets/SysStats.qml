@@ -13,12 +13,20 @@ RowLayout {
 	property var lastCpuIdle: 0
 	property var lastCpuTotal: 0
 	property int memUsage: 0
+	property int gpuUsage: 0
 	Rectangle {
-		implicitWidth: childrenRect.width + 16
-		implicitHeight: childrenRect.height
+		implicitWidth: cpuRow.implicitWidth + 15
+		implicitHeight: cpuRow.implicitHeight
 		color: "#ccfaebd7"
 		radius: 25
+		Behavior on implicitWidth {
+			NumberAnimation {
+				duration: 250
+				easing.type: Easing.InOut
+			}
+		}
 		RowLayout {
+			id: cpuRow
 			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.verticalCenter: parent.verticalCenter
 			Text { 
@@ -29,7 +37,7 @@ RowLayout {
 			}
 			Text {
 				id: iconCPU
-				text: "memory_alt"
+				text: "developer_board"
 				color: "#ff3d3636"
 				font { family: "Material Symbols Outlined"; pixelSize: 16 }
 			}
@@ -37,11 +45,18 @@ RowLayout {
 		Layout.rightMargin: 5
 	}
 	Rectangle {
-		implicitWidth: childrenRect.width + 15
-		implicitHeight: childrenRect.height
+		implicitWidth: ramRow.implicitWidth + 15
+		implicitHeight: ramRow.implicitHeight
 		color: "#ccfaebd7"
 		radius: 25
+		Behavior on implicitWidth {
+			NumberAnimation {
+				duration: 250
+				easing.type: Easing.InOut
+			}
+		}
 		RowLayout {
+			id: ramRow
 			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.verticalCenter: parent.verticalCenter
 			Text {
@@ -59,6 +74,36 @@ RowLayout {
 		}
 		Layout.rightMargin: 5
 	}
+	Rectangle {
+		implicitWidth: gpuRow.implicitWidth + 15
+		implicitHeight: gpuRow.implicitHeight
+		color: "#ccfaebd7"
+		radius: 25
+		Behavior on implicitWidth {
+			NumberAnimation {
+				duration: 250
+				easing.type: Easing.InOut
+			}
+		}
+		RowLayout {
+			id: gpuRow
+			anchors.horizontalCenter: parent.horizontalCenter
+			anchors.verticalCenter: parent.verticalCenter
+			Text {
+				id: textGPU
+				text: gpuUsage + "%"
+				color: "#ff3d3636"
+				font { family: "Monospace"; weight: Font.Bold ;pixelSize: 16 }
+			}
+			Text {
+				id: iconGPU
+				text: "memory_alt"
+				color: "#ff3d3636"
+				font { family: "Material Symbols Outlined"; pixelSize: 16 }
+			}
+		}
+	}
+
 	// CPU process
 	Process {
 		id: cpuProc
@@ -94,15 +139,28 @@ RowLayout {
 		}
    		Component.onCompleted: running = true
 	}
-	
+
+	Process {
+		id: gpuProc
+		command: ["cat", "/sys/class/drm/card1/device/gpu_busy_percent"]
+		stdout: SplitParser {
+			onRead: data => {
+				if (!data) return
+				gpuUsage = parseInt(data.trim())
+			}
+		}
+		Component.onCompleted: running = true
+	}
+
 	// Timer
 	Timer {
-	    interval: 15000
+	    interval: 5000
 	    running: true
 	    repeat: true
 	    onTriggered: {
 	        cpuProc.running = true
-	        memProc.running = true
+			memProc.running = true
+			gpuProc.running = true
     	}
 	}
 }

@@ -7,7 +7,7 @@ import QtQuick.Shapes
 import Quickshell.Services.Pipewire
 import QtQuick.Controls
 import "./widgets"
-
+import "./widgets/trays"
 
 Scope {
 	PanelWindow {
@@ -32,19 +32,31 @@ Scope {
 		Rectangle {
 			id: topLeft
 			implicitHeight: 35
-			implicitWidth: (QsWindow.window.width / 2) - 470
+			implicitWidth: wsRow.implicitWidth + 30
 			color: root.mColor
 			bottomRightRadius: 15
 			anchors {
 				top: parent.top
 				left: parent.left
 			}
+			Corner { 
+				id: leftCorner
+				x: topLeft.implicitWidth 
+				y: 0
+			}
+			Corner {
+				id: leftTopCorner
+				x: 0
+				y: 35
+			}
+
 			RowLayout {
 				anchors.fill: parent
 				anchors.leftMargin: 20
 				anchors.topMargin: 5
 
 				RowLayout {
+					id: wsRow
 					anchors {
 						left: parent.left
 						top: parent.top
@@ -57,12 +69,27 @@ Scope {
 		Rectangle {
 			id: topMiddle
 			implicitHeight: 35
-			implicitWidth: ( QsWindow.window.width / 2 )
+			implicitWidth: clockSpace.implicitWidth
 			color: "transparent"
 			anchors {
 				top: parent.top
 				horizontalCenter: parent.horizontalCenter
 			}
+
+			Corner2 {
+				id: clockLeftTopCorner
+				x: -radius
+				y: 0
+				rotation: 90
+			}
+
+			Corner2 {
+				id: clockRightTopCorner
+				x: clockSpace.implicitWidth
+				y: 0
+			}
+		
+
 			RowLayout {
 				anchors.topMargin: 5
 				anchors.fill: parent
@@ -74,16 +101,18 @@ Scope {
 						horizontalCenter: parent.horizontalCenter
 						verticalCenter: parent.verticalCenter
 					}	
-					implicitWidth: 150
+					implicitWidth: clockItem.implicitWidth + 80
 					implicitHeight: 50
 					bottomRightRadius: 25
 					bottomLeftRadius: 25
 					color: root.sColor
 					Clock { 
+						id: clockItem
 						anchors {
 							horizontalCenter: parent.horizontalCenter
 							verticalCenter: parent.verticalCenter
 						}
+						topPadding: 4
 					}
 				}
 			}
@@ -92,71 +121,44 @@ Scope {
 		Rectangle {
 			id: topRight
 			implicitHeight: 35
-			implicitWidth: ( QsWindow.window.width / 2 ) - 350
+			implicitWidth: widgetsRow.implicitWidth + 36
 			color: root.mColor
 			bottomLeftRadius: 15
 			anchors {
 				top: parent.top
 				right: parent.right
 			}
+			Corner {
+				id: rightCorner
+				x: -radius
+				rotation: 90
+			}
+			Corner {
+				id: rightTopCorner
+				x: topRight.implicitWidth - radius
+				y: 35
+				rotation: 90
+			}
+
 			RowLayout {
 				anchors.fill: parent
 				anchors.rightMargin: 20
 				anchors.topMargin: 7
 				anchors.bottomMargin: 8
 				RowLayout {
+					id: widgetsRow
 					anchors {
 						right: parent.right
 						verticalCenter: parent.verticalCenter
 					}
+					MediaPlayer {}
 					Weather {}
 					AudioControl {}
 					SysStats {}
 				}	
 			}
 		}
-
-		Corner2 {
-			id: clockLeftTopCorner
-			x: ( QsWindow.window.width / 2 ) - ( radius + ( clockSpace.implicitWidth / 2 ) )
-			y: 0
-			rotation: 90
-		}
-
-		Corner2 {
-			id: clockRightTopCorner
-			x: clockLeftTopCorner.x + radius + clockSpace.implicitWidth
-			y: 0
-		}
 		
-		// Left Corner
-		Corner { 
-			id: leftCorner
-			x: ( QsWindow.window.width / 2 ) - 470
-			y: 0
-		}
-		
-		Corner {
-			id: rightCorner
-			x: QsWindow.window.width - 635
-			rotation: 90
-		}
-
-		// Top Left Corner
-		Corner {
-			id: leftTopCorner
-			x: 0
-			y: 35
-		}
-
-		// Top Right Corner
-		Corner {
-			id: rightTopCorner
-			x: QsWindow.window.width - radius
-			y: 35
-			rotation: 90
-		}
-
 		component Corner2: Shape {
 			id: corner2
 			preferredRendererType: Shape.CurveRenderer

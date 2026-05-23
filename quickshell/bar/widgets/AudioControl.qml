@@ -6,34 +6,83 @@ import Quickshell.Io
 import QtQuick.Layouts
 import QtQuick.Shapes
 import Quickshell.Services.Pipewire
+import "./trays"
 
 RowLayout {
-	signal trayToggled
 	PwObjectTracker {
     	objects: [Pipewire.defaultAudioSink, Pipewire.defaultAudioSource]	
 	}
-    property var sink: Pipewire.defaultAudioSink
-	property var source: Pipewire.defaultAudioSource
-	property bool volMuted: (sink && sink.audio) ? sink.audio.muted : false
-	property bool micMuted: (source && source.audio) ? source.audio.muted : false
-	property string volStr: {
-		const vol = (sink && sink.audio) ? sink.audio.volume : null
-		return vol != null && !isNaN(vol) ? `${Math.floor(vol * 100)}%` : "--"	
+
+	property string volStr: ""
+	property var volLevel: 0
+	property string micStr: ""
+	property var micLevel: 0
+	property bool volMuted: volLevel === 0
+	property bool micMuted: micLevel === 0
+
+	Process {
+		id: volProc
+		command: ["wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"]
+		stdout: SplitParser {
+			onRead: data => {
+				if (!data) return
+				var v = data.trim().split(/\s+/)
+				volLevel = parseFloat(v[1])
+				if (volLevel >= 0) {
+					volStr = `${Math.floor(volLevel * 100)}%`
+				} else {
+					volStr = "0%"
+				}
+			}
+		}
+		Component.onCompleted: running = true
 	}
-	property string micStr: {
-		const mic = (source && source.audio) ? source.audio.volume : null
-		return mic != null && !isNaN(mic) ? `${Math.floor(mic * 100)}%` : "--"
+
+	Process {
+		id: micProc
+		command: ["wpctl", "get-volume", "@DEFAULT_AUDIO_SOURCE@"]
+		stdout: SplitParser {
+			onRead: data => {
+			if (!data) return
+			var m = data.trim().split(/\s+/)
+			micLevel = parseFloat(m[1])
+			if (micLevel >= 0) {
+				micStr = `${Math.floor(micLevel * 100)}%`
+			} else {
+					micStr = "0%"
+				}
+			}
+		}
+		Component.onCompleted: running = true
 	}
-	
+
+	Timer {
+		interval: 500
+		running: true
+		repeat: true
+		onTriggered: {
+			volProc.running = true
+			micProc.running = true
+		}
+	}
+
 	Rectangle { 
 		color: "#ccfaebd7"
-		implicitWidth: childrenRect.width + 15
-		implicitHeight: childrenRect.height
+		implicitWidth: audRow.implicitWidth + 15
+		implicitHeight: audRow.implicitHeight
 		radius: 25
+		clip: true
+		Behavior on implicitWidth {
+			NumberAnimation {
+				duration: 250
+				easing.type: Easing.InOut
+			}
+		}
+
 		RowLayout {
+			id: audRow
 			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.verticalCenter: parent.verticalCenter
-			
 			Text {
 				id: volText
 				color: "#ff3d3636"
@@ -46,12 +95,9 @@ RowLayout {
 				text: volMuted ? "volume_off" : "volume_up"
 				font { family: "Material Symbols Outlined"; pixelSize: 16 }
 			}
-			Text {
-				id: separator
-				color: "#ff3d3636"
-				text: "︲"
-				font { family: "Monospace"; weight: Font.Bold; pixelSize: 16 }
-			}
+
+			Rectangle { height: 16; width: 2; radius: 2; color: "#803d3636" }
+
 			Text {
 				id: micText
 				color: "#ff3d3636"
@@ -64,11 +110,6 @@ RowLayout {
 				text: micMuted ? "mic_off" : "mic"
 				font { family: "Material Symbols Outlined"; pixelSize: 16 }				
 			}
-		}
-		MouseArea {
-			anchors.fill: parent
-			cursorShape: Qt.PointingHandCursor
-			hoverEnabled: true
 		}
 		Layout.rightMargin: 5
 	}
