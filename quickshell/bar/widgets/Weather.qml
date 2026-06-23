@@ -3,6 +3,7 @@ import QtQuick
 import Quickshell.Wayland
 import Quickshell.Hyprland
 import QtQuick.Shapes
+import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Io
 
@@ -10,27 +11,27 @@ RowLayout {
 	property string weatherText: "..."
 	property string weatherIconText: "..."
 	Rectangle {
-		implicitWidth: childrenRect.width + 15
-		implicitHeight: childrenRect.height
+		implicitWidth: 96
+		implicitHeight: 20
 		color: "#ccfaebd7"
 		radius: 25
-		RowLayout {
-			anchors.horizontalCenter: parent.horizontalCenter
-			anchors.top: parent.top
+        RowLayout {
+   			anchors.horizontalCenter: parent.horizontalCenter
+			anchors.verticalCenter: parent.verticalCenter
 			Text {
 				id: weatherOutput
 				text: weatherText
 				color: "#ff3d3636"
-				font { family: "Monospace"; weight: Font.Bold; pixelSize: 16 }
+                font { family: "Sixtyfour"; pixelSize: 10 }
 			}
 			Text {
 				id: weatherIconOutput
 				text: weatherIconText
-				color: "#ff3d3636"
-				font { family: "Material Symbols Outlined"; pixelSize: 16 }
+                color: "#ff3d3636"
+				renderType: Text.NativeRendering
+				font { family: "Material Symbols Outlined"; pointSize: 10.4 }
 			}
 		}	
-		Layout.rightMargin: 5
 	}
 	Process {
 		id: weatherProc

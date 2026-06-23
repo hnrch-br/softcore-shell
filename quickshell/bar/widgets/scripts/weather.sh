@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-API_KEY="f731508256f91847d83ccf204c8cd79f" # Paste your key here
-LAT="-23.5505"  # Replace with your Latitude
-LON="-46.6333" # Replace with your Longitude
+API_KEY="" # Paste your key here
+LAT=""  # Replace with your Latitude
+LON="" # Replace with your Longitude
 UNITS="metric" # Use "metric" for Celsius, "imperial" for Fahrenheit
 # ---------------------
 

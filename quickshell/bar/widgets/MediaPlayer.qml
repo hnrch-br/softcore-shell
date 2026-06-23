@@ -1,135 +1,72 @@
+pragma ComponentBehavior: Bound
+
+import Quickshell
 import QtQuick
 import QtQuick.Layouts
-import Quickshell.Services.Mpris
-import Quickshell.Hyprland
-import Quickshell.Wayland
-import QtQuick.Shapes
-import Quickshell.Io
 import QtQuick.Controls
+import Quickshell.Services.Mpris
+import Quickshell.Io
+import qs.services
+import qs.bar.widgets
 
 RowLayout {
-	id: root
-	Process {
-		id: cavaProcess
-		command: ["cava", "-p", "/home/hnrch/.config/cava/config"]
-		running: true
-		stdout: SplitParser {
-			onRead: data => {
-				if (!data) return
-				var line = data.trim()
-				if (line === "") return
-				var values = data.trim().split(";").filter(v => v !== "")
-				cavaValues = values.slice(0, 10).map(v => parseInt(v) / 100.0)
-			}
-		}
-	}
+    id: root
+    anchors.verticalCenter: parent.verticalCenter
+    property bool isPlaying: Players.activePlayer?.isPlaying
+    property string trackTitleOutput: Players.activePlayer?.trackTitle ? Players.activePlayer?.trackTitle : "none"
+    property string trackArtistOutput: Players.activePlayer?.trackArtist ? Players.activePlayer?.trackArtist + ": " : "none: "
+    property string trackOutput: isPlaying ? trackArtistOutput + trackTitleOutput : "no media"
+    property real scrollSpeed: 80
+    property real pauseDuration: 1000
 
-	onIsPlayingChanged: {
-		if (!isPlaying) {
-		marqueeAnim.stop()
-		trackOutput.x = 0
-		} else {
-			marqueeContainer.restartMarquee()
-		}
-	}
+    SequentialAnimation {
+        id: marqueeAnim
+        loops: Animation.Infinite
 
-	property var player: Mpris.players.values.length > 0 ? Mpris.players.values[0] : null
-    property bool isPlaying: player !== null && player.playbackState === MprisPlaybackState.Playing
-    property string trackTitle: isPlaying ? player.trackTitle : ""
-	property string trackArtist: isPlaying ? player.trackArtist : ""
-	property var mediaPlaying: isPlaying ? trackArtist + ": " + trackTitle : "No media"
-	property var cavaValues: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-	Rectangle {	
-		implicitWidth: childrenRect.width + 30
-		implicitHeight: trackOutput.contentHeight
-		radius: 25
-		clip: true
-		color: "#ccfaebd7"
-		Behavior on implicitWidth {
-			NumberAnimation {
-				duration: 240
-				easing.type: Easing.InOutQuad
-			}
-		}
+        PauseAnimation {
+            duration: pauseDuration
+        }
 
-		RowLayout {
-			anchors.horizontalCenter: parent.horizontalCenter
-			anchors.verticalCenter: parent.verticalCenter
-			spacing: 8
-			Item {
-				id: marqueeContainer
-				anchors.left: parent.left
-				implicitWidth: isPlaying ? 135 : trackOutput.contentWidth + 8
-				height: trackOutput.contentHeight
-				clip: true
-				layer.enabled: true
-				Text {
-					id: trackOutput
-					text: mediaPlaying
-					color: "#ff3d3636"
-					font { family: "Monospace"; weight: Font.Bold; pixelSize: 16 }
-				}
+        NumberAnimation {
+            target: trackText
+            property: "x"
+            from: marqueeContainer.width
+            to: -trackText.width
+            duration: (trackText.implicitWidth + marqueeContainer.implicitWidth) / scrollSpeed * 1000
+            easing.type: Easing.Linear
+        }
+    }
+    function restartMarquee() {
+        if (!isPlaying) {
+            marqueeAnim.stop();
+            trackText.x = Qt.binding(() => (marqueeContainer.width - trackText.implicitWidth) / 2)        
+        } else {
+            marqueeAnim.start();
+        }
+    }
 
-				NumberAnimation {
-					id: marqueeAnim
-					target: trackOutput
-					property: "x"
-					from: marqueeContainer.width
-					to: -trackOutput.contentWidth
-					duration: trackOutput.width * 25
-					loops: Animation.Infinite
-					running: false
-				}
-				
-				onWidthChanged: { 
-					if (isPlaying) restartMarquee()
-				
-				}
-				function restartMarquee() {
-					marqueeAnim.stop()
-					trackOutput.x = marqueeContainer.width
-					marqueeAnim.start()
-				}
+    onIsPlayingChanged: restartMarquee()
 
-				Connections {
-					target: trackOutput
-					function onContentWidthChanged() {
-						if (isPlaying) marqueeContainer.restartMarquee()
-					}
-				}
-				Connections {
-					target: root
-					function onMediaPlayingChanged() {
-						if (!isPlaying) marqueeContainer.width = trackOutput.contentWidth + 8
-					}
-				}
-			}
+    Component.onCompleted: restartMarquee()
 
-			Text {
-				id: lengthText
-				text: lengthMedia
-				color: "#ff3d3636"
-				font { family: "Monospace"; pixelSize: 12 }
-			}
+    Rectangle {
+        id: marqueeContainer
+        implicitWidth: isPlaying ? 220 : 100
+        implicitHeight: 22
+        color: "#ccfaebd7"
+        radius: 15
+        clip: true
 
-			Row {
-				spacing: 3
-				height: 16
-				anchors.bottom: parent.bottom
-				bottomPadding: 2
-				anchors.right: parent.right
-				Repeater {
-					model: cavaValues.length
-					Rectangle {
-						implicitWidth: 2
-						height: Math.max(2, Math.min(cavaValues[index] * 100, 100))
-						color: "#ff3d3636"
-						anchors.bottom: parent.bottom
-					}
-				}
-			}
-		}
-		Layout.rightMargin: 5
-	}
+        Behavior on implicitWidth {
+            NumberAnimation { duration: 200 }
+        }
+
+        Text {
+            anchors.verticalCenter: parent.verticalCenter
+            id: trackText
+            text: trackOutput
+            color: "#ff3d3636"
+            font { family: "Pixelify Sans"; pixelSize: 16 }
+        }
+    }
 }
-

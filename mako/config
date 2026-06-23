@@ -1,10 +1,10 @@
 # Mako Notification Daemon
 
 default-timeout=5000
-output=DP-1
-anchor=top-right
+anchor=bottom-right
 layer=top
-max-visible=4
+max-visible=5
+on-button-left=dismiss
 
 font=monospace 11
 background-color=#00000033
@@ -13,12 +13,12 @@ progress-color=over #faebd780
 width=500
 height=80
 border-size=2
-border-radius=10
-outer-margin=5
+border-radius=10,0,0,10
+margin=0,-2,0,0
 padding=5
 max-icon-size=32
 icon-location=left
-sort=-time
+sort=+time
 
 [urgency=low]
 border-color=#faebd780

@@ -8,15 +8,15 @@ import QtQuick.Shapes
 import QtQuick.Controls
 
 RowLayout {
-
+    spacing: 5
 	property int cpuUsage: 0
 	property var lastCpuIdle: 0
 	property var lastCpuTotal: 0
 	property int memUsage: 0
 	property int gpuUsage: 0
 	Rectangle {
-		implicitWidth: cpuRow.implicitWidth + 15
-		implicitHeight: cpuRow.implicitHeight
+		implicitWidth: 68
+		implicitHeight: 20
 		color: "#ccfaebd7"
 		radius: 25
 		Behavior on implicitWidth {
@@ -33,50 +33,22 @@ RowLayout {
 				id: textCPU
 				text: cpuUsage + "%"
 				color: "#ff3d3636"
-        		font { family: "Monospace"; weight: Font.Bold; pixelSize: 16 }
+                font { family: "Sixtyfour"; pixelSize: 10 }
 			}
 			Text {
 				id: iconCPU
-				text: "developer_board"
-				color: "#ff3d3636"
-				font { family: "Material Symbols Outlined"; pixelSize: 16 }
+				text: ""
+                color: "#ff3d3636"
+                font.pointSize: 17.4
+                bottomPadding: 3
+                font.family: "JetBrainsMono Nerd Font Mono"
 			}
 		}
-		Layout.rightMargin: 5
 	}
+	
 	Rectangle {
-		implicitWidth: ramRow.implicitWidth + 15
-		implicitHeight: ramRow.implicitHeight
-		color: "#ccfaebd7"
-		radius: 25
-		Behavior on implicitWidth {
-			NumberAnimation {
-				duration: 250
-				easing.type: Easing.InOut
-			}
-		}
-		RowLayout {
-			id: ramRow
-			anchors.horizontalCenter: parent.horizontalCenter
-			anchors.verticalCenter: parent.verticalCenter
-			Text {
-				id: textMEM
-				text: memUsage + "%"
-				color: "#ff3d3636"
-				font { family: "Monospace"; weight: Font.Bold ;pixelSize: 16 }
-			}
-			Text {
-				id: iconMEM
-				text: "storage"
-				color: "#ff3d3636"
-				font { family: "Material Symbols Outlined"; pixelSize: 16 }
-			}
-		}
-		Layout.rightMargin: 5
-	}
-	Rectangle {
-		implicitWidth: gpuRow.implicitWidth + 15
-		implicitHeight: gpuRow.implicitHeight
+		implicitWidth: 68
+		implicitHeight: 20
 		color: "#ccfaebd7"
 		radius: 25
 		Behavior on implicitWidth {
@@ -93,17 +65,53 @@ RowLayout {
 				id: textGPU
 				text: gpuUsage + "%"
 				color: "#ff3d3636"
-				font { family: "Monospace"; weight: Font.Bold ;pixelSize: 16 }
+				font { family: "Sixtyfour"; pixelSize: 10 }
 			}
 			Text {
 				id: iconGPU
-				text: "memory_alt"
+				text: "󰢮"
 				color: "#ff3d3636"
-				font { family: "Material Symbols Outlined"; pixelSize: 16 }
+                renderType: Text.NativeRendering
+                font.pointSize: 18
+                bottomPadding: 3.5
+                font.family: "JetBrainsMono Nerd Font Mono"
 			}
 		}
 	}
 
+	Rectangle {
+		implicitWidth: 68
+		implicitHeight: 20
+		color: "#ccfaebd7"
+		radius: 25
+		Behavior on implicitWidth {
+			NumberAnimation {
+				duration: 250
+				easing.type: Easing.InOut
+			}
+		}
+		RowLayout {
+			id: ramRow
+			anchors.horizontalCenter: parent.horizontalCenter
+			anchors.verticalCenter: parent.verticalCenter
+			Text {
+				id: textMEM
+				text: memUsage + "%"
+				color: "#ff3d3636"
+				font { family: "Sixtyfour"; pixelSize: 10 }
+			}
+			Text {
+				id: iconMEM
+				text: ""
+				color: "#ff3d3636"
+                renderType: Text.NativeRendering
+                font.pointSize: 16
+                bottomPadding: 2
+                font.family: "JetBrainsMono Nerd Font Mono"
+			}
+		}
+	}
+	
 	// CPU process
 	Process {
 		id: cpuProc

@@ -6,8 +6,10 @@ import QtQuick.Layouts
 import QtQuick.Shapes
 import Quickshell.Services.Pipewire
 import QtQuick.Controls
-import "./widgets"
-import "./widgets/trays"
+import Quickshell.Io
+import qs.bar.widgets
+import qs.popups
+import qs.services
 
 Scope {
 	PanelWindow {
@@ -16,25 +18,27 @@ Scope {
 		property color sColor: "#ccfaebd7"
 
 		color: "transparent"
-		exclusionMode: ExclusionMode.Ignore
-		mask: Region {
+
+        mask: Region {
 			Region { item: topLeft }
-			Region { item: topRight }
-			Region { item: topMiddle }
-		}
+            Region { item: topRight }
+            Region { item: clock }
+        }
 
 		anchors {
 			left: true
 			top: true
-			right: true
+            right: true 
 		}
-		
+
+        exclusionMode: ExclusionMode.Ignore
+
 		Rectangle {
 			id: topLeft
 			implicitHeight: 35
-			implicitWidth: wsRow.implicitWidth + 30
+			implicitWidth: leftRow.implicitWidth + 25
 			color: root.mColor
-			bottomRightRadius: 15
+            bottomRightRadius: 15
 			anchors {
 				top: parent.top
 				left: parent.left
@@ -50,79 +54,23 @@ Scope {
 				y: 35
 			}
 
-			RowLayout {
-				anchors.fill: parent
-				anchors.leftMargin: 20
-				anchors.topMargin: 5
-
-				RowLayout {
-					id: wsRow
-					anchors {
-						left: parent.left
-						top: parent.top
-					}
-					Workspaces {}
-				}
+			Row {
+                id: leftRow
+                anchors.left: parent.left
+                anchors.leftMargin: 15
+                anchors.verticalCenter: parent.verticalCenter
+                Workspaces {}
+                MediaPlayer {}
 			}
 		}
 
-		Rectangle {
-			id: topMiddle
-			implicitHeight: 35
-			implicitWidth: clockSpace.implicitWidth
-			color: "transparent"
-			anchors {
-				top: parent.top
-				horizontalCenter: parent.horizontalCenter
-			}
+        Clock { id: clock }
 
-			Corner2 {
-				id: clockLeftTopCorner
-				x: -radius
-				y: 0
-				rotation: 90
-			}
-
-			Corner2 {
-				id: clockRightTopCorner
-				x: clockSpace.implicitWidth
-				y: 0
-			}
-		
-
-			RowLayout {
-				anchors.topMargin: 5
-				anchors.fill: parent
-				anchors.horizontalCenter: parent.horizontalCenter
-				anchors.verticalCenter: parent.verticalCenter
-				Rectangle {
-					id: clockSpace
-					anchors {
-						horizontalCenter: parent.horizontalCenter
-						verticalCenter: parent.verticalCenter
-					}	
-					implicitWidth: clockItem.implicitWidth + 80
-					implicitHeight: 50
-					bottomRightRadius: 25
-					bottomLeftRadius: 25
-					color: root.sColor
-					Clock { 
-						id: clockItem
-						anchors {
-							horizontalCenter: parent.horizontalCenter
-							verticalCenter: parent.verticalCenter
-						}
-						topPadding: 4
-					}
-				}
-			}
-		}
-
-		Rectangle {
+        Rectangle {
 			id: topRight
 			implicitHeight: 35
-			implicitWidth: widgetsRow.implicitWidth + 36
-			color: root.mColor
+			implicitWidth: rightRow.width + 25
+            color: root.mColor
 			bottomLeftRadius: 15
 			anchors {
 				top: parent.top
@@ -140,57 +88,18 @@ Scope {
 				rotation: 90
 			}
 
-			RowLayout {
-				anchors.fill: parent
-				anchors.rightMargin: 20
-				anchors.topMargin: 7
-				anchors.bottomMargin: 8
-				RowLayout {
-					id: widgetsRow
-					anchors {
-						right: parent.right
-						verticalCenter: parent.verticalCenter
-					}
-					MediaPlayer {}
-					Weather {}
-					AudioControl {}
-					SysStats {}
-				}	
+			Row {
+                id: rightRow
+                anchors.right: parent.right
+                anchors.rightMargin: 15
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 5
+				Weather {}
+                AudioStatus {}
+                SysStats {}
 			}
 		}
 		
-		component Corner2: Shape {
-			id: corner2
-			preferredRendererType: Shape.CurveRenderer
-
-			property real radius: 25
-
-			ShapePath {
-				strokeWidth: 0
-				fillColor: root.sColor
-
-				startX: corner2.radius
-				
-				PathArc {
-					relativeX: -corner2.radius
-					relativeY: corner2.radius
-					radiusX: corner2.radius
-					radiusY: corner2.radius
-					direction: PathArc.Counterclockwise
-				}
-
-				PathLine {
-					relativeX: 0
-					relativeY: -corner2.radius
-				}
-
-				PathLine {
-					relativeX: corner2.radius
-					relativeY: 0
-				}
-			}
-		}
-
 		component Corner: Shape {
 			id: corner
 			preferredRendererType: Shape.CurveRenderer
@@ -234,7 +143,7 @@ Scope {
 			PanelWindow {
 				anchors.top: true
 				implicitWidth: 0
-				implicitHeight: topMiddle.implicitHeight
+				implicitHeight: 35
 			}
 		}
 		Scope {
@@ -243,7 +152,7 @@ Scope {
 				implicitWidth: 0
 				implicitHeight: topRight.implicitHeight
 			}
-		}
-	}
+        }
+    }
 }
 

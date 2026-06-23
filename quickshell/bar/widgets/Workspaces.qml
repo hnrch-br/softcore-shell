@@ -7,7 +7,7 @@ import QtQuick.Layouts
 RowLayout {
 	anchors.top: parent.top
 	Repeater {
-		model: 10
+		model: 5
 		Rectangle {
 			id: wsRect
 			property var ws: Hyprland.workspaces.values.find(w => w.id === index + 1)
@@ -32,11 +32,12 @@ RowLayout {
 			Text {
 				id: wsNum
 				anchors {
-					horizontalCenter: parent.horizontalCenter
-					}
+					centerIn: parent
+				}
+				leftPadding: 2.3
 				text: index + 1
 	    		color: isActive ? "#ff3d3636" : "#fffaebd7"
-	    		font { family: "Monospace"; weight: Font.Bold; pixelSize: isActive ? 18 : 15 ; bold: isActive ? true : false }
+	    		font { family: "Bytesized"; pixelSize: isActive ? 20 : 18 ; weight: isActive ? 650 : Font.Normal }
 			}
 
 	    	MouseArea {
