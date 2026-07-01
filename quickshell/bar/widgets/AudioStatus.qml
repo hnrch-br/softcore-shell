@@ -51,7 +51,8 @@ Item {
 		RowLayout {
 			id: audRow
 			anchors.horizontalCenter: parent.horizontalCenter
-			anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 4
 			Text {
 				id: volText
 				color: "#ff3d3636"
