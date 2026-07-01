@@ -9,7 +9,7 @@ import QtQuick.Shapes
 import QtQuick.Controls
 import Quickshell.Io
 
-import qs.bar.widgets
+import qs.bar
 
 PopupWindow {
     id: root

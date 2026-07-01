@@ -8,7 +8,8 @@ import QtQuick.Shapes
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell.Services.Pipewire
-import qs.bar.widgets
+
+import qs.bar
 import qs.services
 
 PopupWindow {

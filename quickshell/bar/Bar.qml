@@ -9,7 +9,7 @@ import QtQuick.Controls
 import Quickshell.Io
 import QtQuick.Effects
 
-import qs.bar.widgets
+import qs.bar
 import qs.popups
 import qs.services
 

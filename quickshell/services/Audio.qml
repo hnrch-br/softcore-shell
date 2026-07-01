@@ -3,7 +3,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Services.Pipewire
-import qs.bar.widgets
+
 import qs.bar
 import qs.popups
 
