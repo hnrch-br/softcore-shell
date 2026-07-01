@@ -24,6 +24,12 @@ PopupWindow {
         }
     }
 
+    Shortcut {
+        sequence: "Escape"
+        enabled: root.isOpen
+        onActivated: closeAnim.start();
+    }
+
     Rectangle {
         id: sysPopupOuter
         anchors.top: parent.top

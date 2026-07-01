@@ -41,8 +41,8 @@ PopupWindow {
         implicitWidth: parent.width - 40
         opacity: root.visible ? 1 : 0
         color: "#823d3636"
-        bottomLeftRadius: 15
-        bottomRightRadius: 15
+        bottomLeftRadius: 10
+        bottomRightRadius: 10
 
         Behavior on opacity {
             NumberAnimation { duration: 100 }
@@ -60,7 +60,7 @@ PopupWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             implicitHeight: root.visible ? 280 : 0
             implicitWidth: 140
-            radius: 10
+            radius: 5
 
             RowLayout {
                 anchors.horizontalCenter: parent.horizontalCenter
