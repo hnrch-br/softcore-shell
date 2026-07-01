@@ -14,7 +14,7 @@ import qs.services
 import qs.popups
 
 Item {
-    id: audioStatus
+    id: root
 
     implicitWidth: childrenRect.width
     implicitHeight: childrenRect.height
@@ -26,13 +26,15 @@ Item {
     }
 
 
-    AudioPopup{
+    AudioPopup{ 
         id: audioPopup
-        anchor.item: audioStatus
-        anchor.adjustment: PopupAdjustment.None
-        anchor.edges: Edges.Top
-        anchor.margins.left: -200
-        anchor.margins.top: 27
+        anchor {
+            item: root
+            adjustment: PopupAdjustment.None
+            edges: Edges.Top
+            margins.left: -audioPopup.implicitWidth
+            margins.top: 27
+        }
     }
 
     Rectangle { 

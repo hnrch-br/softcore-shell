@@ -1,47 +1,45 @@
-pragma ComponentBehavior: Bound;
+pragma ComponentBehavior: Bound
+
 import Quickshell
 import QtQuick
 import Quickshell.Hyprland
-import Quickshell.Wayland
-import Quickshell.Io
 import QtQuick.Shapes
 import QtQuick.Layouts
 import QtQuick.Controls
-import Quickshell.Services.Pipewire
 
 import qs.bar
 import qs.services
 
 PopupWindow {
-    id: audioPopup
+    id: root
     implicitHeight: 290
     implicitWidth: 200
     color: "transparent"
 
     HyprlandFocusGrab {
-        active: audioPopup.isOpen
-        windows: [audioPopup]
+        active: root.isOpen
+        windows: [root]
         onCleared: {
             closeAnim.start();
         }
     }
 
-    property bool isOpen: false
-    onIsOpenChanged: {
-        if (!isOpen) {
-            visible = false;
-        } else {
-            visible = true;
-        }
+    Shortcut {
+        sequence: "Escape"
+        enabled: root.isOpen
+        onActivated: closeAnim.start();
     }
+
+    property bool isOpen: false
+    visible: isOpen ? true : false
 
     Rectangle {
         id: audioPopupOuter
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        implicitHeight: audioPopup.visible ? parent.height : 0
+        implicitHeight: root.visible ? parent.height : 0
         implicitWidth: parent.width - 40
-        opacity: audioPopup.visible ? 1 : 0
+        opacity: root.visible ? 1 : 0
         color: "#823d3636"
         bottomLeftRadius: 15
         bottomRightRadius: 15
@@ -56,15 +54,13 @@ PopupWindow {
 
         Rectangle {
             id: audioPopupInner
-            opacity: audioPopup.visible ? 1 : 0
+            opacity: root.visible ? 1 : 0
             color: "#ccfaebd7" 
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-            implicitHeight: audioPopup.visible ? 280 : 0
+            implicitHeight: root.visible ? 280 : 0
             implicitWidth: 140
             radius: 10
-            
-            
 
             RowLayout {
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -237,7 +233,7 @@ PopupWindow {
         }
         ScriptAction {
             script: {
-                audioPopup.isOpen = false;
+                root.isOpen = false;
             }
         }
     }

@@ -8,10 +8,11 @@ import qs.popups
 import qs.services
 
 Item {
-    z: 1
+    id: root
     anchors.horizontalCenter: parent.horizontalCenter
     implicitHeight: childrenRect.height
     implicitWidth: childrenRect.width
+    
     Row { 
         id: clockRow
         anchors.horizontalCenter: parent.horizontalCenter
@@ -57,8 +58,15 @@ Item {
         }
     }
 
-    CalendarPopup{
+    CalendarPopup{ 
         id: calendarPopup
+        anchor {
+            item: root
+            adjustment: PopupAdjustment.None
+            edges: Edges.Top
+            margins.left: -calendarPopup.implicitWidth
+            margins.top: 0
+        }
     }
 
     MouseArea {

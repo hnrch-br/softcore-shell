@@ -1,6 +1,8 @@
 import Quickshell
 import QtQuick
 import QtQuick.Shapes
+import QtQuick.Controls
+import QtQuick.Layouts
 
 import qs.bar
 import qs.popups
@@ -8,7 +10,7 @@ import qs.services
 
 Scope {
 	PanelWindow {
-		id: root
+        id: root
 		property color mColor: "#823d3636"
 		property color sColor: "#ccfaebd7"
 
@@ -51,6 +53,7 @@ Scope {
 
 			Row {
                 id: leftRow
+                leftPadding: 17
                 anchors.left: parent.left
                 anchors.leftMargin: 15
                 anchors.verticalCenter: parent.verticalCenter
@@ -83,9 +86,9 @@ Scope {
 				y: 35
 				rotation: 90
 			}
-
 			Row {
                 id: rightRow
+                rightPadding: 17
                 anchors.right: parent.right
                 anchors.rightMargin: 15
                 anchors.verticalCenter: parent.verticalCenter
@@ -93,7 +96,7 @@ Scope {
                 WtWidget {}
                 AudioStatus {}
                 SysStats {}
-			}
+            }
 		}
 		
 		component Corner: Shape {

@@ -2,12 +2,10 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
-import Quickshell.Wayland
 import Quickshell.Hyprland
 import QtQuick.Layouts
 import QtQuick.Shapes
 import QtQuick.Controls
-import Quickshell.Io
 
 import qs.bar
 
@@ -16,13 +14,6 @@ PopupWindow {
     implicitHeight: 300
     implicitWidth: 400
     color: "transparent"
-
-    anchor {
-        item: parent
-        adjustment: PopupAdjustment.None
-        edges: Edges.Top
-        margins.left: -400
-    }
 
     property date currentDate: new Date()
     property date selectedDate: new Date()
@@ -37,8 +28,13 @@ PopupWindow {
         }
     }
 
-    property bool isOpen: false
+    Shortcut {
+        sequence: "Escape"
+        enabled: root.isOpen
+        onActivated: closeAnim.start();
+    }
 
+    property bool isOpen: false
     visible: root.isOpen ? true : false
 
     Rectangle {
