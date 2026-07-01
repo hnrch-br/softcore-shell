@@ -38,7 +38,7 @@ Item {
 		color: "#ccfaebd7"
 		implicitWidth: 140
 		implicitHeight: 20 
-		radius: 25
+		radius: 2
 		clip: true
 
         Behavior on implicitWidth {

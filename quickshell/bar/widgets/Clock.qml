@@ -1,17 +1,21 @@
 import Quickshell
 import QtQuick
+import Quickshell.Wayland
+import Quickshell.Hyprland
 import QtQuick.Shapes
 
 import qs.popups
+import qs.services
 
 Item {
+    z: 1
     anchors.horizontalCenter: parent.horizontalCenter
     implicitHeight: childrenRect.height
     implicitWidth: childrenRect.width
-    Row {
+    Row { 
         id: clockRow
         anchors.horizontalCenter: parent.horizontalCenter
-        opacity: calendarpopup.visible ? 0 : 1
+        opacity: calendarPopup.visible ? 0 : 1
 
         Behavior on opacity {
             NumberAnimation { duration: 100 }
@@ -29,6 +33,10 @@ Item {
             bottomLeftRadius: 15
             bottomRightRadius: 15
             color: "#ccfaebd7"
+
+            Behavior on implicitHeight {
+                NumberAnimation { duration: 250 }
+            }
     
             Text {
                 anchors.centerIn: parent
@@ -37,6 +45,7 @@ Item {
             	font {family: "Ndot 57"; pixelSize: 35 }
                 bottomPadding: 7
             }
+
             SystemClock {
             	id: clock
             	precision: SystemClock.Minutes
@@ -49,17 +58,13 @@ Item {
     }
 
     CalendarPopup{
-        id: calendarpopup
-        anchor.item: clockRect
-        anchor.adjustment: PopupAdjustment.None
-        anchor.edges: Edges.Top
-        anchor.margins.left: -400
+        id: calendarPopup
     }
 
     MouseArea {
         cursorShape: Qt.PointingHandCursor
         anchors.fill: parent
-        onClicked: calendarpopup.isOpen = !calendarpopup.isOpen
+        onClicked: calendarPopup.isOpen = !calendarPopup.isOpen
     }
 
     component Corner: Shape {

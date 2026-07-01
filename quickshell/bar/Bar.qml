@@ -7,6 +7,8 @@ import QtQuick.Shapes
 import Quickshell.Services.Pipewire
 import QtQuick.Controls
 import Quickshell.Io
+import QtQuick.Effects
+
 import qs.bar.widgets
 import qs.popups
 import qs.services
@@ -61,6 +63,7 @@ Scope {
                 anchors.verticalCenter: parent.verticalCenter
                 Workspaces {}
                 MediaPlayer {}
+                Cava {}
 			}
 		}
 
@@ -93,8 +96,8 @@ Scope {
                 anchors.right: parent.right
                 anchors.rightMargin: 15
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: 5
-				Weather {}
+                spacing: 2
+                WtWidget {}
                 AudioStatus {}
                 SysStats {}
 			}

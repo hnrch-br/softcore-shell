@@ -16,14 +16,21 @@ RowLayout {
 			implicitWidth: isActive ? wsNum.contentWidth + 50 : wsNum.contentWidth + 20
 			implicitHeight: wsNum.contentHeight
 			color: isActive ? "#ccfaebd7" : "#cc3d3636"
-			Layout.rightMargin: 8
+			Layout.rightMargin: 4
 
 			Behavior on implicitWidth {
 				NumberAnimation {
-					duration: 100
-					easing.type: Easing.InOutQuad
+					duration: 50
+					easing.type: Easing.InQuart
 				}
-			}
+            }
+
+            Behavior on implicitHeight {
+                NumberAnimation {
+                    duration: 50
+                    easing.type: Easing.InQuart
+                }
+            }
 
 			Behavior on color {
 				ColorAnimation { duration: 200 }

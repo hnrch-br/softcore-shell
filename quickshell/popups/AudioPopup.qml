@@ -46,11 +46,11 @@ PopupWindow {
         bottomRightRadius: 15
 
         Behavior on opacity {
-            NumberAnimation { duration: 250 }
+            NumberAnimation { duration: 100 }
         }
 
         Behavior on implicitHeight {
-            NumberAnimation { duration: 250 }
+            NumberAnimation { duration: 100 }
         }
 
         Rectangle {
@@ -62,6 +62,8 @@ PopupWindow {
             implicitHeight: audioPopup.visible ? 280 : 0
             implicitWidth: 140
             radius: 10
+            
+            
 
             RowLayout {
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -150,11 +152,11 @@ PopupWindow {
             }
     
             Behavior on opacity {
-                NumberAnimation { duration: 250 }
+                NumberAnimation { duration: 100 }
             }
     
             Behavior on implicitHeight {
-                NumberAnimation { duration: 250 }
+                NumberAnimation { duration: 100 }
             }
         }
 
@@ -207,28 +209,28 @@ PopupWindow {
                 target: audioPopupOuter
                 property: "implicitHeight"
                 to: 0
-                duration: 250
+                duration: 100
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
                 target: audioPopupInner
                 property: "implicitHeight"
                 to: 0
-                duration: 250
+                duration: 100
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
                 target: audioPopupOuter
                 property: "opacity"
                 to: 0
-                duration: 250
+                duration: 300
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
                 target: audioPopupInner
                 property: "opacity"
                 to: 0
-                duration: 250
+                duration: 300
                 easing.type: Easing.OutQuad
             }
         }
