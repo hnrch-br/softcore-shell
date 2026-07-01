@@ -1,13 +1,6 @@
 import Quickshell
 import QtQuick
-import Quickshell.Wayland
-import Quickshell.Hyprland
-import QtQuick.Layouts
 import QtQuick.Shapes
-import Quickshell.Services.Pipewire
-import QtQuick.Controls
-import Quickshell.Io
-import QtQuick.Effects
 
 import qs.bar
 import qs.popups
