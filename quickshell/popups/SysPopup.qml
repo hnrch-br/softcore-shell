@@ -11,7 +11,7 @@ import qs.services
 PopupWindow {
     id: root
 
-    implicitWidth: 255
+    implicitWidth: 260
     implicitHeight: 300
     color: "transparent"
 
@@ -37,7 +37,7 @@ PopupWindow {
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         implicitHeight: root.visible ? parent.height : 0
-        implicitWidth: parent.width - 25
+        implicitWidth: parent.width - 35
         bottomLeftRadius: 15
         bottomRightRadius: 15
         color: "#823d3636"

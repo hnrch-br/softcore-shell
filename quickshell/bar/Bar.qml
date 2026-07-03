@@ -53,14 +53,17 @@ Scope {
 
 			Row {
                 id: leftRow
-                spacing: 2
+                spacing: 10
                 leftPadding: 18
                 anchors.left: parent.left
                 anchors.leftMargin: 15
                 anchors.verticalCenter: parent.verticalCenter
-                Workspaces { id: workSpaces}
-                MediaPlayer { id: mediaPlayer }
-                Cava { id: cava }
+                Workspaces { id: workSpaces }
+                RowLayout {
+                    spacing: 2
+                    MediaPlayer { id: mediaPlayer }
+                    Cava { id: cava }
+                }
             }
             ParallelAnimation{
                 NumberAnimation { 
