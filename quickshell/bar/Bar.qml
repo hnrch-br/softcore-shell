@@ -53,6 +53,7 @@ Scope {
 
 			Row {
                 id: leftRow
+                spacing: 2
                 leftPadding: 18
                 anchors.left: parent.left
                 anchors.leftMargin: 15

@@ -6,18 +6,18 @@ import QtQuick.Layouts
 
 RowLayout {
     anchors.top: parent.top
+    spacing: 2
     Repeater {
         model: Hyprland.workspaces.values.filter(w => w.id > 0)
         Rectangle {
             id: wsRect
             required property var modelData
-
             property bool isActive: Hyprland.focusedWorkspace?.id === modelData.id
+            
             radius: 5
             implicitWidth: isActive ? wsNum.contentWidth + 50 : wsNum.contentWidth + 20
             implicitHeight: wsNum.contentHeight
             color: isActive ? "#ccfaebd7" : "#cc3d3636"
-            Layout.rightMargin: 4
 
             Behavior on implicitWidth {
                 NumberAnimation {

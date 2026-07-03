@@ -55,10 +55,7 @@ RowLayout {
         implicitWidth: isPlaying ? 220 : 100
         implicitHeight: 22
         color: "#ccfaebd7"
-        bottomLeftRadius: 25
-        topLeftRadius: 25
-        bottomRightRadius: 2
-        topRightRadius: 2
+        radius: 2
         clip: true
 
         Behavior on implicitWidth {
@@ -72,6 +69,5 @@ RowLayout {
             color: "#ff3d3636"
             font { family: "Pixelify Sans"; pixelSize: 16 }
         }
-        Layout.rightMargin: 2
     }
 }
