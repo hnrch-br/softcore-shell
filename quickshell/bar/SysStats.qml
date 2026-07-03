@@ -16,7 +16,6 @@ Item {
     implicitWidth: childrenRect.width
     implicitHeight: childrenRect.height
 
-
     SysPopup {
         id: sysPopup
         anchor {

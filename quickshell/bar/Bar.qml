@@ -35,7 +35,7 @@ Scope {
 			implicitHeight: 35
 			implicitWidth: leftRow.implicitWidth + 25
 			color: root.mColor
-            bottomRightRadius: 15
+            bottomRightRadius: 10
 			anchors {
 				top: parent.top
 				left: parent.left
@@ -53,15 +53,29 @@ Scope {
 
 			Row {
                 id: leftRow
-                leftPadding: 17
+                leftPadding: 18
                 anchors.left: parent.left
                 anchors.leftMargin: 15
                 anchors.verticalCenter: parent.verticalCenter
-                Workspaces {}
-                MediaPlayer {}
-                Cava {}
-			}
-		}
+                Workspaces { id: workSpaces}
+                MediaPlayer { id: mediaPlayer }
+                Cava { id: cava }
+            }
+            ParallelAnimation{
+                NumberAnimation { 
+                    target: topLeft
+                    property: "implicitWidth"
+                    duration: 100
+                    easing.type: Easing.OutQuad
+                }
+                NumberAnimation {
+                    target: { mediaPlayer; cava }
+                    property: "x"
+                    duration: 100
+                    easing.type: Easing.OutQuad
+                }
+            }
+        }
 
         Clock { id: clock }
 
@@ -70,7 +84,7 @@ Scope {
 			implicitHeight: 35
 			implicitWidth: rightRow.width + 25
             color: root.mColor
-			bottomLeftRadius: 15
+			bottomLeftRadius: 10
 			anchors {
 				top: parent.top
 				right: parent.right
@@ -88,7 +102,7 @@ Scope {
 			}
 			Row {
                 id: rightRow
-                rightPadding: 17
+                rightPadding: 18
                 anchors.right: parent.right
                 anchors.rightMargin: 15
                 anchors.verticalCenter: parent.verticalCenter
@@ -96,6 +110,9 @@ Scope {
                 WtWidget {}
                 AudioStatus {}
                 SysStats {}
+            }
+            Behavior on implicitWidth {
+                NumberAnimation { duration: 100 }
             }
 		}
 		

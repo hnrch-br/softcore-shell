@@ -55,7 +55,7 @@ Item {
 			id: audRow
 			anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            spacing: 4
+            spacing: 5
 			Text {
 				id: volText
 				color: "#ff3d3636"
