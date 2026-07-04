@@ -11,7 +11,7 @@ import qs.services
 Scope {
 	PanelWindow {
         id: root
-		property color mColor: "#823d3636"
+		property color mColor: "#473d3636"
 		property color sColor: "#ccfaebd7"
 
 		color: "transparent"
@@ -61,6 +61,7 @@ Scope {
                 Workspaces { id: workSpaces }
                 RowLayout {
                     spacing: 2
+                    anchors.verticalCenter: parent.verticalCenter
                     MediaPlayer { id: mediaPlayer }
                     Cava { id: cava }
                 }

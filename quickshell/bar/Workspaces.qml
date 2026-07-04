@@ -6,7 +6,7 @@ import QtQuick.Layouts
 
 RowLayout {
     anchors.verticalCenter: parent.verticalCenter
-    spacing: 2
+    spacing: 6
     Layout.rightMargin: 2
     Repeater {
         model: Hyprland.workspaces.values.filter(w => w.id > 0)
@@ -17,7 +17,7 @@ RowLayout {
             
             radius: 5
             implicitWidth: isActive ? wsNum.contentWidth + 50 : wsNum.contentWidth + 20
-            implicitHeight: 24
+            implicitHeight: isActive ? 26 : 24
             color: isActive ? "#ccfaebd7" : "#cc3d3636"
 
             Behavior on implicitWidth {

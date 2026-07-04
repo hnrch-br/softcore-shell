@@ -20,6 +20,11 @@ PopupWindow {
     property int month: currentDate.getMonth()
     property int year: currentDate.getFullYear()
 
+    property color mColor: "#ccfaebd7"
+    property color sColor: "#823d3636"
+    property color mTxtColor: "#ff3d3636"
+    property color sTxtColor: "#ffcdcdcd"
+
     HyprlandFocusGrab {
         active: root.isOpen
         windows: [root]
@@ -43,7 +48,7 @@ PopupWindow {
         anchors.horizontalCenter: parent.horizontalCenter
         implicitHeight: root.visible ? parent.height : 0
         implicitWidth: root.visible ? parent.width - 50 : 80
-        color: "#ccfaebd7"
+        color: root.mColor
         opacity: visible ? 1 : 0
         bottomLeftRadius: 15
         bottomRightRadius: 15
@@ -74,8 +79,8 @@ PopupWindow {
                         text: "arrow_back_ios_new"
                         font { family: "Material Symbols Outlined"; pointSize: 9 }
                         color: lastMonth.down 
-                            ? "#ccaaaaaa" 
-                            : "#ff3d3636"
+                            ? root.sTxtColor
+                            : root.mTxtColor
                         horizontalAlignment: Text.AlignHCenter
                         topPadding: 1
                     }
@@ -89,8 +94,8 @@ PopupWindow {
                         bottomRightRadius: 2
                         topRightRadius: 2
                         color: lastMonth.down
-                            ? "#823d3636"
-                            : "#ccfaebd7"
+                            ? root.sColor
+                            : root.mColor
                         anchors.centerIn: parent
                     }
                     onClicked: {
@@ -108,7 +113,7 @@ PopupWindow {
                     id: monthId
                     text: (new Date(root.year, root.month, 1)).toLocaleDateString(Qt.locale(), "MMMM, yyyy")
                     font { family: "Pixelify Sans"; pixelSize: 15 }
-                    color: "#ff3d3636"
+                    color: root.mTxtColor
                     Layout.preferredWidth: 120
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -119,8 +124,8 @@ PopupWindow {
                         text: "arrow_forward_ios"
                         font { family: "Material Symbols Outlined"; pointSize: 9 }
                         color: nextMonth.down
-                            ? "#ffaaaaaa" 
-                            : "#ff3d3636"
+                            ? root.sTxtColor 
+                            : root.mTxtColor
                         horizontalAlignment: Text.AlignHCenter
                         topPadding: 1
                     }
@@ -134,8 +139,8 @@ PopupWindow {
                         bottomRightRadius: 8
                         topRightRadius: 8
                         color: nextMonth.down
-                            ? "#823d3636"
-                            : "#ccfaebd7"
+                            ? root.sColor
+                            : root.mColor
                         anchors.centerIn: parent
                     }
                     onClicked: {
@@ -159,7 +164,7 @@ PopupWindow {
                     text: shortName
                     font.family: "Sixtyfour"
                     font.pixelSize: 7
-                    color: "#ff5c4033"
+                    color: Qt.tint(root.sColor, "#54ed752b")
                     horizontalAlignment: Text.AlignHCenter
                     leftPadding: 5
 
@@ -183,21 +188,39 @@ PopupWindow {
                     required property var model
                     property bool isCurrentMonth: model.month === root.month
                     property bool isToday: model.date.toDateString() === root.currentDate.toDateString()
+                    property bool isSelected: model.date.toDateString() === root.selectedDate.toDateString()
 
-                    color: isToday && isCurrentMonth ? "#aa3d3636" : isToday ? "#383d3636" : "transparent"
+                    color: isSelected 
+                        ? Qt.tint(root.sColor, "#cced752b")
+                        : isToday
+                        ? Qt.alpha(root.sColor, 0.4)
+                        : "transparent"
                     radius: implicitHeight / 2
+                    
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        hoverEnabled: true
+                        onClicked: root.selectedDate = gridRect.model.date
+                    }
 
                     Text {
                         id: monthDays
                         anchors.centerIn: gridRect
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
-                        text: model.day
+                        text: gridRect.model.day
                         font.family: "Bytesized"
                         opacity: root.visible ? 1 : 0
                         font.pixelSize: 16
-                        color: parent.isToday ? "#ccfaebd7" : parent.isCurrentMonth ? "#ff5c4033" : Qt.darker("#823d3636", 0.9)
-                        font.bold: parent.isToday
+                        color: gridRect.isSelected
+                            ? Qt.darker(root.sTxtColor, 0.9)
+                            : gridRect.isToday
+                            ? root.sTxtColor
+                            : gridRect.isCurrentMonth
+                            ? Qt.darker(root.mTxtColor, 0.65)
+                            : Qt.darker(root.mTxtColor, 0.4)
+                        font.bold: parent.isToday ? true : false
 
                         Behavior on opacity {
                             NumberAnimation { duration: 250 }

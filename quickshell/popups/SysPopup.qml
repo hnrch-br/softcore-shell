@@ -16,7 +16,7 @@ PopupWindow {
     color: "transparent"
 
     property bool isOpen: false
-    visible: isOpen ? true : false
+    visible: root.isOpen ? true : false
 
     HyprlandFocusGrab {
         active: root.isOpen
@@ -37,7 +37,7 @@ PopupWindow {
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         implicitHeight: root.visible ? parent.height : 0
-        implicitWidth: parent.width - 35
+        implicitWidth: root.visible ? parent.width - 35 : 0
         bottomLeftRadius: 15
         bottomRightRadius: 15
         color: "#823d3636"
@@ -54,7 +54,7 @@ PopupWindow {
             spacing: 2
             Rectangle {
                 id: cpuPanel
-                implicitWidth: 68
+                implicitWidth: root.visible ? 68 : 0
                 implicitHeight: root.visible ? 290 : 0
                 opacity: root.visible ? 1 : 0
                 radius: 5
@@ -66,10 +66,13 @@ PopupWindow {
                 Behavior on opacity {
                     NumberAnimation { duration: 100 }
                 }
+                Behavior on implicitWidth {
+                    NumberAnimation { duration: 100 }
+                }
             }
             Rectangle {
                 id: gpuPanel
-                implicitWidth: 68
+                implicitWidth: root.visible? 68 : 0
                 implicitHeight: root.visible ? 290 : 0
                 opacity: root.visible ? 1 : 0
                 radius: 5
@@ -81,11 +84,14 @@ PopupWindow {
                 Behavior on opacity {
                     NumberAnimation { duration: 100 }
                 }
+                Behavior on implicitWidth {
+                    NumberAnimation { duration: 100 }
+                }
             }
 
             Rectangle {
                 id: memPanel
-                implicitWidth: 68
+                implicitWidth: root.visible ? 68 : 0
                 implicitHeight: root.visible ? 290 : 0
                 opacity: root.visible ? 1 : 0
                 radius: 5
@@ -97,6 +103,9 @@ PopupWindow {
                 Behavior on opacity {
                     NumberAnimation { duration: 100 }
                 }
+                Behavior on implicitWidth {
+                    NumberAnimation { duration: 100 }
+                }
             }
         }
 
@@ -105,6 +114,10 @@ PopupWindow {
         }
 
         Behavior on opacity {
+            NumberAnimation { duration: 100 }
+        }
+
+        Behavior on implicitWidth {
             NumberAnimation { duration: 100 }
         }
     }
@@ -157,6 +170,13 @@ PopupWindow {
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
+                target: sysPopupOuter
+                property: "implicitWidth"
+                duration: 100
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
                 target: cpuPanel
                 property: "implicitHeight"
                 duration: 200
@@ -166,35 +186,56 @@ PopupWindow {
             NumberAnimation {
                 target: cpuPanel
                 property: "opacity"
-                duration: 200
+                duration: 100
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: cpuPanel
+                property: "implicitWidth"
+                duration: 150
                 to: 0
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
                 target: gpuPanel
                 property: "implicitHeight"
-                duration: 200
+                duration: 100
                 to: 0
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
                 target: gpuPanel
                 property: "opacity"
-                duration: 200
+                duration: 100
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: gpuPanel 
+                property: "implicitWidth"
+                duration: 150
                 to: 0
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
                 target: memPanel
                 property: "implicitHeight"
-                duration: 200
+                duration: 100
                 to: 0
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
                 target: memPanel
                 property: "opacity"
-                duration: 200
+                duration: 100
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: memPanel 
+                property: "implicitWidth"
+                duration: 150
                 to: 0
                 easing.type: Easing.OutQuad
             }

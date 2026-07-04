@@ -31,14 +31,14 @@ PopupWindow {
     }
 
     property bool isOpen: false
-    visible: isOpen ? true : false
+    visible: root.isOpen ? true : false
 
     Rectangle {
         id: audioPopupOuter
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         implicitHeight: root.visible ? parent.height : 0
-        implicitWidth: parent.width - 40
+        implicitWidth: root.visible ? parent.width - 40 : 0
         opacity: root.visible ? 1 : 0
         color: "#823d3636"
         bottomLeftRadius: 10
@@ -52,6 +52,10 @@ PopupWindow {
             NumberAnimation { duration: 100 }
         }
 
+        Behavior on implicitWidth {
+            NumberAnimation { duration: 100 }
+        }
+
         Rectangle {
             id: audioPopupInner
             opacity: root.visible ? 1 : 0
@@ -59,7 +63,7 @@ PopupWindow {
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
             implicitHeight: root.visible ? 280 : 0
-            implicitWidth: 140
+            implicitWidth: root.visible ? 140 : 0
             radius: 5
 
             RowLayout {
@@ -155,6 +159,10 @@ PopupWindow {
             Behavior on implicitHeight {
                 NumberAnimation { duration: 100 }
             }
+
+            Behavior on implicitWidth {
+                NumberAnimation { duration: 150 }
+            }
         }
 
         Corner {
@@ -220,14 +228,28 @@ PopupWindow {
                 target: audioPopupOuter
                 property: "opacity"
                 to: 0
-                duration: 300
+                duration: 100
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
                 target: audioPopupInner
                 property: "opacity"
                 to: 0
-                duration: 300
+                duration: 100
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: audioPopupOuter
+                property: "implicitWidth"
+                duration: 100
+                to: 0
+                easing.type: Easing.InOutQuad
+            }
+            NumberAnimation {
+                target: audioPopupInner
+                property: "implicitWidth"
+                duration: 100
+                to: 0
                 easing.type: Easing.OutQuad
             }
         }
