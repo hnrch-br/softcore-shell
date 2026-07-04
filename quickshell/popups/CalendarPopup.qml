@@ -42,6 +42,17 @@ PopupWindow {
     property bool isOpen: false
     visible: root.isOpen ? true : false
 
+    function resetDate() {
+        currentDate = new Date();
+        selectedDate = currentDate;
+        month = currentDate.getMonth();
+        year = currentDate.getFullYear();
+    }
+
+    onIsOpenChanged: {
+        if (isOpen) resetDate();
+    }
+
     Rectangle {
         id: calendarArea
         anchors.top: parent.top
@@ -100,8 +111,6 @@ PopupWindow {
                     }
                     onClicked: {
                         root.month--;
-                        grid.month = root.month;
-                        grid.year = root.year;
                         if (root.month < 0) {
                             root.month = 11;
                             root.year--;
@@ -145,8 +154,6 @@ PopupWindow {
                     }
                     onClicked: {
                         root.month++;
-                        grid.month = root.month;
-                        grid.year = root.year;
                         if (root.month > 11) {
                             root.month = 0;
                             root.year++;
