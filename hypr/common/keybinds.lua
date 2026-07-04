@@ -29,9 +29,9 @@ hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up"}))
 hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.move({ direction = "down"}))
 
 -- Switch between 5 workspaces [1 - 5]
-for i = 1, 5 do
-    hl.bind(mainMod .. " + " .. i,             hl.dsp.focus({ workspace = i}))
-    hl.bind(mainMod .. " + SHIFT + " .. i,     hl.dsp.window.move({ workspace = i }))
+for i = 1, 10 do
+    hl.bind(mainMod .. " + " .. (i % 10),             hl.dsp.focus({ workspace = i}))
+    hl.bind(mainMod .. " + SHIFT + " .. (i % 10),     hl.dsp.window.move({ workspace = i }))
 end
 
 -- Example special workspace (scratchpad)
@@ -64,10 +64,14 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = tr
 ----->> Applications
 
 -- Grimblast
-hl.bind( mainMod .. " + Print", hl.dsp.exec_cmd("grimblast --notify save output ~/Pictures/Screenshots/screenshot-$(date +%F-%T).png") )
-hl.bind( "Print", hl.dsp.exec_cmd("grimblast --notify copysave area ~/Pictures/Screenshots/screenshot-$(date +%F-%T).png") )
+hl.bind( mainMod .. " + Print", hl.dsp.exec_cmd("grimblast --notify --freeze save output ~/Pictures/Screenshots/screenshot-$(date +%F-%T).png") )
+hl.bind( "Print", hl.dsp.exec_cmd("grimblast --notify --freeze copysave area ~/Pictures/Screenshots/screenshot-$(date +%F-%T).png") )
 
 -- Cliphist
 hl.bind( mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | fuzzel --dmenu --with-nth 2 | cliphist decode | wl-copy") )
+
 -- Power Menu
 hl.bind( mainMod .. " + Delete", hl.dsp.exec_cmd(".local/bin/powermenu.sh") )
+
+-- Hyprpicker
+hl.bind( mainMod .. " + SHIFT + INSERT", hl.dsp.exec_cmd("hyprpicker -n -a -l") )

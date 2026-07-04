@@ -1,4 +1,4 @@
------>> Windows and Workspaces
+--------->> Rules
 
 local suppressMaximizeRule = hl.window_rule({
     -- Ignore maximize requests from all apps. You'll probably like this.
@@ -17,36 +17,50 @@ suppressMaximizeRule:set_enabled(false)
 -- })
 -- overlayLayerRule:set_enabled(false)
 
+--------------------
+--> WINDOW RULES <--
+--------------------
+
 -- Hyprland-run windowrule
 hl.window_rule({
     name  = "move-hyprland-run",
     match = { class = "hyprland-run" },
-
     move  = "20 monitor_h-120",
     float = true,
 })
 
--- Firefox PiP
+-- PiP
 hl.window_rule({
-    name = "pip-firefox",
-    match = { class = "firefox" },
-    match = { title = "Picture in Picture" },
+    name = "pip",
+    match = { title = "Picture(-| )in(-| )[Pp]icture" },
     float = true,
-    size = { 300, 200 },
+    size = { 600, 300 },
+    pin = true,
+    move = {"monitor_w - window_w - 80", "monitor_h - window_h - 10"},
 })
 
--- Fuzzle Animation
-hl.layer_rule({
-	name = "fuzzel-anim",
-	match = { namespace = "launcher" },
-	animation = "slide buttom",
+-- Steam Popups
+hl.window_rule({
+    name = "steam-popups",
+    match = { class = "steam", title = "Steam Settings|Friends List|Players|Game Servers|Recordings & Screenshots" },
+    float = true,
+    move = { "monitor_w / 2 - window_w / 2", "monitor_h / 2 - window_h / 2"},
+    min_size = { 300, 500 },
 })
--- Mako
-hl.layer_rule({
-	name = "mako-anim",
-	match = { namespace = "notifications" },
-	animation = "slide right",
+
+-----------------------
+--> WORKSPACE RULES <--
+-----------------------
+
+-- Special
+hl.workspace_rule({
+    workspace = "special:magic",
+    on_created_empty = "kitty",
 })
+
+-------------------
+--> LAYER RULES <--
+-------------------
 
 -- Power Animation
 hl.layer_rule({
@@ -55,7 +69,22 @@ hl.layer_rule({
 	animation = "popin 87%",
 })
 
-hl.workspace_rule({
-    workspace = "special:magic",
-    on_created_empty = "kitty",
+-- Notification Animation
+hl.layer_rule({
+	name = "notif-anim",
+	match = { namespace = "notifications" },
+	animation = "slide right",
+})
+
+hl.layer_rule({
+    name = "scp-anim",
+    match = { namespace = "selection" },
+    animation = "fade"
+})
+
+-- Launcher Animation
+hl.layer_rule({
+	name = "launcher-anim",
+	match = { namespace = "launcher" },
+	animation = "slide bottom",
 })
