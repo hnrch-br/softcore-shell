@@ -11,6 +11,9 @@ import qs.services
 PopupWindow {
     id: root
 
+    property color mColor: "#473d3636"
+    property color sColor: "#ccfaebd7"
+
     implicitWidth: 260
     implicitHeight: 300
     color: "transparent"
@@ -40,72 +43,30 @@ PopupWindow {
         implicitWidth: root.visible ? parent.width - 35 : 0
         bottomLeftRadius: 15
         bottomRightRadius: 15
-        color: "#823d3636"
+        color: root.mColor
         opacity: root.visible ? 1 : 0
 
         Corner {
             x: -radius
             rotation: 90
         }
-
-        RowLayout {
+        Rectangle {
+            id: processes
+            implicitWidth: root.visible ? parent.width - 20 : 0
+            implicitHeight: root.visible ? parent.height - 10 : 0
+            opacity: root.visible ? 1 : 0
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
-            spacing: 2
-            Rectangle {
-                id: cpuPanel
-                implicitWidth: root.visible ? 68 : 0
-                implicitHeight: root.visible ? 290 : 0
-                opacity: root.visible ? 1 : 0
-                radius: 5
-                color: "#c8bcac"
-    
-                Behavior on implicitHeight {
-                    NumberAnimation { duration: 100 }
-                }
-                Behavior on opacity {
-                    NumberAnimation { duration: 100 }
-                }
-                Behavior on implicitWidth {
-                    NumberAnimation { duration: 100 }
-                }
+            radius: 5
+            color: root.sColor
+            Behavior on implicitHeight {
+                NumberAnimation { duration: 100 }
             }
-            Rectangle {
-                id: gpuPanel
-                implicitWidth: root.visible? 68 : 0
-                implicitHeight: root.visible ? 290 : 0
-                opacity: root.visible ? 1 : 0
-                radius: 5
-                color: "#c8bcac"
-
-                Behavior on implicitHeight {
-                    NumberAnimation { duration: 100 }
-                }
-                Behavior on opacity {
-                    NumberAnimation { duration: 100 }
-                }
-                Behavior on implicitWidth {
-                    NumberAnimation { duration: 100 }
-                }
+            Behavior on opacity {
+                NumberAnimation { duration: 100 }
             }
-
-            Rectangle {
-                id: memPanel
-                implicitWidth: root.visible ? 68 : 0
-                implicitHeight: root.visible ? 290 : 0
-                opacity: root.visible ? 1 : 0
-                radius: 5
-                color: "#c8bcac"
- 
-                Behavior on implicitHeight {
-                    NumberAnimation { duration: 100 }
-                }
-                Behavior on opacity {
-                    NumberAnimation { duration: 100 }
-                }
-                Behavior on implicitWidth {
-                    NumberAnimation { duration: 100 }
-                }
+            Behavior on implicitWidth {
+                NumberAnimation { duration: 100 }
             }
         }
 
@@ -130,7 +91,7 @@ PopupWindow {
 
         ShapePath {
             strokeWidth: 0
-            fillColor: "#823d3636"
+            fillColor: root.mColor
 
             startX: corner.radius
 
@@ -177,63 +138,21 @@ PopupWindow {
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
-                target: cpuPanel
+                target: processes
                 property: "implicitHeight"
                 duration: 200
                 to: 0
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
-                target: cpuPanel
+                target: processes
                 property: "opacity"
                 duration: 100
                 to: 0
                 easing.type: Easing.OutQuad
             }
             NumberAnimation {
-                target: cpuPanel
-                property: "implicitWidth"
-                duration: 150
-                to: 0
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: gpuPanel
-                property: "implicitHeight"
-                duration: 100
-                to: 0
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: gpuPanel
-                property: "opacity"
-                duration: 100
-                to: 0
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: gpuPanel 
-                property: "implicitWidth"
-                duration: 150
-                to: 0
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: memPanel
-                property: "implicitHeight"
-                duration: 100
-                to: 0
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: memPanel
-                property: "opacity"
-                duration: 100
-                to: 0
-                easing.type: Easing.OutQuad
-            }
-            NumberAnimation {
-                target: memPanel 
+                target: processes
                 property: "implicitWidth"
                 duration: 150
                 to: 0

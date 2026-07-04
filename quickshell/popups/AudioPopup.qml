@@ -16,6 +16,9 @@ PopupWindow {
     implicitWidth: 200
     color: "transparent"
 
+    property color mColor: "#473d3636"
+    property color sColor: "#ccfaebd7"
+
     HyprlandFocusGrab {
         active: root.isOpen
         windows: [root]
@@ -40,7 +43,7 @@ PopupWindow {
         implicitHeight: root.visible ? parent.height : 0
         implicitWidth: root.visible ? parent.width - 40 : 0
         opacity: root.visible ? 1 : 0
-        color: "#823d3636"
+        color: root.mColor
         bottomLeftRadius: 10
         bottomRightRadius: 10
 
@@ -59,7 +62,7 @@ PopupWindow {
         Rectangle {
             id: audioPopupInner
             opacity: root.visible ? 1 : 0
-            color: "#ccfaebd7" 
+            color: root.sColor 
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
             implicitHeight: root.visible ? 280 : 0
@@ -86,11 +89,10 @@ PopupWindow {
                             Audio.defaultSink.audio.volume = value
                     }
                     handle: Rectangle {
-                        id: volHandler  
                         implicitWidth: 30
                         implicitHeight: 10 
                         radius: 5
-                        color: "#ff353535"
+                        color: Qt.alpha(root.mColor, 1.0)
                         x: volControl.leftPadding + volControl.availableWidth / 2 - width / 2
                         y: volControl.topPadding + volControl.visualPosition * (volControl.availableHeight - height)
                         HoverHandler {
@@ -98,7 +100,6 @@ PopupWindow {
                         }
                     }
                     background: Rectangle {
-                        id: volBack
                         anchors {
                         horizontalCenter: parent.horizontalCenter
                         } 
@@ -106,7 +107,7 @@ PopupWindow {
                         implicitWidth: 4
                         width: implicitWidth
                         radius: 5
-                        color: "#b33d3636"
+                        color: Qt.alpha(root.mColor, 0.7)
                     }
                     Layout.rightMargin: 10
                 }
@@ -131,7 +132,7 @@ PopupWindow {
                         implicitWidth: 30
                         implicitHeight: 10
                         radius: 5
-                        color: "#ff353535"
+                        color: Qt.alpha(root.mColor, 1.0)
                         x: micControl.leftPadding + micControl.availableWidth / 2 - width / 2
                         y: micControl.topPadding + micControl.visualPosition * (micControl.availableHeight - height)
                         HoverHandler {
@@ -146,7 +147,7 @@ PopupWindow {
                         implicitWidth: 4
                         width: implicitWidth
                         radius: 5
-                        color: "#b33d3636"
+                        color: Qt.alpha(root.mColor, 0.7)
                     }
                     Layout.leftMargin: 10
                 }
@@ -184,7 +185,7 @@ PopupWindow {
 
 	    	ShapePath {
     			strokeWidth: 0
-    			fillColor: "#823d3636"
+    			fillColor: root.mColor
 
 			    startX: corner.radius
 		    	
