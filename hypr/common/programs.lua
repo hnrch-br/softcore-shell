@@ -1,4 +1,4 @@
 ----->> Programs
 terminal    = "kitty"
 fileManager = "kitty spf"
-menu        = "fuzzel"
+menu        = "qs ipc call launcher toggleVisible"
