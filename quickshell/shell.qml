@@ -7,7 +7,9 @@ import Quickshell.Io
 import qs.bar
 import qs.popups
 import qs.services
+import qs.launcher
 
 Scope {
     Bar {}
+    Wrapper {}
 }
