@@ -54,7 +54,7 @@ PanelWindow {
 
     anchors.bottom: true
 
-    implicitWidth: 600
+    implicitWidth: 640
     implicitHeight: 300
 
     color: "transparent"
@@ -62,7 +62,7 @@ PanelWindow {
     WrapperRectangle {
         id: launcherRect
 
-        implicitWidth: parent.width - 50
+        implicitWidth: parent.width - 90
         implicitHeight: parent.height
         anchors {
             bottom: parent.bottom
@@ -206,7 +206,7 @@ PanelWindow {
 		id: corner
 		preferredRendererType: Shape.CurveRenderer
 
-		property real radius: 25
+		property real radius: 45
 
 		ShapePath {
 			strokeWidth: 0
