@@ -50,8 +50,8 @@ Item {
                 anchors.centerIn: parent
                 text: Qt.formatDateTime(clock.date, "HH:mm")
     	        color: root.mTxtColor
-            	font {family: "Ndot 57"; pixelSize: 35 }
-                bottomPadding: 7
+            	font {family: "Ndot 55 Caps"; pixelSize: 40 }
+                bottomPadding: 0
             }
 
             SystemClock {
