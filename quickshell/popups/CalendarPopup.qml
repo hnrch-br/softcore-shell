@@ -89,11 +89,16 @@ PopupWindow {
                     contentItem: Text {
                         text: "arrow_back_ios_new"
                         font { family: "Material Symbols Outlined"; pointSize: 9 }
+                        opacity: 1
                         color: lastMonth.down 
                             ? root.sTxtColor
                             : root.mTxtColor
                         horizontalAlignment: Text.AlignHCenter
                         topPadding: 1
+
+                        Behavior on opacity {
+                            NumberAnimation { duration: 200 }
+                        }
                     }
 
                     background: Rectangle {
@@ -104,10 +109,17 @@ PopupWindow {
                         topLeftRadius: 8
                         bottomRightRadius: 2
                         topRightRadius: 2
+                        opacity: root.visible ? 1 : 0
                         color: lastMonth.down
                             ? root.sColor
                             : root.mColor
                         anchors.centerIn: parent
+                        Behavior on opacity {
+                            NumberAnimation { duration: 200 }
+                        }
+                        HoverHandler {
+                            cursorShape: Qt.PointingHandCursor
+                        }
                     }
                     onClicked: {
                         root.month--;
@@ -123,8 +135,13 @@ PopupWindow {
                     text: (new Date(root.year, root.month, 1)).toLocaleDateString(Qt.locale(), "MMMM, yyyy")
                     font { family: "Pixelify Sans"; pixelSize: 15 }
                     color: root.mTxtColor
+                    opacity: 1
                     Layout.preferredWidth: 120
                     horizontalAlignment: Text.AlignHCenter
+
+                    Behavior on opacity {
+                        NumberAnimation { duration: 200 }
+                    }
                 }
                 
                 Button {
@@ -132,11 +149,16 @@ PopupWindow {
                     contentItem: Text {
                         text: "arrow_forward_ios"
                         font { family: "Material Symbols Outlined"; pointSize: 9 }
+                        opacity: root.visible ? 1 : 0
                         color: nextMonth.down
                             ? root.sTxtColor 
                             : root.mTxtColor
                         horizontalAlignment: Text.AlignHCenter
                         topPadding: 1
+
+                        Behavior on opacity {
+                            NumberAnimation { duration: 200 }
+                        }
                     }
 
                     background: Rectangle {
@@ -147,10 +169,18 @@ PopupWindow {
                         topLeftRadius: 2
                         bottomRightRadius: 8
                         topRightRadius: 8
+                        opacity: root.visible ? 1 : 0
                         color: nextMonth.down
                             ? root.sColor
                             : root.mColor
                         anchors.centerIn: parent
+                        
+                        Behavior on opacity {
+                            NumberAnimation { duration: 200 }
+                        }
+                        HoverHandler {
+                            cursorShape: Qt.PointingHandCursor
+                        }
                     }
                     onClicked: {
                         root.month++;
@@ -164,9 +194,11 @@ PopupWindow {
             }
 
             DayOfWeekRow {
+                id: row
                 locale: grid.locale
                 Layout.column: 1
                 Layout.fillWidth: true
+                opacity: root.visible ? 1 : 0
                 delegate: Text {
                     text: shortName
                     font.family: "Sixtyfour"
@@ -177,6 +209,10 @@ PopupWindow {
 
                     required property string shortName
                 }
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
             }
 
             MonthGrid {
@@ -186,6 +222,7 @@ PopupWindow {
                 month: root.month
                 year: root.year
                 locale: Qt.locale()
+                opacity: root.visible ? 1 : 0
                 
                 delegate: Rectangle {
                     id: gridRect
@@ -230,9 +267,13 @@ PopupWindow {
                         font.bold: parent.isToday ? true : false
 
                         Behavior on opacity {
-                            NumberAnimation { duration: 250 }
+                            NumberAnimation { duration: 100 }
                         }
                     }
+                }
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 200 }
                 }
             }
         }
@@ -270,6 +311,40 @@ PopupWindow {
                 property: "opacity"
                 to: 0
                 duration: 100
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: grid
+                property: "opacity"
+                duration: 100
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: row
+                property: "opacity"
+                duration: 100
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: leftBtnRect
+                property: "opacity"
+                duration: 200
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: rightBtnRect
+                property: "opacity"
+                duration: 200
+                to: 0
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: monthId
+                property: "opacity"
+                duration: 200
                 easing.type: Easing.OutQuad
             }
         }

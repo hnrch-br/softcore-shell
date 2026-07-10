@@ -5,7 +5,7 @@ import Quickshell.Io
 QtObject {
     id: funcs
 
-    required property var root
+    required property var wrapper 
 
     property var recentApps: []
 

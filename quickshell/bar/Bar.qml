@@ -36,7 +36,10 @@ Scope {
 			implicitWidth: leftRow.implicitWidth + 25
 			color: root.mColor
             bottomRightRadius: 10
-			anchors {
+            
+            
+
+            anchors {
 				top: parent.top
 				left: parent.left
 			}
@@ -49,7 +52,7 @@ Scope {
 				id: leftTopCorner
 				x: 0
 				y: 35
-			}
+			} 
 
 			Row {
                 id: leftRow

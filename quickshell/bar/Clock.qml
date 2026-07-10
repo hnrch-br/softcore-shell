@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import Quickshell
 import QtQuick
 import Quickshell.Wayland
@@ -10,10 +12,14 @@ import qs.services
 Item {
     id: root
     anchors.horizontalCenter: parent.horizontalCenter
-    implicitHeight: childrenRect.height
+    implicitHeight: 48
     implicitWidth: childrenRect.width
-    
-    Row { 
+
+    property color mColor: "#473d3636"
+    property color sColor: "#ccfaebd7"
+    property color mTxtColor: "#ff3d3636"
+
+    Row {
         id: clockRow
         anchors.horizontalCenter: parent.horizontalCenter
         opacity: calendarPopup.visible ? 0 : 1
@@ -26,23 +32,24 @@ Item {
             id: leftCorner
             x: -radius
             rotation: 90
-        }    
+        } 
+
         Rectangle {
             id: clockRect
             implicitWidth: 140
             implicitHeight: 45
             bottomLeftRadius: 15
             bottomRightRadius: 15
-            color: "#ccfaebd7"
+            color: root.sColor 
 
             Behavior on implicitHeight {
                 NumberAnimation { duration: 250 }
-            }
-    
+            } 
+
             Text {
                 anchors.centerIn: parent
                 text: Qt.formatDateTime(clock.date, "HH:mm")
-    	        color: "#ff3d3636"
+    	        color: root.mTxtColor
             	font {family: "Ndot 57"; pixelSize: 35 }
                 bottomPadding: 7
             }
@@ -83,7 +90,7 @@ Item {
 
 		ShapePath {
 			strokeWidth: 0
-			fillColor: "#ccfaebd7"
+			fillColor: root.sColor
 
 			startX: corner.radius
 			
@@ -103,5 +110,5 @@ Item {
 				relativeY: 0
 			}
 		}
-	}
+    } 
 }

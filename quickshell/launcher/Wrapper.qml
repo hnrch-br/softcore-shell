@@ -22,24 +22,25 @@ PanelWindow {
 
     property bool isOpen: false
 
-    visible: isOpen
+    visible: isOpen ? true : false
 
     IpcHandler {
         target: "launcher"
 
-        function toggleVisible(): void {
+        function toggleAppVisible(): void {
             root.isOpen = !root.isOpen;
             if (root.isOpen) {
                 searchField.forceActiveFocus()
-                searchField.text = ""
-                resultList.currentIndex = 0
+                searchField.text = "" 
                 searchField.forceActiveFocus()
+                appResultList.currentIndex = 0
+                appResultList.visible = true
             }
         }
     }
 
-    property var funcs: Func {
-        root: root
+    property var funcs: SearchFunc {
+        wrapper: root
     }
 
     property var filteredApps: funcs.computeFilteredApps(
@@ -109,23 +110,24 @@ PanelWindow {
                         Layout.fillHeight: true
                         placeholderText: "..."
                         background: null
-                        font { family: "Sixtyfour"; pixelSize: 11 }
+                        font { family: "Sixtyfour"; pixelSize: 15 }
                         color: Qt.alpha(root.mTxtColor, 0.8)
 
-                        Keys.onDownPressed: resultList.incrementCurrentIndex()
-                        Keys.onUpPressed: resultList.decrementCurrentIndex()
+                        Keys.onDownPressed: appResultList.incrementCurrentIndex()
+                        Keys.onUpPressed: appResultList.decrementCurrentIndex()
                         Keys.onReturnPressed: (event) => {
-                            funcs.launchCurrent(filteredApps[resultList.currentIndex])
+                            funcs.launchCurrent(filteredApps[appResultList.currentIndex])
                             event.accepted = true
                         }
                         Keys.onEscapePressed: root.isOpen = false
 
-                        onTextChanged: resultList.currentIndex = 0
+                        onTextChanged: appResultList.currentIndex = 0
                     }
                 }
             }
+
             Rectangle {
-                id: appList
+                id: wrapperList
                 Layout.fillHeight: true
                 Layout.topMargin: 14
                 Layout.bottomMargin: 9
@@ -135,7 +137,7 @@ PanelWindow {
                 radius: 10
 
                 ListView {
-                    id: resultList
+                    id: appResultList
                     anchors.fill: parent
                     anchors.margins: 5
                     currentIndex: 0

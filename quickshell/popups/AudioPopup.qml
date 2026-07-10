@@ -68,6 +68,43 @@ PopupWindow {
             implicitHeight: root.visible ? 280 : 0
             implicitWidth: root.visible ? 140 : 0
             radius: 5
+            
+            RowLayout {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                anchors.centerIn: parent
+                spacing: 80
+                ColumnLayout {
+                    Layout.fillHeight: true
+                    spacing: 22
+                    Repeater {
+                        model: 9
+                        delegate: Rectangle {
+                            anchors.left: parent.left
+                            required property int index
+                            implicitWidth: (index%2 === 0) ? 18 : 8
+                            implicitHeight: 2
+                            radius: 1
+                            color: Qt.alpha(root.mColor, 0.7)
+                        }
+                    }
+                } 
+                ColumnLayout {
+                    Layout.fillHeight: true
+                    spacing: 22
+                    Repeater {
+                        model: 9
+                        delegate: Rectangle {
+                            anchors.right: parent.right
+                            required property int index
+                            implicitWidth: (index%2 === 0) ? 18 : 8
+                            implicitHeight: 2
+                            radius: 1
+                            color: Qt.alpha(root.mColor, 0.7)
+                        }
+                    }
+                }
+            }
 
             RowLayout {
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -91,7 +128,7 @@ PopupWindow {
                     handle: Rectangle {
                         implicitWidth: 30
                         implicitHeight: 10 
-                        radius: 5
+                        radius: 3
                         color: Qt.alpha(root.mColor, 1.0)
                         x: volControl.leftPadding + volControl.availableWidth / 2 - width / 2
                         y: volControl.topPadding + volControl.visualPosition * (volControl.availableHeight - height)
@@ -131,7 +168,7 @@ PopupWindow {
                     handle: Rectangle {
                         implicitWidth: 30
                         implicitHeight: 10
-                        radius: 5
+                        radius: 3
                         color: Qt.alpha(root.mColor, 1.0)
                         x: micControl.leftPadding + micControl.availableWidth / 2 - width / 2
                         y: micControl.topPadding + micControl.visualPosition * (micControl.availableHeight - height)

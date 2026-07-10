@@ -14,26 +14,7 @@ Item {
     id: root
     
     implicitWidth: childrenRect.width
-    implicitHeight: childrenRect.height
-
-    SysPopup {
-        id: sysPopup
-        anchor {
-            item: root
-            edges: Edges.Top
-            adjustment: PopupAdjustment.None
-            margins.left: -sysPopup.implicitWidth
-            margins.top: 27
-        }
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        cursorShape: Qt.PointingHandCursor
-        onClicked: {
-            sysPopup.isOpen = !sysPopup.isOpen
-        }
-    }
+    implicitHeight: childrenRect.height 
 
     RowLayout {
         spacing: 2
