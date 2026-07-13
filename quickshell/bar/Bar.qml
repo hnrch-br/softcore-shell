@@ -36,8 +36,6 @@ Scope {
 			implicitWidth: leftRow.implicitWidth + 25
 			color: root.mColor
             bottomRightRadius: 10
-            
-            
 
             anchors {
 				top: parent.top
@@ -56,31 +54,17 @@ Scope {
 
 			Row {
                 id: leftRow
-                spacing: 10
+                spacing: 5
                 leftPadding: 18
                 anchors.left: parent.left
                 anchors.leftMargin: 15
                 anchors.verticalCenter: parent.verticalCenter
-                Workspaces { id: workSpaces }
+                Workspaces {}
                 RowLayout {
                     spacing: 2
                     anchors.verticalCenter: parent.verticalCenter
-                    MediaPlayer { id: mediaPlayer }
-                    Cava { id: cava }
-                }
-            }
-            ParallelAnimation{
-                NumberAnimation { 
-                    target: topLeft
-                    property: "implicitWidth"
-                    duration: 100
-                    easing.type: Easing.OutQuad
-                }
-                NumberAnimation {
-                    target: { mediaPlayer; cava }
-                    property: "x"
-                    duration: 100
-                    easing.type: Easing.OutQuad
+                    MediaPlayer {}
+                    Cava {}
                 }
             }
         }

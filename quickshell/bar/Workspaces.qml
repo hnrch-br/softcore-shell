@@ -7,12 +7,12 @@ import QtQuick.Layouts
 RowLayout {
     anchors.verticalCenter: parent.verticalCenter
     spacing: 6
-    Layout.rightMargin: 2
     Repeater {
         model: Hyprland.workspaces.values.filter(w => w.id > 0)
-        Rectangle {
+        delegate: Rectangle {
             id: wsRect
             required property var modelData
+            readonly property var index: modelData + 1
             property bool isActive: Hyprland.focusedWorkspace?.id === modelData.id
             
             radius: 5
@@ -40,9 +40,7 @@ RowLayout {
 
             Text {
                 id: wsNum
-                anchors {
-                    centerIn: parent
-                }
+                anchors.centerIn: parent
                 leftPadding: 2.3
                 text: wsRect.modelData.id
                 color: wsRect.isActive ? "#ff3d3636" : "#fffaebd7"
