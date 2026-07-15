@@ -33,7 +33,7 @@ Scope {
 		Rectangle {
 			id: topLeft
 			implicitHeight: 35
-			implicitWidth: leftRow.implicitWidth + 25
+			implicitWidth: leftRow.implicitWidth + 38
 			color: root.mColor
             bottomRightRadius: 10
 
@@ -52,17 +52,16 @@ Scope {
 				y: 35
 			} 
 
-			Row {
+			RowLayout {
                 id: leftRow
                 spacing: 5
-                leftPadding: 18
                 anchors.left: parent.left
-                anchors.leftMargin: 15
+                anchors.leftMargin: 30
                 anchors.verticalCenter: parent.verticalCenter
                 Workspaces {}
                 RowLayout {
                     spacing: 2
-                    anchors.verticalCenter: parent.verticalCenter
+                    Layout.alignment: Qt.AlignVCenter
                     MediaPlayer {}
                     Cava {}
                 }
@@ -74,7 +73,7 @@ Scope {
         Rectangle {
 			id: topRight
 			implicitHeight: 35
-			implicitWidth: rightRow.width + 25
+			implicitWidth: rightRow.width + 38
             color: root.mColor
 			bottomLeftRadius: 10
 			anchors {
@@ -92,11 +91,10 @@ Scope {
 				y: 35
 				rotation: 90
 			}
-			Row {
+			RowLayout {
                 id: rightRow
-                rightPadding: 18
                 anchors.right: parent.right
-                anchors.rightMargin: 15
+                anchors.rightMargin: 30
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 2
                 WtWidget {}

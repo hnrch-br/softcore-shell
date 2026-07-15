@@ -111,7 +111,7 @@ PopupWindow {
                         topRightRadius: 2
                         opacity: root.visible ? 1 : 0
                         color: lastMonth.down
-                            ? root.sColor
+                            ? Qt.tint(Qt.alpha(root.mColor, 1.0), "#cced752b")
                             : root.mColor
                         anchors.centerIn: parent
                         Behavior on opacity {
@@ -171,7 +171,7 @@ PopupWindow {
                         topRightRadius: 8
                         opacity: root.visible ? 1 : 0
                         color: nextMonth.down
-                            ? root.sColor
+                            ? Qt.tint(Qt.alpha(root.mColor, 1.0), "#cced752b")
                             : root.mColor
                         anchors.centerIn: parent
                         
@@ -198,6 +198,7 @@ PopupWindow {
                 locale: grid.locale
                 Layout.column: 1
                 Layout.fillWidth: true
+                leftPadding: 2.1
                 opacity: root.visible ? 1 : 0
                 delegate: Text {
                     text: shortName
@@ -205,7 +206,6 @@ PopupWindow {
                     font.pixelSize: 7
                     color: Qt.tint(root.sColor, "#54ed752b")
                     horizontalAlignment: Text.AlignHCenter
-                    leftPadding: 5
 
                     required property string shortName
                 }
@@ -265,6 +265,7 @@ PopupWindow {
                             ? Qt.darker(root.mTxtColor, 0.65)
                             : Qt.darker(root.mTxtColor, 0.4)
                         font.bold: parent.isToday ? true : false
+                        leftPadding: 3.1
 
                         Behavior on opacity {
                             NumberAnimation { duration: 100 }

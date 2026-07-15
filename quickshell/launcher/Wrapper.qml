@@ -184,6 +184,8 @@ PanelWindow {
             implicitWidth: parent.width - 20
             implicitHeight: parent.height - 75
             
+            clip: true
+
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom

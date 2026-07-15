@@ -13,7 +13,7 @@ Item {
     id: root
     anchors.horizontalCenter: parent.horizontalCenter
     implicitHeight: 48
-    implicitWidth: childrenRect.width
+    implicitWidth: clockRow.implicitWidth
 
     property color mColor: "#473d3636"
     property color sColor: "#ccfaebd7"
@@ -28,23 +28,25 @@ Item {
             NumberAnimation { duration: 100 }
         }
 
-        Corner {
-            id: leftCorner
-            x: -radius
-            rotation: 90
-        } 
-
         Rectangle {
             id: clockRect
-            implicitWidth: 140
-            implicitHeight: 45
-            bottomLeftRadius: 15
-            bottomRightRadius: 15
+            implicitWidth: 115
+            implicitHeight: 45 
             color: root.sColor 
 
             Behavior on implicitHeight {
                 NumberAnimation { duration: 250 }
-            } 
+            }
+
+            CornerLeft {
+                anchors.top: parent.top
+                x: -(3 / 2) * radius
+            }
+
+            CornerRight {
+                anchors.top: parent.top
+                x: clockRect.implicitWidth
+            }
 
             Text {
                 anchors.centerIn: parent
@@ -58,10 +60,6 @@ Item {
             	id: clock
             	precision: SystemClock.Minutes
             }
-        }
-        Corner {
-            id: rightCorner
-            x: radius + clockRect.implicitWidth
         }
     }
 
@@ -82,33 +80,76 @@ Item {
         onClicked: calendarPopup.isOpen = !calendarPopup.isOpen
     }
 
-    component Corner: Shape {
-        id: corner
+    component CornerLeft: Shape {
+        id: cornerL
 		preferredRendererType: Shape.CurveRenderer
 
-		property real radius: 30
+        property real radius: 30
 
 		ShapePath {
 			strokeWidth: 0
 			fillColor: root.sColor
 
-			startX: corner.radius
-			
-			PathArc {
-				relativeX: -corner.radius
-				relativeY: corner.radius
-				radiusX: corner.radius
-				radiusY: corner.radius
-				direction: PathArc.Counterclockwise
-			}
-			PathLine {
-				relativeX: 0
-				relativeY: -corner.radius
-			}
-			PathLine {
-				relativeX: corner.radius
-				relativeY: 0
-			}
-		}
-    } 
+            startX: 0
+
+            PathArc {
+                relativeX: cornerL.radius
+                relativeY: cornerL.radius
+                radiusX: cornerL.radius
+                radiusY: cornerL.radius
+            }
+
+            PathArc {
+                relativeX: cornerL.radius / 2
+                relativeY: cornerL.radius / 2
+                radiusX: cornerL.radius / 2
+                radiusY: cornerL.radius / 2
+                direction: PathArc.Counterclockwise
+            }
+
+            PathLine {
+                relativeX: 0
+                relativeY: -(3 / 2) * cornerL.radius
+            }
+            PathLine {
+                relativeY: 0
+                relativeX: -(3 / 2) * cornerL.radius
+            }
+        }
+    }
+    component CornerRight: Shape {
+        id: cornerR
+        preferredRendererType: Shape.CurveRenderer
+
+        property real radius: 30
+
+        ShapePath {
+            strokeWidth: 0
+            fillColor: root.sColor
+
+            startX: (3 / 2) * cornerR.radius
+            PathArc {
+                relativeX: -cornerR.radius
+                relativeY: cornerR.radius
+                radiusX: cornerR.radius
+                radiusY: cornerR.radius
+                direction: PathArc.Counterclockwise
+            }
+            PathArc {
+                relativeX: -cornerR.radius / 2
+                relativeY: cornerR.radius / 2
+                radiusX: cornerR.radius / 2
+                radiusY: cornerR.radius / 2
+            }
+
+            PathLine {
+                relativeX: 0
+                relativeY: -(3 / 2) * cornerR.radius
+            }
+            PathLine {
+                relativeY: 0
+                relativeX: (3 / 2) * cornerR.radius
+            }
+        }
+    }
 }
