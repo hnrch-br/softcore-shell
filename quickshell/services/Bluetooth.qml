@@ -39,12 +39,5 @@ Singleton {
         return "bluetooth";
         if (activeDevice)
         return "bluetooth_connected";
-    }
-
-    readonly property string scanningIcon: {
-        if (defaultAdapter.discovering)
-        return "search";
-        if (!defaultAdapter.discovering)
-        return "search_off"
-    }
+    } 
 }

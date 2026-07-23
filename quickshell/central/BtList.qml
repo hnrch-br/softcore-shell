@@ -88,7 +88,7 @@ ColumnLayout {
                 anchors.right: parent.right
                 spacing: 0
                 Text {
-                    text: Bluetooth.scanningIcon
+                    text: "search"
                     font {
                         family: "Material Symbols Outlined"
                         pointSize: 14
@@ -127,8 +127,21 @@ ColumnLayout {
                 : Qt.alpha(root.mColor, 0.8)
             
             RowLayout {
-                anchors.centerIn: parent
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                anchors.right: parent.right
                 spacing: 0
+                Text {
+                    text: "explore"
+                    font {
+                        family: "Material Symbols Outlined"
+                        pointSize: 14
+                    }
+                    color: scanningMA.containsMouse
+                        ? Qt.alpha(root.mColor, 1.0)
+                        : Qt.alpha(root.sColor, 0.8)
+                }
                 Text {
                     text: Bluetooth.discoverStatus
                     font {
