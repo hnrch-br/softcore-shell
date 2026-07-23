@@ -5,7 +5,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 import qs.bar
-import qs.popups
 import qs.services
 
 Scope {
@@ -98,8 +97,8 @@ Scope {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 2
                 WtWidget {}
-                AudioStatus {}
                 SysStats {}
+                CentralButton {}
             }
             Behavior on implicitWidth {
                 NumberAnimation { duration: 100 }

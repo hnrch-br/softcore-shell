@@ -6,7 +6,7 @@ import Quickshell.Wayland
 import Quickshell.Hyprland
 import QtQuick.Shapes
 
-import qs.popups
+import qs.calendar
 import qs.services
 
 Item {
@@ -28,6 +28,8 @@ Item {
             NumberAnimation { duration: 100 }
         }
 
+        CornerLeft { anchors.top: parent.top} 
+
         Rectangle {
             id: clockRect
             implicitWidth: 115
@@ -36,17 +38,7 @@ Item {
 
             Behavior on implicitHeight {
                 NumberAnimation { duration: 250 }
-            }
-
-            CornerLeft {
-                anchors.top: parent.top
-                x: -(3 / 2) * radius
-            }
-
-            CornerRight {
-                anchors.top: parent.top
-                x: clockRect.implicitWidth
-            }
+            } 
 
             Text {
                 anchors.centerIn: parent
@@ -61,6 +53,8 @@ Item {
             	precision: SystemClock.Minutes
             }
         }
+
+        CornerRight { anchors.top: parent.top }
     }
 
     CalendarPopup{ 

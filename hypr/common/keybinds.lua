@@ -5,9 +5,12 @@ require("common.autostart")
 ----->> Keybinds
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
+-- Reload config
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
+
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
-local closeWindowBind = hl.bind(mainMod .. " + Backspace", hl.dsp.window.close())
+hl.bind(mainMod .. " + Backspace", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + Space", hl.dsp.window.float({ action = "toggle" }))
@@ -28,13 +31,13 @@ hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right"}
 hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up"}))
 hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.move({ direction = "down"}))
 
--- Switch between 5 workspaces [1 - 5]
+-- Switch between 10 workspaces [1 - 10]
 for i = 1, 10 do
     hl.bind(mainMod .. " + " .. (i % 10),             hl.dsp.focus({ workspace = i}))
     hl.bind(mainMod .. " + SHIFT + " .. (i % 10),     hl.dsp.window.move({ workspace = i }))
 end
 
--- Example special workspace (scratchpad)
+-- Special workspace (scratchpad)
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
@@ -66,12 +69,6 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = tr
 -- Grimblast
 hl.bind( mainMod .. " + Print", hl.dsp.exec_cmd("grimblast --notify --freeze save output ~/Pictures/Screenshots/screenshot-$(date +%F-%T).png") )
 hl.bind( "Print", hl.dsp.exec_cmd("grimblast --notify --freeze copysave area ~/Pictures/Screenshots/screenshot-$(date +%F-%T).png") )
-
--- Cliphist
-hl.bind( mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | fuzzel --dmenu --with-nth 2 | cliphist decode | wl-copy") )
-
--- Power Menu
-hl.bind( mainMod .. " + Delete", hl.dsp.exec_cmd(".local/bin/powermenu.sh") )
 
 -- Hyprpicker
 hl.bind( mainMod .. " + SHIFT + INSERT", hl.dsp.exec_cmd("hyprpicker -n -a -l") )

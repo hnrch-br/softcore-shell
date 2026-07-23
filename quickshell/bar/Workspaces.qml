@@ -40,21 +40,21 @@ Item {
                 Behavior on implicitWidth {
                     NumberAnimation {
                         duration: 50
-                        easing.type: Easing.InQuart
+                        easing.type: Easing.OutQuad
                     }
                 }
 
                 Behavior on implicitHeight {
                     NumberAnimation {
                         duration: 50
-                        easing.type: Easing.InQuart
+                        easing.type: Easing.OutQuad
                     }
                 }
 
                 Behavior on color {
                     ColorAnimation { 
                         duration: 200;
-                        easing.type: Easing.InQuart
+                        easing.type: Easing.OutQuad
                     }
                 }
 

@@ -5,12 +5,12 @@ import Quickshell.Hyprland
 import Quickshell.Io
 
 import qs.bar
-import qs.popups
 import qs.services
 import qs.launcher
+import qs.central
 
 Scope {
     Bar {}
-    PowerPopup {}
     Wrapper {}
+    CentralPopup {}
 }

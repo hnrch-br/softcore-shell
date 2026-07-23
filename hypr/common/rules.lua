@@ -53,10 +53,7 @@ hl.window_rule({
 -----------------------
 
 -- Special
-hl.workspace_rule({
-    workspace = "special:magic",
-    on_created_empty = "kitty",
-})
+hl.workspace_rule({ workspace = "special:magic", on_created_empty = "kitty"})
 
 -------------------
 --> LAYER RULES <--
@@ -73,7 +70,7 @@ hl.layer_rule({
 hl.layer_rule({
 	name = "notif-anim",
 	match = { namespace = "notifications" },
-	animation = "slide right",
+	animation = "slide",
 })
 
 hl.layer_rule({
@@ -87,4 +84,11 @@ hl.layer_rule({
 	name = "launcher-anim",
 	match = { namespace = "launcher" },
 	animation = "slide bottom",
+})
+
+-- Power Popup Animation
+hl.layer_rule({
+    name = "pp-anim",
+    match = { namespace = "powerpopup" },
+    animation = "fade",
 })

@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import Quickshell
 import QtQuick
 import Quickshell.Io
@@ -8,7 +10,6 @@ import QtQuick.Shapes
 import QtQuick.Controls
 
 import qs.services
-import qs.popups
 
 Item {
     id: root
@@ -16,105 +17,127 @@ Item {
     implicitWidth: childrenRect.width
     implicitHeight: childrenRect.height 
 
+    readonly property color mColor: "#ccfaebd7"
+    readonly property color sColor: "#423d3636"
+
+    readonly property int barWidth: 2
+    readonly property int barSpacing: 1
+    readonly property int barHeight: 18
+
+    readonly property int rectsWidth: 68
+    readonly property int availableWidth: rectsWidth - (2 * barSpacing)
+    readonly property int maxBars: Math.floor((availableWidth + barSpacing) / (barWidth + barSpacing))
+
     RowLayout {
         spacing: 2
         Rectangle {
-            implicitWidth: 68
+            id: cpuRect
+            implicitWidth: root.rectsWidth
             implicitHeight: 20
-            color: "#ccfaebd7"
+            color: root.mColor
             radius: 2
-            Behavior on implicitWidth {
-                NumberAnimation {
-                    duration: 250
-                    easing.type: Easing.InQuad
-                }
-            }
+            clip: true 
             RowLayout {
                 id: cpuRow
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                Text { 
-                    id: textCPU
-                    text: System.cpuUsage + "%"
-                    color: "#ff3d3636"
-                    font { family: "Sixtyfour"; pixelSize: 10 }
-                }
                 Text {
                     id: iconCPU
         	    	text: ""
-                    color: "#ff3d3636"
+                    color: Qt.alpha(root.sColor, 1.0)
                     font.pointSize: 17.4
                     bottomPadding: 3
                     font.family: "JetBrainsMono Nerd Font Mono"
     		    }
-    	    }
+            }
+            RowLayout {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 1
+                spacing: root.barSpacing
+                Repeater {
+                    model: Math.round((System.cpuUsage / 100) * root.maxBars)
+                    delegate: Rectangle {
+                        radius: 1
+                        implicitWidth: root.barWidth
+                        implicitHeight: root.barHeight
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: Qt.tint(Qt.alpha(root.sColor, 0.8), "#a67b5b")
+                    }
+                }
+            }
         }
 
         Rectangle {
-            implicitWidth: 68
+            implicitWidth: root.rectsWidth
             implicitHeight: 20
-            color: "#ccfaebd7"
+            color: root.mColor
             radius: 2
-            Behavior on implicitWidth {
-                NumberAnimation {
-                    duration: 250
-                    easing.type: Easing.InOut
-                }
-            }
+            clip: true
             RowLayout {
                 id: gpuRow
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                Text {
-                    id: textGPU
-                    text: System.gpuUsage + "%"
-                    color: "#ff3d3636"
-                    font { family: "Sixtyfour"; pixelSize: 10 }
-                }
+                anchors.verticalCenter: parent.verticalCenter 
                 Text {
                     id: iconGPU
                     text: "󰢮"
-                    color: "#ff3d3636"
-                    renderType: Text.NativeRendering
+                    color: Qt.alpha(root.sColor, 1.0)
                     font.pointSize: 18
-                    bottomPadding: 3.5
+                    bottomPadding: 3
                     font.family: "JetBrainsMono Nerd Font Mono"
+                }
+            }
+            RowLayout {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 1
+                spacing: root.barSpacing
+                Repeater {
+                    model: Math.round((System.gpuUsage / 100) * root.maxBars)
+                    delegate: Rectangle {
+                        radius: 1
+                        implicitWidth: root.barWidth
+                        implicitHeight: root.barHeight
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: Qt.tint(Qt.alpha(root.sColor, 0.8), "#a67b5b")
+                    }
                 }
             }
         }
 
         Rectangle {
-            implicitWidth: 68
+            implicitWidth: root.rectsWidth
             implicitHeight: 20
-            color: "#ccfaebd7"
-            topLeftRadius: 2
-            bottomLeftRadius: 2
-            bottomRightRadius: 25
-            topRightRadius: 25
-            Behavior on implicitWidth {
-                NumberAnimation {
-                    duration: 250
-                    easing.type: Easing.InQuad
-                }
-            }
+            color: root.mColor
+            radius: 2
+            clip: true
             RowLayout {
                 id: ramRow
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 Text {
-                    id: textMEM
-                    text: System.memUsage + "%"
-                    color: "#ff3d3636"
-                    font { family: "Sixtyfour"; pixelSize: 10 }
-                }
-                Text {
                     id: iconMEM
                     text: ""
-                    color: "#ff3d3636"
-                    renderType: Text.NativeRendering
+                    color: Qt.alpha(root.sColor, 1.0)
                     font.pointSize: 16
-                    bottomPadding: 2
+                    bottomPadding: 1.8
                     font.family: "JetBrainsMono Nerd Font Mono"
+                }
+            }
+            RowLayout {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 1
+                spacing: root.barSpacing
+                Repeater {
+                    model: Math.round((System.memUsage / 100) * root.maxBars)
+                    delegate: Rectangle {
+                        radius: 1
+                        implicitWidth: root.barWidth
+                        implicitHeight: root.barHeight
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: Qt.tint(Qt.alpha(root.sColor, 0.8), "#a67b5b")
+                    }
                 }
             }
         }

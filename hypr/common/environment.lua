@@ -1,6 +1,7 @@
 ----->> Environment Variables
-hl.env("XCURSOR_SIZE", "24")
-hl.env("HYPRCURSOR_SIZE", "24")
+hl.env("XCURSOR_SIZE", "28")
+hl.env("XCURSOR_THEME", "clay-dark")
+hl.env("HYPRCURSOR_SIZE", "28")
 hl.env("HYPRCURSOR_THEME", "clay-dark")
 hl.env("GTK_THEME", "Gruvbox-B-MB-Dark-Medium")
 hl.env("GTK_APPLICATION_PREFER_DARK_THEME", "1")

@@ -1,6 +1,6 @@
 --Splitting
 require("common.beviercurves")
-require("common.looks")
+require("common.general")
 require("common.keyboard")
 require("common.outputs")
 require("common.programs")

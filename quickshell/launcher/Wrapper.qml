@@ -10,7 +10,7 @@ import QtQuick.Controls
 import QtQuick.Shapes
 import QtQuick.Effects
 
-import "./scripts/fuzzy.js" as Fuzzy
+import "root:/services/scripts/fuzzy.js" as Fuzzy
 
 PanelWindow {
     id: root
@@ -48,7 +48,7 @@ PanelWindow {
         list.positionViewAtIndex(selectedIndex, ListView.Contain);
     }
 
-    readonly property var allEntries: {
+    readonly property var appEntries: {
         var src = DesktopEntries.applications.values;
         var out = [];
         for (var i = 0; i < src.length; i++)
@@ -97,17 +97,15 @@ PanelWindow {
 
     property string query: ""
     property var usage: ({})
-    readonly property int totalCount: allEntries.length
-    readonly property var results: Fuzzy.rank(allEntries, query, usage)
+    readonly property var results: Fuzzy.rank(appEntries, query, usage)
     property bool isOpen: false
     property color mColor: "#423d3636"
     property color sColor: "#ccfaebd7"
 
     property var entries: results
-    property int total: 0
     property int selectedIndex: 0
 
-    visible: isOpen
+    visible: root.isOpen
 
     Rectangle {
         id: wrapper
@@ -211,10 +209,22 @@ PanelWindow {
                     property bool isSelected: index === root.selectedIndex
                     
                     anchors.horizontalCenter: parent.horizontalCenter
-                    implicitWidth: list.width
-                    implicitHeight: 42
+                    implicitWidth: (isSelected || listRowMA.containsMouse) ? list.width : list.width - 20
+                    implicitHeight: (isSelected || listRowMA.containsMouse) ? 46 : 42
                     radius: 10
                     color: (isSelected || listRowMA.containsMouse) ? Qt.tint(root.sColor, "#cced752b") : "transparent"
+
+                    Behavior on implicitHeight {
+                        NumberAnimation { duration: 200; easing.type: Easing.OutQuad }
+                    }
+
+                    Behavior on implicitWidth {
+                        NumberAnimation { duration: 200; easing.type: Easing.OutQuad }
+                    }
+
+                    Behavior on color {
+                        ColorAnimation { duration: 140; easing.type: Easing.OutQuad }
+                    }
 
                     RowLayout {
                         anchors.fill: parent
