@@ -61,7 +61,7 @@ Item {
                         radius: 1
                         implicitWidth: root.barWidth
                         implicitHeight: root.barHeight
-                        anchors.verticalCenter: parent.verticalCenter
+                        Layout.alignment: Qt.AlignVCenter
                         color: Qt.tint(Qt.alpha(root.sColor, 0.8), "#a67b5b")
                     }
                 }
@@ -98,7 +98,7 @@ Item {
                         radius: 1
                         implicitWidth: root.barWidth
                         implicitHeight: root.barHeight
-                        anchors.verticalCenter: parent.verticalCenter
+                        Layout.alignment: Qt.AlignVCenter
                         color: Qt.tint(Qt.alpha(root.sColor, 0.8), "#a67b5b")
                     }
                 }
@@ -135,7 +135,7 @@ Item {
                         radius: 1
                         implicitWidth: root.barWidth
                         implicitHeight: root.barHeight
-                        anchors.verticalCenter: parent.verticalCenter
+                        Layout.alignment: Qt.AlignVCenter
                         color: Qt.tint(Qt.alpha(root.sColor, 0.8), "#a67b5b")
                     }
                 }

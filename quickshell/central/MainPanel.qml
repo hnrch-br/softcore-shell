@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
@@ -11,7 +13,7 @@ ColumnLayout {
     spacing: 20
     Layout.fillWidth: true
     Layout.fillHeight: true
-    anchors.horizontalCenter: parent.horizontalCenter  
+    anchors.horizontalCenter: parent.horizontalCenter
 
     GridLayout {
         id: setGrid
@@ -29,16 +31,39 @@ ColumnLayout {
     }
             
     ColumnLayout {
+        id: sliderColumn
+
+        property int barCount: 11
+        property real minHeight: 4
+        property real maxHeight: 14
+
         Layout.alignment: Qt.AlignHCenter
         Layout.fillWidth: true
         Layout.fillHeight: true
         Rectangle {
             implicitWidth: 275
             implicitHeight: 80
-            color: Qt.alpha(root.mColor, 0.4)
-            radius: 10
+            color: "transparent"
+            radius: 10 
+
+            RowLayout {
+                spacing: 23.5
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                Repeater {
+                    model: sliderColumn.barCount
+                    delegate: Rectangle {
+                        anchors.top: parent.top
+                        required property int index
+                        implicitWidth: 2
+                        implicitHeight: (index%2 === 0) ? sliderColumn.maxHeight : sliderColumn.minHeight
+                        radius: 1
+                        color: root.sColor
+                    }
+                }
+            }
                     
-            AudioSliders {
+            AudioSlider {
                 value: Audio.sinkVolume
                 onMoved: Audio.setSinkVolume(value)
             }
@@ -46,20 +71,32 @@ ColumnLayout {
         Rectangle {
             implicitWidth: 275
             implicitHeight: 80
-            color: Qt.alpha(root.mColor, 0.4)
+            color: "transparent"
             radius: 10
-                    
-            AudioSliders {
+
+            RowLayout {
+                spacing: 23.5
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                Repeater {
+                    model: sliderColumn.barCount
+                    delegate: Rectangle {
+                        anchors.bottom: parent.bottom
+                        required property int index
+                        implicitWidth: 2
+                        implicitHeight: (index%2 === 0) ? sliderColumn.maxHeight : sliderColumn.minHeight
+                        radius: 1
+                        color: root.sColor
+                    }
+                }
+            }
+
+            AudioSlider {
                 value: Audio.sourceVolume
                 onMoved: Audio.setSourceVolume(value)
             }
         }
     }
 
-    Rectangle {
-        implicitWidth: 275
-        implicitHeight: 140
-        radius: 10
-        color: root.mColor 
-    }
+    NotificationArea {}
 }

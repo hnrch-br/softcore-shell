@@ -16,7 +16,7 @@ Item {
     implicitWidth: clockRow.implicitWidth
 
     property color mColor: "#473d3636"
-    property color sColor: "#ccfaebd7"
+    property color sColor: "#d6c5b2"
     property color mTxtColor: "#ff3d3636"
 
     Row {

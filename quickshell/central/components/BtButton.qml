@@ -10,10 +10,10 @@ Rectangle {
     implicitWidth: setGrid.rectWidth
     implicitHeight: setGrid.rectHeight
     radius: 5
-    color: (Bluetooth.enabled || Bluetooth.activeDevice)
-        ? Qt.tint(Qt.alpha(root.sColor, 0.6), "#a67b5b")
-        : btMA.containsMouse 
-        ? Qt.tint(Qt.alpha(root.sColor, 1.0), "#cced752b") 
+    color: btMA.containsMouse
+        ? Qt.tint(Qt.alpha(root.sColor, 1.0), "#cced752b")
+        : (Bluetooth.enabled || Bluetooth.activeDevice) 
+        ? Qt.tint(Qt.alpha(root.sColor, 0.8), "#af895f")
         : Qt.alpha(root.mColor, 0.6)
     border.width: 1
     border.color: btMA.containsMouse 

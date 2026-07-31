@@ -49,7 +49,13 @@ hl.config({
 
     xwayland = {
         force_zero_scaling = true
-    }
+    },
+
+    misc = {
+        force_default_wallpaper = 0,
+        disable_hyprland_logo   = true,
+        initial_workspace_tracking = 0,
+    },
 })
 
 hl.config({
@@ -77,14 +83,5 @@ hl.config({
         focus_fit_method = 1,
         follow_focus = true,
         direction = "right"
-    },
-})
-
---Wallpaper
-hl.config({
-    misc = {
-        force_default_wallpaper = 0,    -- Set to 0 or 1 to disable the anime mascot wallpapers
-        disable_hyprland_logo   = true, -- If true disables the random hyprland logo / anime girl background. :(
-        initial_workspace_tracking = 0,
     },
 })

@@ -32,7 +32,9 @@ ColumnLayout {
             implicitWidth: 89
             implicitHeight: 48
             radius: 5
-            color: statusMA.containsMouse 
+            color: Bluetooth.enabled 
+                ? Qt.tint(Qt.alpha(root.sColor, 0.6), "#a67b5b") 
+                : statusMA.containsMouse 
                 ? Qt.tint(Qt.alpha(root.sColor, 1.0), "#cced752b")
                 : Qt.alpha(root.mColor, 0.8)
             
@@ -77,10 +79,12 @@ ColumnLayout {
             implicitWidth: 89
             implicitHeight: 48
             radius: 5
-            color: scanningMA.containsMouse
+            color: Bluetooth.scanning 
+                ? Qt.tint(Qt.alpha(root.sColor, 0.6), "#a67b5b") 
+                : scanningMA.containsMouse 
                 ? Qt.tint(Qt.alpha(root.sColor, 1.0), "#cced752b")
                 : Qt.alpha(root.mColor, 0.8)
-            
+
             RowLayout {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
@@ -112,8 +116,8 @@ ColumnLayout {
             MouseArea {
                 id: scanningMA
                 anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
+                hoverEnabled: Bluetooth.enabled ? true : false
+                cursorShape: Bluetooth.enabled ? Qt.PointingHandCursor : Qt.ForbiddenCursor
                 onClicked: Bluetooth.toggleScanning()
             }
         }
@@ -122,7 +126,9 @@ ColumnLayout {
             implicitWidth: 89
             implicitHeight: 48
             radius: 5
-            color: discoverMA.containsMouse
+            color: Bluetooth.discoverable
+                ? Qt.tint(Qt.alpha(root.sColor, 0.6), "#a67b5b") 
+                : discoverMA.containsMouse 
                 ? Qt.tint(Qt.alpha(root.sColor, 1.0), "#cced752b")
                 : Qt.alpha(root.mColor, 0.8)
             
@@ -138,7 +144,7 @@ ColumnLayout {
                         family: "Material Symbols Outlined"
                         pointSize: 14
                     }
-                    color: scanningMA.containsMouse
+                    color: discoverMA.containsMouse
                         ? Qt.alpha(root.mColor, 1.0)
                         : Qt.alpha(root.sColor, 0.8)
                 }
@@ -157,8 +163,8 @@ ColumnLayout {
             MouseArea {
                 id: discoverMA
                 anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
+                hoverEnabled: Bluetooth.enabled ? true : false
+                cursorShape: Bluetooth.enabled ? Qt.PointingHandCursor : Qt.ForbiddenCursor
                 onClicked: Bluetooth.toggleDiscoverable()
             }
         }

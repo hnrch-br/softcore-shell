@@ -2,6 +2,9 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
+
+import qs.services
+
 Rectangle {
     implicitWidth: setGrid.rectWidth
     implicitHeight: setGrid.rectHeight
@@ -32,10 +35,10 @@ Rectangle {
 
         Text {
             id: perType 
-            text: "perType"
+            text: Perf.profileState
             font { 
                 family: "Pixelify Sans"
-                pixelSize: 14
+                pixelSize: 12
             }
             color: perMA.containsMouse 
                 ? Qt.alpha(root.mColor, 1.0) 
@@ -49,5 +52,6 @@ Rectangle {
         hoverEnabled: true
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
+        onClicked: Perf.profile()
     }
 }

@@ -13,12 +13,12 @@ import qs.bar
 RowLayout {
     id: root
     anchors.verticalCenter: parent.verticalCenter
-    property bool isPlaying: Players.activePlayer?.isPlaying
-    property string trackTitleOutput: Players.activePlayer?.trackTitle ? Players.activePlayer?.trackTitle : "none"
-    property string trackArtistOutput: Players.activePlayer?.trackArtist ? Players.activePlayer?.trackArtist + ": " : "none: "
-    property string trackOutput: isPlaying ? trackArtistOutput + trackTitleOutput : "no media"
-    property real scrollSpeed: 80
-    property real pauseDuration: 1000
+    readonly property bool isPlaying: Players.activePlayer?.isPlaying ?? false
+    readonly property string trackTitleOutput: Players.activePlayer?.trackTitle ? Players.activePlayer?.trackTitle : "none"
+    readonly property string trackArtistOutput: Players.activePlayer?.trackArtist ? Players.activePlayer?.trackArtist + ": " : "none: "
+    readonly property string trackOutput: isPlaying ? trackArtistOutput + trackTitleOutput : "no media"
+    readonly property real scrollSpeed: 80
+    readonly property real pauseDuration: 1000
 
     SequentialAnimation {
         id: marqueeAnim

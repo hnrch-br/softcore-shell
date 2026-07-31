@@ -68,7 +68,7 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = tr
 
 -- Grimblast
 hl.bind( mainMod .. " + Print", hl.dsp.exec_cmd("grimblast --notify --freeze save output ~/Pictures/Screenshots/screenshot-$(date +%F-%T).png") )
-hl.bind( "Print", hl.dsp.exec_cmd("grimblast --notify --freeze copysave area ~/Pictures/Screenshots/screenshot-$(date +%F-%T).png") )
+hl.bind("Print", hl.dsp.exec_cmd("grimblast --notify --freeze save area - | swappy -f - -o ~/Pictures/Screenshots/screenshot-" .. os.date("%F-%T") .. ".png"))
 
 -- Hyprpicker
 hl.bind( mainMod .. " + SHIFT + INSERT", hl.dsp.exec_cmd("hyprpicker -n -a -l") )

@@ -20,8 +20,8 @@ PopupWindow {
     property int month: currentDate.getMonth()
     property int year: currentDate.getFullYear()
 
-    property color mColor: "#ccfaebd7"
-    property color sColor: "#823d3636"
+    property color mColor: "#faebd7"
+    property color sColor: "#3a2b2a"
     property color mTxtColor: "#ff3d3636"
     property color sTxtColor: "#ffcdcdcd"
 
@@ -59,7 +59,7 @@ PopupWindow {
         anchors.horizontalCenter: parent.horizontalCenter
         implicitHeight: root.visible ? parent.height : 0
         implicitWidth: root.visible ? parent.width - 50 : 80
-        color: root.mColor
+        color: Qt.tint(Qt.alpha(root.mColor, 1.0), "#d6c5b2")
         opacity: visible ? 1 : 0
         bottomLeftRadius: 15
         bottomRightRadius: 15
@@ -83,7 +83,7 @@ PopupWindow {
             RowLayout {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.topMargin: 10
-                spacing: 5
+                spacing: 2
                 Button {
                     id: lastMonth  
                     contentItem: Text {
@@ -91,8 +91,8 @@ PopupWindow {
                         font { family: "Material Symbols Outlined"; pointSize: 9 }
                         opacity: 1
                         color: lastMonth.down 
-                            ? root.sTxtColor
-                            : root.mTxtColor
+                            ? root.mTxtColor
+                            : root.sTxtColor
                         horizontalAlignment: Text.AlignHCenter
                         topPadding: 1
 
@@ -112,7 +112,7 @@ PopupWindow {
                         opacity: root.visible ? 1 : 0
                         color: lastMonth.down
                             ? Qt.tint(Qt.alpha(root.mColor, 1.0), "#cced752b")
-                            : root.mColor
+                            : root.sColor
                         anchors.centerIn: parent
                         Behavior on opacity {
                             NumberAnimation { duration: 200 }
@@ -130,17 +130,24 @@ PopupWindow {
                     }
                 }
 
-                Text {
-                    id: monthId
-                    text: (new Date(root.year, root.month, 1)).toLocaleDateString(Qt.locale(), "MMMM, yyyy")
-                    font { family: "Pixelify Sans"; pixelSize: 15 }
-                    color: root.mTxtColor
+                Rectangle {
+                    implicitWidth: 125
+                    implicitHeight: 20
+                    color: root.sColor
+                    radius: 2
                     opacity: root.visible ? 1 : 0
-                    Layout.preferredWidth: 120
-                    horizontalAlignment: Text.AlignHCenter
+                    Text {
+                        id: monthId
+                        text: (new Date(root.year, root.month, 1)).toLocaleDateString(Qt.locale(), "MMMM, yyyy")
+                        font { family: "Pixelify Sans"; pixelSize: 15 }
+                        color: root.sTxtColor
+                        opacity: root.visible ? 1 : 0
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
 
                     Behavior on opacity {
-                        NumberAnimation { duration: 150 }
+                        NumberAnimation { duration: 200 }
                     }
                 }
                 
@@ -151,8 +158,8 @@ PopupWindow {
                         font { family: "Material Symbols Outlined"; pointSize: 9 }
                         opacity: root.visible ? 1 : 0
                         color: nextMonth.down
-                            ? root.sTxtColor 
-                            : root.mTxtColor
+                            ? root.mTxtColor 
+                            : root.sTxtColor
                         horizontalAlignment: Text.AlignHCenter
                         topPadding: 1
 
@@ -172,7 +179,7 @@ PopupWindow {
                         opacity: root.visible ? 1 : 0
                         color: nextMonth.down
                             ? Qt.tint(Qt.alpha(root.mColor, 1.0), "#cced752b")
-                            : root.mColor
+                            : root.sColor
                         anchors.centerIn: parent
                         
                         Behavior on opacity {
@@ -190,28 +197,26 @@ PopupWindow {
                         }
                     }
                 }
-
             }
 
             DayOfWeekRow {
                 id: row
                 locale: grid.locale
-                Layout.column: 1
                 Layout.fillWidth: true
-                leftPadding: 2.1
                 opacity: root.visible ? 1 : 0
+                spacing: 3
                 delegate: Text {
+                    required property string shortName
+
                     text: shortName
                     font.family: "Sixtyfour"
                     font.pixelSize: 7
                     color: Qt.tint(root.sColor, "#54ed752b")
-                    horizontalAlignment: Text.AlignHCenter
-
-                    required property string shortName
+                    leftPadding: 4
                 }
 
                 Behavior on opacity {
-                    NumberAnimation { duration: 100 }
+                    NumberAnimation { duration: 200 }
                 }
             }
 
@@ -221,6 +226,7 @@ PopupWindow {
                 Layout.fillHeight: true
                 month: root.month
                 year: root.year
+                spacing: 3
                 locale: Qt.locale()
                 opacity: root.visible ? 1 : 0
                 
@@ -237,9 +243,9 @@ PopupWindow {
                     color: isSelected 
                         ? Qt.tint(root.sColor, "#cced752b")
                         : isToday
-                        ? Qt.alpha(root.sColor, 0.4)
+                        ? Qt.tint(root.sColor, "#af895f")
                         : "transparent"
-                    radius: implicitHeight / 2
+                    radius: 4
                     
                     MouseArea {
                         anchors.fill: parent
@@ -260,15 +266,15 @@ PopupWindow {
                         color: gridRect.isSelected
                             ? Qt.darker(root.sTxtColor, 0.9)
                             : gridRect.isToday
-                            ? root.sTxtColor
+                            ? Qt.darker(root.sTxtColor, 0.9)
                             : gridRect.isCurrentMonth
-                            ? Qt.darker(root.mTxtColor, 0.65)
-                            : Qt.darker(root.mTxtColor, 0.4)
+                            ? Qt.darker(root.mTxtColor, 1)
+                            : Qt.darker(root.mTxtColor, 0.35)
                         font.bold: parent.isToday ? true : false
                         leftPadding: 3.1
 
                         Behavior on opacity {
-                            NumberAnimation { duration: 100 }
+                            NumberAnimation { duration: 200 }
                         }
                     }
                 }
@@ -278,17 +284,19 @@ PopupWindow {
                 }
             }
         }
-        Corner {
-            id: leftCorner
-            x: -radius
-            rotation: 90
-        }
 
         Corner {
-            id: rightCorner
-            x: calendarArea.width
+            id: leftCorner
+            anchors.left: calendarArea.left
+            anchors.leftMargin: -radius
+            rotation: 90
         }
-    }
+        Corner {
+            id: rightCorner
+            anchors.right: calendarArea.right
+            anchors.rightMargin: -radius
+        }
+    } 
 
     SequentialAnimation {
         id: closeAnim
@@ -364,7 +372,7 @@ PopupWindow {
 
 		ShapePath {
 			strokeWidth: 0
-			fillColor: "#ccfaebd7"
+			fillColor: Qt.tint(Qt.alpha(root.mColor, 1.0), "#d6c5b2")
     
             startX: corner.radius
 				

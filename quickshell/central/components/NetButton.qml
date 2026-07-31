@@ -10,15 +10,21 @@ Rectangle {
     implicitWidth: setGrid.rectWidth
     implicitHeight: setGrid.rectHeight
     radius: 5
-    color: (Network.wiredConnected || Network.wirelessConnected)
-        ? Qt.tint(Qt.alpha(root.sColor, 0.6), "#a67b5b")
-        : netMA.containsMouse
-        ? Qt.tint(Qt.alpha(root.sColor, 1.0), "#cced752b") 
+    color: (Network.wirelessConnected && netMA.containsMouse)
+        ? Qt.tint(Qt.alpha(root.sColor, 0.6), "#cced752b")
+        : Network.wirelessConnected
+        ? Qt.tint(Qt.alpha(root.mColor, 0.6), "#af895f")
+        : Network.wiredConnected
+        ? Qt.tint(Qt.alpha(root.mColor, 0.4), "#cca67b5b")
         : Qt.alpha(root.mColor, 0.6)
-    border.width: 1
-    border.color: netMA.containsMouse 
-        ? "transparent" 
-        : Qt.alpha(root.sColor, 0.4)
+        border.width: 1
+    border.color: (Network.wirelessConnected && netMA.containsMouse)
+        ? Qt.tint(Qt.alpha(root.sColor, 0.2), "#cca67b5b")
+        : Network.wirelessConnected
+        ? "transparent"
+        : Network.wiredConnected
+        ? "transparent"
+        : root.sColor
     RowLayout {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
@@ -31,9 +37,9 @@ Rectangle {
                 family: "Material Symbols Outlined"
                 pointSize: 16.7
             }
-            color: netMA.containsMouse 
-                ? Qt.alpha(root.mColor, 1.0) 
-                : root.sColor
+            color: (Network.wirelessConnected && netMA.containsMouse)
+                ? Qt.alpha(root.mColor, 1.0)
+                : Qt.alpha(root.sColor, 0.6)
         }
 
         Text {
@@ -43,9 +49,9 @@ Rectangle {
                 family: "Pixelify Sans"
                 pixelSize: 14
             }
-            color: netMA.containsMouse 
-                ? Qt.alpha(root.mColor, 1.0) 
-                : root.sColor
+            color: (Network.wirelessConnected && netMA.containsMouse)
+                ? Qt.alpha(root.mColor, 1.0)
+                : Qt.alpha(root.sColor, 0.6)
             elide: Text.ElideRight
             wrapMode: Text.NoWrap
         }
