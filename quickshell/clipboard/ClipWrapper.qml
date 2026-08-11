@@ -1,111 +1,44 @@
 pragma ComponentBehavior: Bound
 
-import Quickshell
 import QtQuick
-import QtQuick.Layouts
+import Quickshell
 import Quickshell.Wayland
-import Quickshell.Widgets
 import Quickshell.Io
+import QtQuick.Layouts
 import QtQuick.Controls
 import QtQuick.Shapes
-import QtQuick.Effects
 
-import "root:/services/scripts/fuzzy.js" as Fuzzy
+import qs.services
 
 Scope {
     id: root
 
-    property string query: ""
-    property var usage: ({})
-    readonly property var results: Fuzzy.rank(appEntries, query, usage)
     property bool isOpen: false
     readonly property color mColor: "#3a2b2b"
     readonly property color sColor: "#ccfaebd7"
 
-    readonly property var appEntries: {
-        var src = DesktopEntries.applications.values;
-        var out = [];
-        for (var i = 0; i < src.length; i++)
-            if (src[i] && !src[i].noDisplay)
-                out.push(src[i]);
-        return out;
-    }
-
-    function moveSelection(delta) {
-        if (root.entries.length === 0)
-            return;
-        var n = root.selectedIndex + delta;
-        if (n < 0)
-            n = 0;
-        if (n > root.entries.length - 1)
-            n = root.entries.length - 1;
-        root.selectedIndex = n;
-    }
-
-    function run(entry) {
-        if (entry) {
-            if (entry.id) {
-                root.usage[entry.id] = (root.usage[entry.id] || 0) + 1;
-                usageStore.setText(JSON.stringify(root.usage));
-                usageStore.waitForJob();
-            }
-            entry.execute();
-        }
-        root.isOpen = false;
-    }
-
-    Component.onCompleted: {
-        var raw = usageStore.text();
-        try {
-            root.usage = raw && raw.length ? JSON.parse(raw) : ({});
-        } catch (e) {
-            root.usage = ({});
-        }
-    }
-
-    onIsOpenChanged: {
-        if (root.isOpen) {
-            query = "";
-            selectedIndex = 0;
-        }
-    }
-
-    FileView {
-        id: usageStore
-        path: Quickshell.env("HOME") + "/.cache/recent-apps.json"
-        blockLoading: true
-        atomicWrites: true
-        printErrors: false
-    }
-
-    property var entries: results
-    property int selectedIndex: 0
-
     LazyLoader {
-        id: loader
         loading: !root.isOpen
-
         PanelWindow {
-            id: launcher
+            id: clipboard
 
             anchors {
+                top: true
                 bottom: true
                 right: true
                 left: true
-                top: true
             }
 
             WlrLayershell.layer: WlrLayer.Overlay
-            WlrLayershell.namespace: "launcher"
+            WlrLayershell.namespace: "clipboard"
 
             exclusionMode: ExclusionMode.Ignore
 
             WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
-
             color: "transparent"
 
             IpcHandler {
-                target: "launcher"
+                target: "clipboard"
 
                 function toggleVisible(): void {
                     root.isOpen = !root.isOpen;
@@ -115,7 +48,7 @@ Scope {
             visible: false
 
             Rectangle {
-                id: wrapper
+                id: clipWrapper
 
                 color: root.mColor
                 state: root.isOpen ? "opened" : "closed"
@@ -124,30 +57,19 @@ Scope {
                 anchors.bottom: parent.bottom
 
                 implicitWidth: 500
-                implicitHeight: 320
+                implicitHeight: 260
                 topLeftRadius: 25
                 topRightRadius: 25
 
-                Keys.onUpPressed: root.moveSelection(-1)
-                Keys.onDownPressed: root.moveSelection(1)
-                Keys.onPressed: e => {
-                    if (e.key === Qt.Key_Return || e.key === Qt.Key_Enter) {
-                        root.run(root.entries[root.selectedIndex]);
-                        e.accepted = true;
-                    } else if (e.key === Qt.Key_Escape) {
-                        root.isOpen = false;
-                        e.accepted = true;
-                    }
-                }
-
-                SearchBar {}
-
                 Rectangle {
                     id: listRect
-                    implicitWidth: parent.width - 20
-                    implicitHeight: parent.height - 75
 
-                    clip: true
+                    implicitWidth: parent.width - 16
+                    implicitHeight: parent.height - 18
+
+                    radius: 20
+
+                    color: Qt.darker(root.mColor, 0.85)
 
                     anchors {
                         horizontalCenter: parent.horizontalCenter
@@ -155,10 +77,7 @@ Scope {
                         bottomMargin: 10
                     }
 
-                    radius: 12
-                    color: Qt.darker(root.mColor, 0.85)
-
-                    AppList {}
+                    ClipList {}
                 }
 
                 Corner {
@@ -179,40 +98,39 @@ Scope {
                     State {
                         name: "opened"
                         PropertyChanges {
-                            target: wrapper
-                            implicitHeight: 320
+                            target: clipWrapper
+                            implicitHeight: 260
                             opacity: 1
                         }
                     },
                     State {
                         name: "closed"
                         PropertyChanges {
-                            target: wrapper
+                            target: clipWrapper
                             implicitHeight: 0
                             opacity: 0
                         }
                     }
                 ]
-
                 transitions: [
                     Transition {
                         from: "closed"
                         to: "opened"
                         SequentialAnimation {
                             PropertyAction {
-                                target: launcher
+                                target: clipboard
                                 property: "visible"
                                 value: true
                             }
                             ParallelAnimation {
                                 NumberAnimation {
-                                    target: wrapper
+                                    target: clipWrapper
                                     property: "implicitHeight"
-                                    duration: 200
+                                    duration: 150
                                     easing.type: Easing.OutQuad
                                 }
                                 NumberAnimation {
-                                    target: wrapper
+                                    target: clipWrapper
                                     property: "opacity"
                                     duration: 200
                                     easing.type: Easing.OutQuad
@@ -226,20 +144,20 @@ Scope {
                         SequentialAnimation {
                             ParallelAnimation {
                                 NumberAnimation {
-                                    target: wrapper
+                                    target: clipWrapper
                                     property: "implicitHeight"
-                                    duration: 200
+                                    duration: 150
                                     easing.type: Easing.OutQuad
                                 }
                                 NumberAnimation {
-                                    target: wrapper
+                                    target: clipWrapper
                                     property: "opacity"
                                     duration: 200
                                     easing.type: Easing.OutQuad
                                 }
                             }
                             PropertyAction {
-                                target: launcher
+                                target: clipboard
                                 property: "visible"
                                 value: false
                             }

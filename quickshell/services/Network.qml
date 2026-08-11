@@ -14,11 +14,13 @@ Singleton {
     readonly property var networksRaw: wirelessDevice?.networks?.values ?? []
     readonly property bool wirelessConnected: root.wirelessDevice?.connected ?? false
     readonly property bool wiredConnected: root.wiredDevice?.connected ?? false
+    readonly property bool scanning: root.wirelessDevice?.scannerEnabled ?? false
         
     readonly property real signalStrength: root.activeNetwork?.signalStrength ?? 0
     readonly property string ssid: root.activeNetwork?.name ?? ""
 
     readonly property string networkLabel: root.wirelessConnected ? root.ssid : "Ethernet"
+    readonly property string scanStatus: (root.wirelessConnected && root.scanning) ? "On" : "Off"
 
     readonly property int stateUnknown: ConnectionState.Unknown
     readonly property int stateConnecting: ConnectionState.Connecting
@@ -36,9 +38,9 @@ Singleton {
         return root.wirelessDevice.wifiEnabled = !root.wirelessDevice.wifiEnabled;
     }
 
-    function toggleScan(on): void {
+    function toggleScan(): void {
         if (!wirelessDevice) return;
-        wirelessDevice.scannerEnabled = on;
+        wirelessDevice.scannerEnabled = !wirelessDevice.scannerEnabled;
     }
 
     readonly property var netIcon: {
@@ -52,10 +54,10 @@ Singleton {
             if (s >= 0.8) return "wifi";
             if (s >= 0.4) return "wifi_2_bar";
             if (s >= 0.2) return "wifi_1_bar";
-            return "android_wifi_3_bar_off";
+            return "wifi_off";
         }
         return "block";
-    }
+    } 
 
     readonly property var networks: {
         const seen = {};

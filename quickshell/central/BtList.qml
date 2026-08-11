@@ -15,13 +15,13 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.fillHeight: true
     anchors.horizontalCenter: parent.horizontalCenter
-    visible: false
     spacing: 5
+    opacity: root.visible ? 1 : 0
 
     readonly property color mColor: "#423d3636"
     readonly property color sColor: "#ccfaebd7"
 
-    property int size: 25
+    readonly property int size: 25
 
     RowLayout {
         Layout.topMargin: 15
@@ -379,11 +379,14 @@ ColumnLayout {
                 onClicked: goBackProc.running = true
             }
         }
-                
+    }
+
+    Behavior on opacity {
+        NumberAnimation { duration: 200; easing.type: Easing.OutQuad }
     }
 
     Process {
         id: goBackProc
         command: ["qs", "ipc", "call", "btList", "goBack"]
-    } 
+    }
 }

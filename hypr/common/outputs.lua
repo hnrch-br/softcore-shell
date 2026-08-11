@@ -2,6 +2,7 @@
 hl.monitor({
     output   = "DP-1",
     mode     = "1920x1080@144",
-    position = "auto",
-    scale    = "1",
+    position = "0x0",
+    bitdepth = 10,
+    scale    = 1,
 })

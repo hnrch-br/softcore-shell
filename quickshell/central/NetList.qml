@@ -11,11 +11,11 @@ import qs.central.components
 
 ColumnLayout {
     id: root
-
     Layout.fillWidth: true
     Layout.fillHeight: true
+    spacing: 5
     anchors.horizontalCenter: parent.horizontalCenter
-    visible: false
+    opacity: root.visible ? 1 : 0
 
     property int expandedIndex: -1
 
@@ -24,13 +24,110 @@ ColumnLayout {
  
     property string pskInput: ""
 
+    readonly property int size: 25
+
+    RowLayout {
+        Layout.topMargin: 15
+        Layout.alignment: Qt.AlignHCenter
+        spacing: 3
+        Rectangle {
+            implicitWidth: 136
+            implicitHeight: 48
+            radius: 5
+            color: (Network.wirelessConnected && statusMA.containsMouse)
+                ? Qt.tint(Qt.alpha(root.sColor, 1.0), "#cced752b")
+                : Network.wiredConnected
+                ? Qt.alpha(Qt.tint(root.sColor, "#a67b5b"), 0.4)
+                : Qt.alpha(root.sColor, 0.8)
+
+            RowLayout {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                anchors.right: parent.right
+                Text {
+                    text: Network.netIcon
+                    font { 
+                        family: "Material Symbols Outlined"
+                        pointSize: 14 
+                    }
+                    color: (Network.wirelessConnected && statusMA.containsMouse)
+                        ? Qt.alpha(root.mColor, 1.0)
+                        : Qt.alpha(root.sColor, 0.6)
+                }
+                Text {
+                    text: Network.networkLabel
+                    font {
+                        family: "Pixelify Sans"
+                        pixelSize: 15
+                    }
+                    color: (Network.wirelessConnected && statusMA.containsMouse)
+                        ? Qt.alpha(root.mColor, 1.0)
+                        : Qt.alpha(root.sColor, 0.6)
+                }
+            }
+
+            MouseArea {
+                id: statusMA
+                anchors.fill: parent
+                hoverEnabled: Network.wirelessConnected ? true : false
+                cursorShape: Qt.PointingHandCursor 
+                onClicked: Network.toggleNet()
+            }
+        }
+        Rectangle {
+            implicitWidth: 136
+            implicitHeight: 48
+            radius: 5
+            color: (Network.wirelessConnected && containsMouse)
+                ? Qt.tint(Qt.alpha(root.sColor, 1.0), "#cced752b")
+                : Network.scanning
+                ? Qt.tint(Qt.alpha(root.sColor, 0.6), "#a67b5b")
+                : Qt.alpha(root.mColor, 0.8)
+
+            RowLayout {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                anchors.right: parent.right
+                Text {
+                    text: "explore"
+                    font { 
+                        family: "Material Symbols Outlined"
+                        pointSize: 14 
+                    }
+                    color: (Network.wirelessConnected && statusMA.containsMouse)
+                        ? Qt.alpha(root.mColor, 1.0)
+                        : Qt.alpha(root.sColor, 0.6)
+                }
+                Text {
+                    text: Network.scanStatus
+                    font {
+                        family: "Pixelify Sans"
+                        pixelSize: 15
+                    }
+                    color: (Network.wirelessConnected && statusMA.containsMouse)
+                        ? Qt.alpha(root.mColor, 1.0)
+                        : Qt.alpha(root.sColor, 0.6)
+                }
+            }
+
+
+            MouseArea {
+                id: scanningMA
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Network.wirelessConnected ? Qt.PointingHandCursor : Qt.ForbiddenCursor
+                onClicked: Network.toggleScan()
+            }
+        }
+    }
+
     Rectangle {
         implicitWidth: 275
-        implicitHeight: 445
+        implicitHeight: 395
         radius: 10
-        color: root.mColor
-        Layout.alignment: Qt.AlignHCenter
-        Layout.topMargin: 15 
+        color: root.mColor 
         clip: true
 
         ListView {
@@ -202,6 +299,10 @@ ColumnLayout {
                 onClicked: goBackProc.running = true
             }
         }
+    }
+
+    Behavior on opacity {
+        NumberAnimation { duration: 200; easing.type: Easing.OutQuad }
     }
 
     Process {

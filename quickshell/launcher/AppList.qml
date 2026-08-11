@@ -7,18 +7,17 @@ import Quickshell.Widgets
 import QtQuick.Effects
 
 ListView {
-    id: list
+    id: appList
     anchors.fill: parent
     spacing: 2
     clip: true
     boundsBehavior: Flickable.StopAtBounds
     model: root.entries.length
-    anchors.horizontalCenter: parent.horizontalCenter
 
     Connections {
         target: root
         function onSelectedIndexChanged() {
-            list.positionViewAtIndex(root.selectedIndex, ListView.Contain);
+            appList.positionViewAtIndex(root.selectedIndex, ListView.Contain);
         }
     }
 
@@ -29,21 +28,30 @@ ListView {
         property bool isSelected: index === root.selectedIndex
 
         anchors.horizontalCenter: parent.horizontalCenter
-        implicitWidth: isSelected ? list.width : list.width - 20
+        implicitWidth: isSelected ? appList.width : appList.width - 20
         implicitHeight: isSelected ? 46 : 42
         radius: 10
         color: isSelected ? Qt.tint(root.sColor, "#cced752b") : "transparent"
 
         Behavior on implicitHeight {
-            NumberAnimation { duration: 200; easing.type: Easing.OutQuad }
+            NumberAnimation {
+                duration: 200
+                easing.type: Easing.OutQuad
+            }
         }
 
         Behavior on implicitWidth {
-            NumberAnimation { duration: 200; easing.type: Easing.OutQuad }
+            NumberAnimation {
+                duration: 200
+                easing.type: Easing.OutQuad
+            }
         }
 
         Behavior on color {
-            ColorAnimation { duration: 140; easing.type: Easing.OutQuad }
+            ColorAnimation {
+                duration: 140
+                easing.type: Easing.OutQuad
+            }
         }
 
         RowLayout {
@@ -84,9 +92,8 @@ ListView {
             onClicked: root.run(listRow.entry)
             onExited: {
                 if (root.selectedIndex === listRow.index)
-                return root.selectedIndex = -1;
+                    return root.selectedIndex = -1;
             }
-        }    
+        }
     }
 }
-

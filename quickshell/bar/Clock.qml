@@ -25,39 +25,50 @@ Item {
         opacity: calendarPopup.visible ? 0 : 1
 
         Behavior on opacity {
-            NumberAnimation { duration: 100 }
+            NumberAnimation {
+                duration: 100
+            }
         }
 
-        CornerLeft { anchors.top: parent.top} 
+        CornerLeft {
+            anchors.top: parent.top
+        }
 
         Rectangle {
             id: clockRect
             implicitWidth: 115
-            implicitHeight: 45 
-            color: root.sColor 
+            implicitHeight: 45
+            color: root.sColor
 
             Behavior on implicitHeight {
-                NumberAnimation { duration: 250 }
-            } 
+                NumberAnimation {
+                    duration: 250
+                }
+            }
 
             Text {
                 anchors.centerIn: parent
                 text: Qt.formatDateTime(clock.date, "HH:mm")
-    	        color: root.mTxtColor
-            	font {family: "Ndot 55 Caps"; pixelSize: 40 }
+                color: root.mTxtColor
+                font {
+                    family: "Ndot 55 Caps"
+                    pixelSize: 40
+                }
                 bottomPadding: 0
             }
 
             SystemClock {
-            	id: clock
-            	precision: SystemClock.Minutes
+                id: clock
+                precision: SystemClock.Minutes
             }
         }
 
-        CornerRight { anchors.top: parent.top }
+        CornerRight {
+            anchors.top: parent.top
+        }
     }
 
-    CalendarPopup{ 
+    CalendarPopup {
         id: calendarPopup
         anchor {
             item: root
@@ -76,13 +87,13 @@ Item {
 
     component CornerLeft: Shape {
         id: cornerL
-		preferredRendererType: Shape.CurveRenderer
+        preferredRendererType: Shape.CurveRenderer
 
         property real radius: 30
 
-		ShapePath {
-			strokeWidth: 0
-			fillColor: root.sColor
+        ShapePath {
+            strokeWidth: 0
+            fillColor: root.sColor
 
             startX: 0
 

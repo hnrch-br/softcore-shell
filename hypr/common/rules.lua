@@ -1,11 +1,11 @@
 --------->> Rules
 
 local suppressMaximizeRule = hl.window_rule({
-    -- Ignore maximize requests from all apps. You'll probably like this.
-    name  = "suppress-maximize-events",
-    match = { class = ".*" },
+	-- Ignore maximize requests from all apps. You'll probably like this.
+	name = "suppress-maximize-events",
+	match = { class = ".*" },
 
-    suppress_event = "maximize",
+	suppress_event = "maximize",
 })
 suppressMaximizeRule:set_enabled(false)
 
@@ -23,29 +23,29 @@ suppressMaximizeRule:set_enabled(false)
 
 -- Hyprland-run windowrule
 hl.window_rule({
-    name  = "move-hyprland-run",
-    match = { class = "hyprland-run" },
-    move  = "20 monitor_h-120",
-    float = true,
+	name = "move-hyprland-run",
+	match = { class = "hyprland-run" },
+	move = "20 monitor_h-120",
+	float = true,
 })
 
 -- PiP
 hl.window_rule({
-    name = "pip",
-    match = { title = "Picture(-| )in(-| )[Pp]icture" },
-    float = true,
-    size = { 600, 300 },
-    pin = true,
-    move = {"monitor_w - window_w - 80", "monitor_h - window_h - 10"},
+	name = "pip",
+	match = { title = "Picture(-| )in(-| )[Pp]icture" },
+	float = true,
+	size = { 600, 300 },
+	pin = true,
+	move = { "monitor_w - window_w - 80", "monitor_h - window_h - 10" },
 })
 
 -- Steam Popups
 hl.window_rule({
-    name = "steam-popups",
-    match = { class = "steam", title = "Steam Settings|Friends List|Players|Game Servers|Recordings & Screenshots" },
-    float = true,
-    move = { "monitor_w / 2 - window_w / 2", "monitor_h / 2 - window_h / 2"},
-    min_size = { 300, 500 },
+	name = "steam-popups",
+	match = { class = "steam", title = "Steam Settings|Friends List|Players|Game Servers|Recordings & Screenshots" },
+	float = true,
+	move = { "monitor_w / 2 - window_w / 2", "monitor_h / 2 - window_h / 2" },
+	min_size = { 300, 500 },
 })
 
 -----------------------
@@ -53,18 +53,11 @@ hl.window_rule({
 -----------------------
 
 -- Special
-hl.workspace_rule({ workspace = "special:magic", on_created_empty = "kitty"})
+hl.workspace_rule({ workspace = "special:magic", on_created_empty = "kitty" })
 
 -------------------
 --> LAYER RULES <--
 -------------------
-
--- Power Animation
-hl.layer_rule({
-	name = "power-anim",
-	match = { namespace = "power" },
-	animation = "popin 87%",
-})
 
 -- Notification Animation
 hl.layer_rule({
@@ -74,21 +67,26 @@ hl.layer_rule({
 })
 
 hl.layer_rule({
-    name = "scp-anim",
-    match = { namespace = "selection" },
-    animation = "fade"
+	name = "scp-anim",
+	match = { namespace = "selection" },
+	animation = "fade",
+})
+
+hl.layer_rule({
+	name = "central-anim",
+	match = { namespace = "centralpopup" },
+	no_anim = true,
+})
+
+hl.layer_rule({
+	name = "clip-anim",
+	match = { namespace = "clipboard" },
+	no_anim = true,
 })
 
 -- Launcher Animation
 hl.layer_rule({
 	name = "launcher-anim",
 	match = { namespace = "launcher" },
-	animation = "slide bottom",
-})
-
--- Power Popup Animation
-hl.layer_rule({
-    name = "pp-anim",
-    match = { namespace = "powerpopup" },
-    animation = "fade",
+	no_anim = true,
 })

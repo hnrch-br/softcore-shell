@@ -14,6 +14,7 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.fillHeight: true
     anchors.horizontalCenter: parent.horizontalCenter
+    opacity: mainPanel.visible ? 1 : 0
 
     GridLayout {
         id: setGrid
@@ -99,4 +100,8 @@ ColumnLayout {
     }
 
     NotificationArea {}
+
+    Behavior on opacity {
+        NumberAnimation { duration: 200; easing.type: Easing.OutQuad }
+    }
 }

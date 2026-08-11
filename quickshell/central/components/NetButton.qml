@@ -60,24 +60,9 @@ Rectangle {
         id: netMA
         hoverEnabled: true
         anchors.fill: parent
-        cursorShape: Network.wirelessConnected ? Qt.PointingHandCursor : Qt.ForbiddenCursor
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onClicked: (mouse) => {
-            if ((mouse.button) == Qt.LeftButton) {
-                if (Network.wirelessConnected)
-                return toggleNet();
-                if (Network.wiredConnected)
-                return;
-            }
-            if ((mouse.button) == Qt.RightButton) {
-                if (Network.wirelessConnected)
-                return root.wifiListProc.running = true;
-                if (Network.wiredConnected)
-                return;
-            }
-
-            return;
-        }
+        cursorShape: Qt.PointingHandCursor
+        onClicked: Network.toggleNet()
+        onPressAndHold: wifiListProc.running = true
     }
 
     Process {

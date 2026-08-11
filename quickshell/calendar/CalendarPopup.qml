@@ -36,7 +36,7 @@ PopupWindow {
     Shortcut {
         sequence: "Escape"
         enabled: root.isOpen
-        onActivated: closeAnim.start();
+        onActivated: closeAnim.start()
     }
 
     property bool isOpen: false
@@ -50,7 +50,12 @@ PopupWindow {
     }
 
     onIsOpenChanged: {
-        if (isOpen) resetDate();
+        if (isOpen)
+            resetDate();
+    }
+
+    mask: Region {
+        item: calendarArea
     }
 
     Rectangle {
@@ -65,17 +70,23 @@ PopupWindow {
         bottomRightRadius: 15
 
         Behavior on implicitHeight {
-            NumberAnimation { duration: 100 }
+            NumberAnimation {
+                duration: 100
+            }
         }
 
         Behavior on implicitWidth {
-            NumberAnimation { duration: 100 }
+            NumberAnimation {
+                duration: 100
+            }
         }
 
         Behavior on opacity {
-            NumberAnimation { duration: 100 }
+            NumberAnimation {
+                duration: 100
+            }
         }
-        ColumnLayout { 
+        ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
             anchors.horizontalCenter: parent.horizontalCenter
@@ -85,19 +96,22 @@ PopupWindow {
                 Layout.topMargin: 10
                 spacing: 2
                 Button {
-                    id: lastMonth  
+                    id: lastMonth
                     contentItem: Text {
                         text: "arrow_back_ios_new"
-                        font { family: "Material Symbols Outlined"; pointSize: 9 }
+                        font {
+                            family: "Material Symbols Outlined"
+                            pointSize: 9
+                        }
                         opacity: 1
-                        color: lastMonth.down 
-                            ? root.mTxtColor
-                            : root.sTxtColor
+                        color: lastMonth.down ? root.mTxtColor : root.sTxtColor
                         horizontalAlignment: Text.AlignHCenter
                         topPadding: 1
 
                         Behavior on opacity {
-                            NumberAnimation { duration: 200 }
+                            NumberAnimation {
+                                duration: 200
+                            }
                         }
                     }
 
@@ -110,12 +124,12 @@ PopupWindow {
                         bottomRightRadius: 2
                         topRightRadius: 2
                         opacity: root.visible ? 1 : 0
-                        color: lastMonth.down
-                            ? Qt.tint(Qt.alpha(root.mColor, 1.0), "#cced752b")
-                            : root.sColor
+                        color: lastMonth.down ? Qt.tint(Qt.alpha(root.mColor, 1.0), "#cced752b") : root.sColor
                         anchors.centerIn: parent
                         Behavior on opacity {
-                            NumberAnimation { duration: 200 }
+                            NumberAnimation {
+                                duration: 200
+                            }
                         }
                         HoverHandler {
                             cursorShape: Qt.PointingHandCursor
@@ -139,7 +153,10 @@ PopupWindow {
                     Text {
                         id: monthId
                         text: (new Date(root.year, root.month, 1)).toLocaleDateString(Qt.locale(), "MMMM, yyyy")
-                        font { family: "Pixelify Sans"; pixelSize: 15 }
+                        font {
+                            family: "Pixelify Sans"
+                            pixelSize: 15
+                        }
                         color: root.sTxtColor
                         opacity: root.visible ? 1 : 0
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -147,24 +164,29 @@ PopupWindow {
                     }
 
                     Behavior on opacity {
-                        NumberAnimation { duration: 200 }
+                        NumberAnimation {
+                            duration: 200
+                        }
                     }
                 }
-                
+
                 Button {
                     id: nextMonth
                     contentItem: Text {
                         text: "arrow_forward_ios"
-                        font { family: "Material Symbols Outlined"; pointSize: 9 }
+                        font {
+                            family: "Material Symbols Outlined"
+                            pointSize: 9
+                        }
                         opacity: root.visible ? 1 : 0
-                        color: nextMonth.down
-                            ? root.mTxtColor 
-                            : root.sTxtColor
+                        color: nextMonth.down ? root.mTxtColor : root.sTxtColor
                         horizontalAlignment: Text.AlignHCenter
                         topPadding: 1
 
                         Behavior on opacity {
-                            NumberAnimation { duration: 200 }
+                            NumberAnimation {
+                                duration: 200
+                            }
                         }
                     }
 
@@ -177,13 +199,13 @@ PopupWindow {
                         bottomRightRadius: 8
                         topRightRadius: 8
                         opacity: root.visible ? 1 : 0
-                        color: nextMonth.down
-                            ? Qt.tint(Qt.alpha(root.mColor, 1.0), "#cced752b")
-                            : root.sColor
+                        color: nextMonth.down ? Qt.tint(Qt.alpha(root.mColor, 1.0), "#cced752b") : root.sColor
                         anchors.centerIn: parent
-                        
+
                         Behavior on opacity {
-                            NumberAnimation { duration: 200 }
+                            NumberAnimation {
+                                duration: 200
+                            }
                         }
                         HoverHandler {
                             cursorShape: Qt.PointingHandCursor
@@ -216,7 +238,9 @@ PopupWindow {
                 }
 
                 Behavior on opacity {
-                    NumberAnimation { duration: 200 }
+                    NumberAnimation {
+                        duration: 200
+                    }
                 }
             }
 
@@ -229,7 +253,7 @@ PopupWindow {
                 spacing: 3
                 locale: Qt.locale()
                 opacity: root.visible ? 1 : 0
-                
+
                 delegate: Rectangle {
                     id: gridRect
                     implicitWidth: 30
@@ -240,13 +264,9 @@ PopupWindow {
                     property bool isToday: model.date.toDateString() === root.currentDate.toDateString()
                     property bool isSelected: model.date.toDateString() === root.selectedDate.toDateString()
 
-                    color: isSelected 
-                        ? Qt.tint(root.sColor, "#cced752b")
-                        : isToday
-                        ? Qt.tint(root.sColor, "#af895f")
-                        : "transparent"
+                    color: isSelected ? Qt.tint(root.sColor, "#cced752b") : isToday ? Qt.tint(root.sColor, "#af895f") : "transparent"
                     radius: 4
-                    
+
                     MouseArea {
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
@@ -263,24 +283,22 @@ PopupWindow {
                         font.family: "Bytesized"
                         opacity: root.visible ? 1 : 0
                         font.pixelSize: 16
-                        color: gridRect.isSelected
-                            ? Qt.darker(root.sTxtColor, 0.9)
-                            : gridRect.isToday
-                            ? Qt.darker(root.sTxtColor, 0.9)
-                            : gridRect.isCurrentMonth
-                            ? Qt.darker(root.mTxtColor, 1)
-                            : Qt.darker(root.mTxtColor, 0.35)
+                        color: gridRect.isSelected ? Qt.darker(root.sTxtColor, 0.9) : gridRect.isToday ? Qt.darker(root.sTxtColor, 0.9) : gridRect.isCurrentMonth ? Qt.darker(root.mTxtColor, 1) : Qt.darker(root.mTxtColor, 0.35)
                         font.bold: parent.isToday ? true : false
                         leftPadding: 3.1
 
                         Behavior on opacity {
-                            NumberAnimation { duration: 200 }
+                            NumberAnimation {
+                                duration: 200
+                            }
                         }
                     }
                 }
 
                 Behavior on opacity {
-                    NumberAnimation { duration: 200 }
+                    NumberAnimation {
+                        duration: 200
+                    }
                 }
             }
         }
@@ -296,7 +314,7 @@ PopupWindow {
             anchors.right: calendarArea.right
             anchors.rightMargin: -radius
         }
-    } 
+    }
 
     SequentialAnimation {
         id: closeAnim
@@ -364,34 +382,34 @@ PopupWindow {
         }
     }
 
-	component Corner: Shape {
-		id: corner
-		preferredRendererType: Shape.CurveRenderer
+    component Corner: Shape {
+        id: corner
+        preferredRendererType: Shape.CurveRenderer
 
-		property real radius: 25
+        property real radius: 25
 
-		ShapePath {
-			strokeWidth: 0
-			fillColor: Qt.tint(Qt.alpha(root.mColor, 1.0), "#d6c5b2")
-    
+        ShapePath {
+            strokeWidth: 0
+            fillColor: Qt.tint(Qt.alpha(root.mColor, 1.0), "#d6c5b2")
+
             startX: corner.radius
-				
-			PathArc {
-				relativeX: -corner.radius
-				relativeY: corner.radius
-				radiusX: corner.radius
-				radiusY: corner.radius
-				direction: PathArc.Counterclockwise
-			}
 
-			PathLine {
-				relativeX: 0
-    			relativeY: -corner.radius
-			}
-			PathLine {
-				relativeX: corner.radius
-			    relativeY: 0
-			}
-		}
-	}
+            PathArc {
+                relativeX: -corner.radius
+                relativeY: corner.radius
+                radiusX: corner.radius
+                radiusY: corner.radius
+                direction: PathArc.Counterclockwise
+            }
+
+            PathLine {
+                relativeX: 0
+                relativeY: -corner.radius
+            }
+            PathLine {
+                relativeX: corner.radius
+                relativeY: 0
+            }
+        }
+    }
 }

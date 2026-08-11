@@ -60,22 +60,12 @@ Rectangle {
         hoverEnabled: true
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onClicked: (mouse) => {
-            if ((mouse.button) == Qt.LeftButton){
-                return Bluetooth.toggleEnabled();
-            }
-            if ((mouse.button == Qt.RightButton)) {
-                if (Bluetooth.defaultAdapter)
-                return wifiListProc.running = true;
-            }
-
-            return;
-        }
+        onClicked: Bluetooth.toggleEnabled()
+        onPressAndHold: btListProc.running = true
     }
 
     Process {
-        id: wifiListProc
+        id: btListProc
         command: ["qs", "ipc", "call", "btList", "toggleVisible"]
     }
 }
