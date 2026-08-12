@@ -9,7 +9,7 @@ Singleton {
     id: root
 
     property var list: []
-    property var decodeQueue: []
+    property var decode: []
     property bool decoding: false
 
     Process {
@@ -41,13 +41,16 @@ Singleton {
                     });
                 }
                 root.list = entries;
-                var queue = [];
+                var q = [];
                 for (var j = 0; j < entries.length; j++) {
                     if (entries[j].imgType !== "")
-                        queue.push({ id: entries[j].id, mimeType: entries[j].imgType });
+                    q.push({ 
+                        id: entries[j].id,
+                        mimeType: entries[j].imgType
+                    });
                 }
-                root.decodeQueue = queue;
-                root.processQueue();
+                root.decode = q;
+                root.process();
             }
         }
     }
@@ -56,31 +59,35 @@ Singleton {
         id: decodeProc
         stdout: StdioCollector {
             onStreamFinished: {
-                var current = root.decodeQueue[0];
-                root.decodeQueue = root.decodeQueue.slice(1);
-                root.applyPreview(current.id, current.mimeType, this.text.trim());
+                var cur = root.decode[0];
+                root.decode = root.decode.slice(1);
+                root.apply(
+                    cur.id,
+                    cur.mimeType, 
+                    this.text.trim()
+                );
                 root.decoding = false;
-                root.processQueue();
+                root.process();
             }
         }
     }
 
-    function processQueue() {
-        if (root.decoding || root.decodeQueue.length === 0)
+    function process() {
+        if (root.decoding || root.decode.length === 0)
             return;
         root.decoding = true;
-        var next = root.decodeQueue[0];
-        decodeProc.command = ["bash", "-c", "cliphist decode " + next.id + " | base64 -w 0"];
+        var next = root.decode[0];
+        decodeProc.command = ["sh", "-c", `cliphist decode ${next.id} | base64 -w 0`];
         decodeProc.running = true;
     }
 
-    function applyPreview(id, mimeType, base64Data) {
+    function apply(id, mimeType, base64Data) {
         root.list = root.list.map(function (entry) {
             if (entry.id !== id)
                 return entry;
-            var copy = Object.assign({}, entry);
-            copy.previewSource = "data:image/" + mimeType + ";base64," + base64Data;
-            return copy;
+            var cp = Object.assign({}, entry);
+            cp.previewSource = `data:image/${mimeType};base64,${base64Data}`;
+            return cp;
         });
     }
 

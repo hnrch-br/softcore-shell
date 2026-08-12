@@ -33,7 +33,7 @@ ListView {
         color: isSelected ? Qt.tint(root.sColor, "#cced752b") : "transparent"
         anchors.horizontalCenter: parent.horizontalCenter
         implicitWidth: isSelected ? clipList.width : clipList.width - 20
-        implicitHeight: (isSelected && entryImg.visible) ? 70 : isSelected ? 46 : 42
+        implicitHeight: (isSelected && entryImg.visible) ? 90 : isSelected ? 46 : 42
         radius: 20
 
         Behavior on implicitHeight {
@@ -67,8 +67,8 @@ ListView {
                 id: entryImg
                 visible: entry.previewSource !== ""
                 source: entry.previewSource
-                Layout.preferredWidth: isSelected ? 70 : 32
-                Layout.preferredHeight: isSelected ? 70 : 32
+                Layout.preferredWidth: isSelected ? 86 : 32
+                Layout.preferredHeight: isSelected ? 86 : 32
                 fillMode: Image.PreserveAspectFit
             }
 
