@@ -13,6 +13,15 @@ Singleton {
     property bool decoding: false
 
     Process {
+        id: watchProc
+        command: ["sh", "-c", "wl-paste --watch echo x"]
+        running: true
+        stdout: SplitParser {
+            onRead: line => root.refresh()
+        }
+    }
+
+    Process {
         id: listProc
         command: ["cliphist", "list"]
         stdout: StdioCollector {
@@ -93,6 +102,12 @@ Singleton {
 
     function copyEntry(id) {
         Quickshell.execDetached(["sh", "-c", `cliphist decode ${id} | wl-copy`])
+    }
+
+    function refresh() {
+        root.decode = [];
+        root.decoding = false;
+        listProc.running = true;
     }
  
     Component.onCompleted: listProc.running = true
