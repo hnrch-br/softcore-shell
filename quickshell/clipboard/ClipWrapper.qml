@@ -14,8 +14,27 @@ Scope {
     id: root
 
     property bool isOpen: false
+    property int selectedIndex: 0
+
     readonly property color mColor: "#3a2b2b"
     readonly property color sColor: "#ccfaebd7"
+
+    property var entries: Clip.list
+
+    function moveSelection(delta) {
+        if (root.entries.length === 0)
+            return;
+        var n = root.selectedIndex + delta;
+        if (n < 0)
+            n = 0;
+        if (n > root.entries.length - 1)
+            n = root.entries.length - 1;
+        root.selectedIndex = n;
+    }
+
+    onIsOpenChanged: {
+        root.selectedIndex = 0;
+    }
 
     LazyLoader {
         loading: !root.isOpen
@@ -61,6 +80,25 @@ Scope {
                 topLeftRadius: 25
                 topRightRadius: 25
 
+                focus: true
+
+                Keys.onUpPressed: root.moveSelection(-1)
+                Keys.onDownPressed: root.moveSelection(1)
+                Keys.onPressed: e => {
+                    if (e.key === Qt.Key_Return || e.key === Qt.Key_Enter) {
+                        var entry = root.entries[root.selectedIndex];
+                        if (entry) {
+                            Clip.copyEntry(entry.id);
+                            root.isOpen = false;
+                        }
+                        e.accepted = true;
+                    }
+                    if (e.key === Qt.Key_Escape) {
+                        root.isOpen = false;
+                        e.accepted = true;
+                    }
+                }
+
                 Rectangle {
                     id: listRect
 
@@ -77,7 +115,9 @@ Scope {
                         bottomMargin: 10
                     }
 
-                    ClipList {}
+                    ClipList {
+                        id: clipList
+                    }
                 }
 
                 Corner {
