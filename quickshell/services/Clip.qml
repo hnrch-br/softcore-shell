@@ -53,10 +53,10 @@ Singleton {
                 var q = [];
                 for (var j = 0; j < entries.length; j++) {
                     if (entries[j].imgType !== "")
-                    q.push({ 
-                        id: entries[j].id,
-                        mimeType: entries[j].imgType
-                    });
+                        q.push({
+                            id: entries[j].id,
+                            mimeType: entries[j].imgType
+                        });
                 }
                 root.decode = q;
                 root.process();
@@ -70,11 +70,7 @@ Singleton {
             onStreamFinished: {
                 var cur = root.decode[0];
                 root.decode = root.decode.slice(1);
-                root.apply(
-                    cur.id,
-                    cur.mimeType, 
-                    this.text.trim()
-                );
+                root.apply(cur.id, cur.mimeType, this.text.trim());
                 root.decoding = false;
                 root.process();
             }
@@ -101,7 +97,7 @@ Singleton {
     }
 
     function copyEntry(id) {
-        Quickshell.execDetached(["sh", "-c", `cliphist decode ${id} | wl-copy`])
+        Quickshell.execDetached(["sh", "-c", `cliphist decode ${id} | wl-copy`]);
     }
 
     function refresh() {
@@ -109,6 +105,6 @@ Singleton {
         root.decoding = false;
         listProc.running = true;
     }
- 
+
     Component.onCompleted: listProc.running = true
 }

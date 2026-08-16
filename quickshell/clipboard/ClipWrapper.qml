@@ -19,7 +19,16 @@ Scope {
     readonly property color mColor: "#3a2b2b"
     readonly property color sColor: "#ccfaebd7"
 
-    property var entries: Clip.list
+    property var entries: results(Clip.list, query)
+    property string query: ""
+
+    function results(list, q): void {
+        if (q.length === 0) {
+            list;
+        }
+        const f = q.toLowerCase();
+        return list.filter(entry => entry.content && entry.content.toLowerCase().includes(f));
+    }
 
     function moveSelection(delta) {
         if (root.entries.length === 0)
@@ -30,10 +39,12 @@ Scope {
         if (n > root.entries.length - 1)
             n = root.entries.length - 1;
         root.selectedIndex = n;
-    }
+    } 
 
     onIsOpenChanged: {
-        root.selectedIndex = 0;
+        if (root.isOpen) {
+            root.selectedIndex = 0;
+        }
     }
 
     LazyLoader {
@@ -76,11 +87,8 @@ Scope {
                 anchors.bottom: parent.bottom
 
                 implicitWidth: 500
-                implicitHeight: 260
                 topLeftRadius: 25
                 topRightRadius: 25
-
-                focus: true
 
                 Keys.onUpPressed: root.moveSelection(-1)
                 Keys.onDownPressed: root.moveSelection(1)
@@ -99,13 +107,15 @@ Scope {
                     }
                 }
 
+                ClipSearch {}
+
                 Rectangle {
                     id: listRect
 
                     implicitWidth: parent.width - 16
-                    implicitHeight: parent.height - 18
+                    implicitHeight: parent.height - 60
 
-                    radius: 20
+                    radius: 10
 
                     color: Qt.darker(root.mColor, 0.85)
 
@@ -115,9 +125,7 @@ Scope {
                         bottomMargin: 10
                     }
 
-                    ClipList {
-                        id: clipList
-                    }
+                    ClipList {}
                 }
 
                 Corner {

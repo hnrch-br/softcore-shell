@@ -12,9 +12,8 @@ ListView {
     spacing: 2
     clip: true
     boundsBehavior: Flickable.StopAtBounds
-    model: Clip.list.length
+    model: root.entries
     anchors.horizontalCenter: parent.horizontalCenter
-    keyNavigationEnabled: false
 
     Connections {
         target: root
@@ -34,7 +33,7 @@ ListView {
         anchors.horizontalCenter: parent.horizontalCenter
         implicitWidth: isSelected ? clipList.width : clipList.width - 20
         implicitHeight: (isSelected && entryImg.visible) ? 90 : isSelected ? 46 : 42
-        radius: 20
+        radius: 10
 
         Behavior on implicitHeight {
             NumberAnimation {

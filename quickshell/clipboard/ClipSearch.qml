@@ -1,29 +1,31 @@
-pragma ComponentBehavior: Bound
-
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
 import QtQuick.Controls
 
 Rectangle {
-    id: fieldRect
-    implicitWidth: parent.width - 20
-    implicitHeight: 45
-
-    color: root.sColor
-    radius: 15
+    id: searchRect
 
     anchors {
         horizontalCenter: parent.horizontalCenter
         top: parent.top
-        topMargin: 10
+        topMargin: 7
     }
 
+    implicitWidth: parent.width - 16
+    implicitHeight: 38
+
+    color: root.sColor
+    bottomLeftRadius: 10
+    bottomRightRadius: 10
+    topLeftRadius: 20
+    topRightRadius: 20
+
     Connections {
-        target: launcher
+        target: clipboard
 
         function onVisibleChanged(): void {
-            field.text = "";
+            field.text = ""
         }
     }
 
@@ -80,12 +82,11 @@ Rectangle {
                 function onCursorPositionChanged(): void {
                     cursorDelegate.resetBlink();
                 }
-            }
+            } 
         }
-
         onTextChanged: {
-            root.query = text;
             root.selectedIndex = 0;
+            root.query = text;
         }
     }
 }
