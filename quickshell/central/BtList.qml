@@ -136,7 +136,6 @@ ColumnLayout {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 10
-                anchors.right: parent.right
                 spacing: 0
                 Text {
                     text: "explore"
@@ -200,12 +199,13 @@ ColumnLayout {
                         : Qt.alpha(root.mColor, 0.6)
 
                     Rectangle {
+                        id: optRect
                         z: 1
                         opacity: pairedHover.hovered
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         implicitHeight: 38
-                        implicitWidth: pairedHover.hovered ? 68 : 1
+                        implicitWidth: pairedHover.hovered ? 100 : 1
                         radius: 4
                         color: Qt.alpha(root.mColor, 0.3)
                         Behavior on opacity {
@@ -253,16 +253,38 @@ ColumnLayout {
                                     anchors.fill: parent
                                     cursorShape: Qt.PointingHandCursor
                                     onClicked: pairedRow.modelData.forget()
-                                    
-                                    Text {
-                                        anchors.centerIn: parent
-                                        text: "remove"
-                                        font {
-                                            family: "Material Symbols Outlined"
-                                            pointSize: 8
-                                        }
-                                        color: root.sColor
+                                }
+
+                                Text {
+                                    anchors.centerIn: parent
+                                    text: "remove"
+                                    font {
+                                        family: "Material Symbols Outlined"
+                                        pointSize: 8
                                     }
+                                    color: root.sColor
+                                }
+                            }
+                            Rectangle {
+                                implicitWidth: root.size
+                                implicitHeight: root.size
+                                radius: 8
+                                color: Qt.alpha(root.mColor, 0.6)
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    cursorShape: Qt.PointingHandCursor
+                                    onClicked: pairedRow.modelData.trusted = !pairedRow.modelData.trusted
+                                }
+                                
+                                Text {
+                                    anchors.centerIn: parent
+                                    text: pairedRow.modelData.trusted ? "block" : "handshake"
+                                    font {
+                                        family: "Material Symbols Outlined"
+                                        pointSize: 8
+                                    }
+                                    color: root.sColor
                                 }
                             }
                         }
@@ -271,11 +293,12 @@ ColumnLayout {
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.left
-                        anchors.leftMargin: 5
+                        anchors.leftMargin: 5 
+                        anchors.right: parent.right
                         text: pairedRow.modelData.name || pairedRow.modelData.address
                         font {
                             family: "Pixelify Sans"
-                            pixelSize: 12
+                            pixelSize: 14
                         }
                         color: pairedHover.hovered
                             ? Qt.alpha(root.mColor, 1.0)
@@ -335,7 +358,7 @@ ColumnLayout {
                         text: listRow.modelData.name || listRow.modelData.address
                         font {
                             family: "Pixelify Sans"
-                            pixelSize: 12
+                            pixelSize: 14
                         }
                         color: listHover.hovered 
                             ? Qt.alpha(root.mColor, 1.0)
