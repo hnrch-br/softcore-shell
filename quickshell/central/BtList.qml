@@ -167,17 +167,37 @@ ColumnLayout {
                 onClicked: Bluetooth.toggleDiscoverable()
             }
         }
-    }
+    } 
 
     Rectangle {
         implicitWidth: 275
         implicitHeight: 395
         radius: 10
         color: root.mColor
-        Layout.alignment: Qt.AlignHCenter 
+        Layout.alignment: Qt.AlignHCenter
         ColumnLayout {
             anchors.fill: parent
             spacing: 4
+            
+            Text {
+                text: "Paired devices"
+                font {
+                    family: "Sixtyfour"
+                    pixelSize: 10
+                }
+                color: root.sColor
+                Layout.topMargin: 5
+                Layout.leftMargin: 10
+            }
+            
+            
+            Rectangle {
+                implicitWidth: 255
+                implicitHeight: 1
+                color: Qt.alpha(root.mColor, 0.9)
+                Layout.alignment: Qt.AlignHCenter
+            }
+
             ListView {
                 id: pairedList
                 model: Bluetooth.pairedDevices
@@ -298,7 +318,7 @@ ColumnLayout {
                         text: pairedRow.modelData.name || pairedRow.modelData.address
                         font {
                             family: "Pixelify Sans"
-                            pixelSize: 14
+                            pixelSize: 16
                         }
                         color: pairedHover.hovered
                             ? Qt.alpha(root.mColor, 1.0)
@@ -310,13 +330,24 @@ ColumnLayout {
                     }
                 }
             }
+
+            Text {
+                text: "Found devices"
+                font {
+                    family: "Sixtyfour"
+                    pixelSize: 10
+                }
+                color: root.sColor
+                Layout.topMargin: 5
+                Layout.leftMargin: 10
+            }
+
             
             Rectangle {
-                implicitWidth: 275
+                implicitWidth: 255
                 implicitHeight: 1
                 color: Qt.alpha(root.mColor, 0.9)
                 Layout.alignment: Qt.AlignHCenter
-                visible: pairedList.count > 0
             }
 
             ListView {
