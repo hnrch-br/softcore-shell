@@ -30,12 +30,12 @@ Item {
             delegate: Rectangle {
                 id: wsRect 
                 required property var modelData
-                property bool isActive: modelData.id === root.focusedWorkspace
+                property bool isFocused: modelData.id === root.focusedWorkspace 
 
                 radius: 5
-                implicitWidth: wsRect.isActive ? 56 : 30
-                implicitHeight: wsRect.isActive ? 26 : 24
-                color: wsRect.isActive ? "#ccfaebd7" : "#cc3d3636"
+                implicitWidth: wsRect.isFocused ? 56 : 30
+                implicitHeight: wsRect.isFocused ? 26 : 24
+                color: wsRect.isFocused ? "#ccfaebd7" : "#cc3d3636"
 
                 Behavior on implicitWidth {
                     NumberAnimation {
@@ -63,15 +63,29 @@ Item {
                     anchors.centerIn: parent
                     leftPadding: 2.3
                     text: wsRect.modelData.id
-                    color: wsRect.isActive ? "#ff3d3636" : "#fffaebd7"
-                    font { family: "Bytesized"; pixelSize: wsRect.isActive ? 20 : 18 ; weight: wsRect.isActive ? 650 : Font.Normal }
+                    color: wsRect.isFocused
+                        ? "#ff3d3636"
+                        : "#fffaebd7"
+                    font { 
+                        family: "Bytesized"
+                        pixelSize: wsRect.isFocused 
+                            ? 20
+                            : 18
+                        weight: wsRect.isFocused
+                            ? 650 
+                            : Font.Normal
+                    }
                 }
 
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
                     hoverEnabled: true
-                    onClicked: Hyprland.dispatch(`hl.dsp.focus({ workspace = ${wsRect.modelData.id} })`)
+                    onClicked: { 
+                        Hyprland.dispatch(`hl.dsp.focus(
+                            { workspace = ${wsRect.modelData.id} }
+                        )`)
+                    }
                 }
             }
         }

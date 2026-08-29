@@ -40,7 +40,7 @@ RowLayout {
     function restartMarquee() {
         if (!isPlaying) {
             marqueeAnim.stop();
-            trackText.x = Qt.binding(() => (marqueeContainer.width - trackText.implicitWidth) / 2)        
+            trackText.x = Qt.binding(() => (marqueeContainer.width - trackText.implicitWidth) / 2)
         } else {
             marqueeAnim.start();
         }

@@ -51,8 +51,8 @@ Item {
                 text: Qt.formatDateTime(clock.date, "HH:mm")
                 color: root.mTxtColor
                 font {
-                    family: "Ndot 55 Caps"
-                    pixelSize: 40
+                    family: "Ndot 55"
+                    pixelSize: 45
                 }
                 bottomPadding: 0
             }

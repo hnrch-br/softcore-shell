@@ -7,6 +7,7 @@ import QtQuick.Controls
 DayOfWeekRow {
     id: row
     locale: root.locale
+    Layout.topMargin: 8
     Layout.fillWidth: true
     opacity: root.visible ? 1 : 0
     spacing: 3

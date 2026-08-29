@@ -43,12 +43,12 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 Text {
                     id: iconCPU
-        	    	text: ""
+        	    text: ""
                     color: Qt.alpha(root.sColor, 1.0)
-                    font.pointSize: 17.4
-                    bottomPadding: 3
+		    font.pointSize: 10.2
+		    bottomPadding: 0
                     font.family: "JetBrainsMono Nerd Font Mono"
-    		    }
+    		}
             }
             RowLayout {
                 anchors.verticalCenter: parent.verticalCenter
@@ -82,8 +82,8 @@ Item {
                     id: iconGPU
                     text: "󰢮"
                     color: Qt.alpha(root.sColor, 1.0)
-                    font.pointSize: 18
-                    bottomPadding: 3
+		    font.pointSize: 13.2
+		    bottomPadding: 0
                     font.family: "JetBrainsMono Nerd Font Mono"
                 }
             }
@@ -119,8 +119,8 @@ Item {
                     id: iconMEM
                     text: ""
                     color: Qt.alpha(root.sColor, 1.0)
-                    font.pointSize: 16
-                    bottomPadding: 1.8
+		    font.pointSize: 9.2
+		    bottomPadding: 0
                     font.family: "JetBrainsMono Nerd Font Mono"
                 }
             }

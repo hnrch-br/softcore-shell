@@ -13,7 +13,7 @@ MonthGrid {
     spacing: 3
     locale: root.locale
     opacity: root.visible ? 1 : 0
-    Layout.topMargin: 7
+    Layout.topMargin: 0
 
     delegate: Rectangle {
         id: gridRect
