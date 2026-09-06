@@ -27,11 +27,12 @@ ListView {
         property var entry: root.entries[index]
         property bool isSelected: index === root.selectedIndex
 
-        anchors.horizontalCenter: parent.horizontalCenter
         implicitWidth: isSelected ? appList.width : appList.width - 20
         implicitHeight: isSelected ? 46 : 42
         radius: 10
-        color: isSelected ? Qt.tint(root.sColor, "#cced752b") : "transparent"
+        color: isSelected
+            ? Qt.tint(root.sColor, "#cced752b")
+            : "transparent"
 
         Behavior on implicitHeight {
             NumberAnimation {
@@ -62,13 +63,17 @@ ListView {
 
             IconImage {
                 implicitSize: 32
-                source: listRow.entry ? Quickshell.iconPath(listRow.entry.icon, true) : ""
+                source: listRow.entry
+                    ? Quickshell.iconPath(listRow.entry.icon, true)
+                    : ""
                 backer.fillMode: Image.PreserveAspectCrop
                 backer.smooth: true
                 layer.enabled: true
                 layer.effect: MultiEffect {
                     colorization: 1.0
-                    colorizationColor: listRow.isSelected ? "transparent" : Qt.tint(Qt.alpha(root.mColor, 0.5), "#cced752b")
+                    colorizationColor: listRow.isSelected 
+                        ? "transparent"
+                        : Qt.tint(Qt.alpha(root.mColor, 0.5), "#cced752b")
                 }
                 asynchronous: true
             }
@@ -77,7 +82,9 @@ ListView {
                 Layout.fillWidth: true
                 elide: Text.ElideRight
                 text: listRow.entry ? listRow.entry.name : ""
-                color: listRow.isSelected ? Qt.alpha(root.mColor, 1.0) : root.sColor
+                color: listRow.isSelected
+                    ? Qt.alpha(root.mColor, 1.0)
+                    : root.sColor
                 font.family: "Pixelify Sans"
                 font.pixelSize: 16
             }

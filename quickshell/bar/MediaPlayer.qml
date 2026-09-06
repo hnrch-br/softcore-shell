@@ -12,7 +12,9 @@ import qs.bar
 
 RowLayout {
     id: root
-    anchors.verticalCenter: parent.verticalCenter
+
+    Layout.alignment: Qt.AlignVCenter
+
     readonly property bool isPlaying: Players.activePlayer?.isPlaying ?? false
     readonly property string trackTitleOutput: Players.activePlayer?.trackTitle ? Players.activePlayer?.trackTitle : "none"
     readonly property string trackArtistOutput: Players.activePlayer?.trackArtist ? Players.activePlayer?.trackArtist + ": " : "none: "

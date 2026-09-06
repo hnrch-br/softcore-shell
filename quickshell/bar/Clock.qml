@@ -48,18 +48,13 @@ Item {
 
             Text {
                 anchors.centerIn: parent
-                text: Qt.formatDateTime(clock.date, "HH:mm")
+                text: Time.format("HH:mm")
                 color: root.mTxtColor
                 font {
                     family: "Ndot 55"
-                    pixelSize: 45
+                    pixelSize: 42
                 }
-                bottomPadding: 0
-            }
-
-            SystemClock {
-                id: clock
-                precision: SystemClock.Minutes
+                topPadding: 0
             }
         }
 

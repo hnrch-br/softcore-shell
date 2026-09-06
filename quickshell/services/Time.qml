@@ -1,0 +1,24 @@
+pragma Singleton
+import Quickshell
+import QtQuick
+
+Singleton {
+    id: root
+
+    property alias enabled: clock.enabled
+    readonly property date date: clock.date
+    readonly property int years: date.getFullYear()
+    readonly property int months: date.getMonth()
+    readonly property int hours: clock.hours
+    readonly property int minutes: clock.minutes
+    readonly property int seconds: clock.seconds
+
+    function format(fmt: string): string {
+        return Qt.formatDateTime(clock.date, fmt);
+    }
+
+    SystemClock {
+        id: clock
+        precision: SystemClock.Seconds
+    }
+}

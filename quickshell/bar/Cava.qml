@@ -10,7 +10,7 @@ RowLayout {
     property var audioBars: []
     readonly property int bars: 16
 
-    anchors.verticalCenter: parent.verticalCenter
+    Layout.alignment: Qt.AlignVCenter
 
     Process {
         id: cavaProc

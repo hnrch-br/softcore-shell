@@ -10,7 +10,8 @@ Singleton {
 
     property var list: []
     property var decode: []
-    property bool decoding: false
+    property var curDec: []
+    property bool isDecoding: false
 
     Process {
         id: watchProc
@@ -68,41 +69,43 @@ Singleton {
         id: decodeProc
         stdout: StdioCollector {
             onStreamFinished: {
-                var cur = root.decode[0];
-                root.decode = root.decode.slice(1);
-                root.apply(cur.id, cur.mimeType, this.text.trim());
-                root.decoding = false;
+                var cur = root.curDec;
+                root.curDec = null;
+                root.isDecoding = false;
+                if (cur) {
+                    root.apply(cur.id, cur.mimeType, this.text.trim());
+                }
                 root.process();
             }
         }
     }
 
     function process() {
-        if (root.decoding || root.decode.length === 0)
+        if (root.isDecoding || root.decode.length === 0)
             return;
-        root.decoding = true;
-        var next = root.decode[0];
-        decodeProc.command = ["sh", "-c", `cliphist decode ${next.id} | base64 -w 0`];
+        root.isDecoding = true;
+        root.curDec = root.decode[0];
+        root.decode = root.decode.slice(1);
+        decodeProc.command = ["sh", "-c", `cliphist decode ${root.curDec.id} | base64 -w 0`];
         decodeProc.running = true;
     }
 
-    function apply(id, mimeType, base64Data) {
+    function apply(id: int, mimeType: string, base64Data: string) {
         root.list = root.list.map(function (entry) {
-            if (entry.id !== id)
-                return entry;
+            if (entry.id !== id) return entry;
             var cp = Object.assign({}, entry);
             cp.previewSource = `data:image/${mimeType};base64,${base64Data}`;
             return cp;
         });
     }
 
-    function copyEntry(id) {
+    function copyEntry(id: int) {
         Quickshell.execDetached(["sh", "-c", `cliphist decode ${id} | wl-copy`]);
     }
 
     function refresh() {
         root.decode = [];
-        root.decoding = false;
+        root.isDecoding = false;
         listProc.running = true;
     }
 

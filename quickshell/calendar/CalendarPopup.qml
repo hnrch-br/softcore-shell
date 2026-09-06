@@ -8,6 +8,7 @@ import QtQuick.Shapes
 import QtQuick.Controls
 
 import qs.bar
+import qs.services
 
 PopupWindow {
     id: root
@@ -15,16 +16,16 @@ PopupWindow {
     implicitWidth: 400
     color: "transparent"
 
-    property date currentDate: new Date()
-    property date selectedDate: new Date()
-    property int month: currentDate.getMonth()
-    property int year: currentDate.getFullYear()
-    property var locale: Qt.locale()
+    property date currentDate: Time.date
+    property date selectedDate: Time.date
+    property int month: Time.months
+    property int year: Time.years
+    readonly property var locale: Qt.locale()
 
-    property color mColor: "#faebd7"
-    property color sColor: "#3a2b2a"
-    property color mTxtColor: "#ff3d3636"
-    property color sTxtColor: "#ffcdcdcd"
+    readonly property color mColor: "#faebd7"
+    readonly property color sColor: "#3a2b2a"
+    readonly property color mTxtColor: "#ff3d3636"
+    readonly property color sTxtColor: "#ffcdcdcd"
 
     HyprlandFocusGrab {
         active: root.isOpen
@@ -51,8 +52,7 @@ PopupWindow {
     }
 
     onIsOpenChanged: {
-        if (isOpen)
-            resetDate();
+        if (isOpen) return resetDate();
     }
 
     mask: Region {

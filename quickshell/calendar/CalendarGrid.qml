@@ -22,10 +22,18 @@ MonthGrid {
 
         required property var model
         property bool isCurrentMonth: model.month === root.month
-        property bool isToday: model.date.toDateString() === root.currentDate.toDateString()
-        property bool isSelected: model.date.toDateString() === root.selectedDate.toDateString()
+        property bool isToday: {
+            model.date.toDateString() === root.currentDate.toDateString()
+        }
+        property bool isSelected: { 
+            model.date.toDateString() === root.selectedDate.toDateString()
+        }
 
-        color: isSelected ? Qt.tint(root.sColor, "#cced752b") : isToday ? Qt.tint(root.sColor, "#af895f") : "transparent"
+        color: isSelected
+            ? Qt.tint(root.sColor, "#cced752b") 
+            : isToday
+            ? Qt.tint(root.sColor, "#af895f")
+            : "transparent"
         radius: 4
 
         MouseArea {

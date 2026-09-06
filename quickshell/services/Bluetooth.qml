@@ -24,10 +24,10 @@ Singleton {
         root.defaultAdapter.discoverable = !root.defaultAdapter.discoverable
     }
 
-    readonly property string deviceName: root.defaultAdapter.enabled ? (root.activeDevice?.name ?? "No device") : "Off"
-    readonly property string btStatus: root.defaultAdapter.enabled ? "On" : "Off"
-    readonly property string scanningStatus: root.defaultAdapter.discovering ? "Yes" : "No"
-    readonly property string discoverStatus: root.defaultAdapter.discoverable ? "Yes" : "No"
+    readonly property string deviceName: root.defaultAdapter?.enabled ? (root.activeDevice?.name ?? "No device") : "Off"
+    readonly property string btStatus: root.defaultAdapter?.enabled ? "On" : "Off"
+    readonly property string scanningStatus: root.defaultAdapter?.discovering ? "Yes" : "No"
+    readonly property string discoverStatus: root.defaultAdapter?.discoverable ? "Yes" : "No"
     readonly property list<BluetoothDevice> pairedDevices: root.defaultAdapter?.devices?.values.filter(d => d.paired) ?? []
     readonly property list<BluetoothDevice> devices: root.defaultAdapter?.devices?.values.filter(d => !d.paired) ?? []
     readonly property BluetoothDevice activeDevice: root.pairedDevices.find(d => d.connected) ?? null

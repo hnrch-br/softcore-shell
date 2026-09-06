@@ -58,7 +58,7 @@ RowLayout {
     }
 
     Rectangle {
-        implicitWidth: 125
+        implicitWidth: 150
         implicitHeight: 20
         color: root.sColor
         radius: 2
