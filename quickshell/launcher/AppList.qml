@@ -27,26 +27,12 @@ ListView {
         property var entry: root.entries[index]
         property bool isSelected: index === root.selectedIndex
 
-        implicitWidth: isSelected ? appList.width : appList.width - 20
+        implicitWidth: 480
         implicitHeight: isSelected ? 46 : 42
         radius: 10
         color: isSelected
             ? Qt.tint(root.sColor, "#cced752b")
             : "transparent"
-
-        Behavior on implicitHeight {
-            NumberAnimation {
-                duration: 200
-                easing.type: Easing.OutQuad
-            }
-        }
-
-        Behavior on implicitWidth {
-            NumberAnimation {
-                duration: 200
-                easing.type: Easing.OutQuad
-            }
-        }
 
         Behavior on color {
             ColorAnimation {
@@ -57,9 +43,16 @@ ListView {
 
         RowLayout {
             anchors.fill: parent
-            anchors.leftMargin: 8
+            anchors.leftMargin: listRow.isSelected ? 20 : 8
             anchors.rightMargin: 8
             spacing: 10
+
+            Behavior on anchors.leftMargin {
+                NumberAnimation {
+                    duration: 100
+                    easing.type: Easing.OutQuad
+                }
+            }
 
             IconImage {
                 implicitSize: 32

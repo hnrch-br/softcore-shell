@@ -31,19 +31,19 @@ Singleton {
 
     function glyph(codeCur, isDay) {
         if (codeCur === 0)
-            return isDay ? "sunny" : "nightlight";
+            return isDay ? "sun" : "moon";
         if (codeCur <= 2)
-            return isDay ? "partly_cloudy_day" : "partly_cloudy_night";
+            return isDay ? "cloud-sun" : "cloud-moon";
         if (codeCur === 3)
             return "cloud";
         if (codeCur === 45 || codeCur === 48)
-            return "foggy";
+            return "cloud-fog";
         if (codeCur >= 95)
-            return "thunderstorm";
+            return "zap";
         if ((codeCur >= 71 && codeCur <= 77) || codeCur === 85 || codeCur === 86)
             return "snowflake";
         if ((codeCur >= 51 && codeCur <= 67) || (codeCur >= 80 && codeCur <= 82))
-            return "rainy";
+            return "cloud-rain-wind";
         return "cloud";
     }
 

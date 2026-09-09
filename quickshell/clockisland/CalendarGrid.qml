@@ -12,7 +12,6 @@ MonthGrid {
     year: root.year
     spacing: 3
     locale: root.locale
-    opacity: root.visible ? 1 : 0
     Layout.topMargin: 0
 
     delegate: Rectangle {
@@ -61,18 +60,6 @@ MonthGrid {
                 : Qt.darker(root.mTxtColor, 0.35)
             font.bold: parent.isToday ? true : false
             leftPadding: 3.1
-
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: 200
-                }
-            }
-        }
-    }
-
-    Behavior on opacity {
-        NumberAnimation {
-            duration: 200
         }
     }
 }

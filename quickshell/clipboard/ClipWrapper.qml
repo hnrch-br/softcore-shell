@@ -86,7 +86,6 @@ Scope {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
 
-                implicitWidth: 500
                 topLeftRadius: 25
                 topRightRadius: 25
 
@@ -148,6 +147,7 @@ Scope {
                         PropertyChanges {
                             target: clipWrapper
                             implicitHeight: 260
+                            implicitWidth: 500
                             opacity: 1
                         }
                     },
@@ -156,6 +156,7 @@ Scope {
                         PropertyChanges {
                             target: clipWrapper
                             implicitHeight: 0
+                            implicitWidth: 0
                             opacity: 0
                         }
                     }
@@ -179,6 +180,12 @@ Scope {
                                 }
                                 NumberAnimation {
                                     target: clipWrapper
+                                    property: "implicitWidth"
+                                    duration: 100
+                                    easing.type: Easing.OutQuad
+                                }
+                                NumberAnimation {
+                                    target: clipWrapper
                                     property: "opacity"
                                     duration: 200
                                     easing.type: Easing.OutQuad
@@ -195,6 +202,12 @@ Scope {
                                     target: clipWrapper
                                     property: "implicitHeight"
                                     duration: 150
+                                    easing.type: Easing.OutQuad
+                                }
+                                NumberAnimation {
+                                    target: clipWrapper
+                                    property: "implicitWidth"
+                                    duration: 100
                                     easing.type: Easing.OutQuad
                                 }
                                 NumberAnimation {

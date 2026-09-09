@@ -5,7 +5,7 @@ import QtQuick.Shapes
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import qs.bar
+import qs.clockisland
 import qs.services
 
 Scope {
@@ -18,7 +18,6 @@ Scope {
         mask: Region {
         	Region { item: topLeft }
             Region { item: topRight }
-            Region { item: clock }
         }
 
         anchors {
@@ -57,7 +56,7 @@ Scope {
             }
         }
 
-        Clock { id: clock }
+        ClockIsland { id: clockisland }
 
         Rectangle {
             id: topRight
@@ -145,26 +144,13 @@ Scope {
         }
 
         Scope {
-    		PanelWindow {
-        		anchors.left: true
-        		implicitWidth: 0
-        		implicitHeight: topLeft.implicitHeight
-        	}
-        }
-        Scope {
         	PanelWindow {
         		anchors.top: true
         		implicitWidth: 0
-        		implicitHeight: 35
+                implicitHeight: 35
+                color: "transparent"
         	}
-        }
-        Scope {
-        	PanelWindow {
-        		anchors.right: true
-        		implicitWidth: 0
-        		implicitHeight: topRight.implicitHeight
-        	}
-        }
+        } 
     }
 }
 

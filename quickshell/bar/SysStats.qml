@@ -41,14 +41,16 @@ Item {
                 id: cpuRow
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                Text {
+                Image {
                     id: iconCPU
-        	    text: ""
-                    color: Qt.alpha(root.sColor, 1.0)
-		    font.pointSize: 10.2
-		    bottomPadding: 0
-                    font.family: "JetBrainsMono Nerd Font Mono"
-    		}
+                    Layout.preferredWidth: 14
+                    Layout.preferredHeight: 14
+                    source: Qt.resolvedUrl("../assets/components/cpu.svg")
+                    sourceSize.width: 14
+                    sourceSize.height: 14
+                    fillMode: Image.PreserveAspectFit
+                    smooth: true
+                }
             }
             RowLayout {
                 anchors.verticalCenter: parent.verticalCenter
@@ -78,13 +80,15 @@ Item {
                 id: gpuRow
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter 
-                Text {
+                Image {
                     id: iconGPU
-                    text: "󰢮"
-                    color: Qt.alpha(root.sColor, 1.0)
-		    font.pointSize: 13.2
-		    bottomPadding: 0
-                    font.family: "JetBrainsMono Nerd Font Mono"
+                    Layout.preferredWidth: 14
+                    Layout.preferredHeight: 14
+                    source: Qt.resolvedUrl("../assets/components/gpu.svg")
+                    sourceSize.width: 14
+                    sourceSize.height: 14
+                    fillMode: Image.PreserveAspectFit
+                    smooth: true
                 }
             }
             RowLayout {
@@ -115,13 +119,15 @@ Item {
                 id: ramRow
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                Text {
+                Image {
                     id: iconMEM
-                    text: ""
-                    color: Qt.alpha(root.sColor, 1.0)
-		    font.pointSize: 9.2
-		    bottomPadding: 0
-                    font.family: "JetBrainsMono Nerd Font Mono"
+                    Layout.preferredWidth: 14
+                    Layout.preferredHeight: 14
+                    source: Qt.resolvedUrl("../assets/components/memory-stick.svg")
+                    sourceSize.width: 14
+                    sourceSize.height: 14
+                    fillMode: Image.PreserveAspectFit
+                    smooth: true
                 }
             }
             RowLayout {

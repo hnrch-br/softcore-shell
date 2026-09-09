@@ -29,6 +29,8 @@ Scope {
             WlrLayershell.namespace: "centralPopup"
             exclusionMode: ExclusionMode.Ignore
 
+            visible: false
+
             mask: Region {
                 item: centralWrapper
             }
@@ -53,7 +55,6 @@ Scope {
                 onActivated: root.isOpen = false
             }
 
-            visible: false
             color: "transparent"
 
             anchors {

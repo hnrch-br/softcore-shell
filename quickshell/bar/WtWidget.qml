@@ -30,13 +30,13 @@ RowLayout {
                 color: "#ff3d3636"
                 font { family: "Sixtyfour"; pixelSize: 10 }
             }
-            Text {
+            Image {
                 id: icons
-                text: Weather.ready
-                    ? Weather.glyph(Weather.codeCur, Weather.isDay)
-                    : "..."
-                color: "#ff3d3636"
-                font { family: "Material Symbols Outlined"; pixelSize: 14 }
+                Layout.preferredWidth: 14
+                Layout.preferredHeight: 14
+                source: Weather.ready
+                    ? Qt.resolvedUrl("../assets/weather/" + Weather.glyph(Weather.codeCur, Weather.isDay) + ".svg")
+                    : ""
             }
         }
     }

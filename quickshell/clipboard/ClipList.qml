@@ -30,21 +30,13 @@ ListView {
         property bool isSelected: index === root.selectedIndex
 
         color: isSelected ? Qt.tint(root.sColor, "#cced752b") : "transparent"
-        anchors.horizontalCenter: parent.horizontalCenter
-        implicitWidth: isSelected ? clipList.width : clipList.width - 20
-        implicitHeight: (isSelected && entryImg.visible) ? 90 : isSelected ? 46 : 42
+        implicitWidth: 484
+        implicitHeight: isSelected ? 60 : 50
         radius: 10
 
         Behavior on implicitHeight {
             NumberAnimation {
-                duration: 200
-                easing.type: Easing.OutQuad
-            }
-        }
-
-        Behavior on implicitWidth {
-            NumberAnimation {
-                duration: 200
+                duration: 140
                 easing.type: Easing.OutQuad
             }
         }
@@ -58,17 +50,25 @@ ListView {
 
         RowLayout {
             anchors.fill: parent
-            anchors.leftMargin: 8
+            anchors.leftMargin: clipRow.isSelected ? 20 : 8
             anchors.rightMargin: 8
             spacing: 10
+
+            Behavior on anchors.leftMargin {
+                NumberAnimation {
+                    duration: 100
+                    easing.type: Easing.OutQuad
+                }
+            }
 
             Image {
                 id: entryImg
                 visible: entry.previewSource !== ""
                 source: entry.previewSource
-                Layout.preferredWidth: isSelected ? 86 : 32
-                Layout.preferredHeight: isSelected ? 86 : 32
+                Layout.preferredWidth: isSelected ? 58 : 50
+                Layout.preferredHeight: isSelected ? 58 : 50
                 fillMode: Image.PreserveAspectFit
+                smooth: true
             }
 
             Text {

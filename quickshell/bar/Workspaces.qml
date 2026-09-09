@@ -2,24 +2,12 @@ pragma ComponentBehavior: Bound
 
 import Quickshell
 import QtQuick
-import Quickshell.Wayland
-import Quickshell.Hyprland
 import QtQuick.Layouts
 
-Item {
-    id: root
+import qs.services
 
-    readonly property var workspaces: {
-        try { 
-            Hyprland.workspaces.values
-                .filter(workspace => workspace.id >= 0)
-                .sort((a, b) => a.id - b.id)
-        } catch (e) {
-            return;
-        }
-    }
-    readonly property var toplevels: Hyprland.toplevels
-    readonly property int minWorkspaces: 5
+Item {
+    id: root 
 
     implicitWidth: wsRow.implicitWidth
     implicitHeight: wsRow.implicitHeight
@@ -32,20 +20,41 @@ Item {
         }
     }
 
-    Connections {
-        target: Hyprland
-        function onRawEvent(event: HyprlandEvent): void {
-            const n = event.name;
-            if (n.endsWith("v2")) return;
+    property real wheelAccumulator: 0
 
-            if (["workspace", "moveworkspace", "activespecial", "focusedmon"].includes(n)) {
-                Hyprland.refreshWorkspaces();
+    Timer {
+        id: wsWheelTimer
+        interval: 200
+        onTriggered: root.wheelAccumulator = 0
+    }
+
+    WheelHandler {
+        acceptedModifiers: Qt.NoModifier
+        acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+        onWheel: (wheel) => {
+            wsWheelTimer.restart();
+            root.wheelAccumulator -= wheel.angleDelta.y;
+
+            const threshold = 120;
+            if (Math.abs(root.wheelAccumulator) < threshold) return;
+
+            const steps = Math.trunc(root.wheelAccumulator / threshold);
+            root.wheelAccumulator = root.wheelAccumulator % threshold;
+            
+            const list = Hypr.workspaces;
+            const count = Hypr.workspaceCount;
+            if (count <= 1) return;
+
+            let curIdx = list.findIndex(w => w.id === Hypr.focusedId);
+            if (curIdx < 0)
+                curIdx = steps > 0 ? count - 1 : 0;
+
+            const nextIdx = ((curIdx + steps) % count + count) % count;
+            const idx = list[nextIdx].id;
+
+            if (idx !== Hypr.focusedId) {
+                Hypr.focusWorkspace(idx);
             }
-            if (["openwindow", "closewindow", "movewindow"].includes(n)) {
-                Hyprland.refreshToplevels();
-            }
-            if (n.includes("workspace")) return Hyprland.refreshWorkspaces();
-            if (n.includes("window") || ["fullscreen", "changefloatingmode", "minimize"].includes(n));
         }
     }
 
@@ -55,18 +64,19 @@ Item {
         spacing: 6 
         Repeater {
             id: wsRepeater
+
             model: ScriptModel {
-                values: root.workspaces
+                values: Hypr.workspaces
             }
 
             delegate: Rectangle {
                 id: wsRect 
                 required property var modelData
-                property bool isFocused: wsRect.modelData.focused
+                property bool isFocused: wsRect.modelData.id === Hypr.focusedId
 
-                radius: 5
-                implicitWidth: wsRect.isFocused ? 56 : 30
-                implicitHeight: wsRect.isFocused ? 26 : 24
+                radius: 3
+                implicitWidth: wsRect.isFocused ? 18 : 10
+                implicitHeight: wsRect.isFocused ? 24 : 20
                 color: wsRect.isFocused
                     ? "#ccfaebd7"
                     : "#cc3d3636"
@@ -90,37 +100,7 @@ Item {
                         duration: 50;
                         easing.type: Easing.OutQuad
                     }
-                }
-
-                Text {
-                    id: wsNum
-                    anchors.centerIn: parent
-                    leftPadding: 2.3
-                    text: wsRect.modelData.id
-                    color: wsRect.isFocused
-                        ? "#ff3d3636"
-                        : "#fffaebd7"
-                    font { 
-                        family: "Bytesized"
-                        pixelSize: wsRect.isFocused 
-                            ? 20
-                            : 18
-                        weight: wsRect.isFocused
-                            ? 650 
-                            : Font.Normal
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    hoverEnabled: true
-                    onClicked: { 
-                        Hyprland.dispatch(`hl.dsp.focus(
-                            { workspace = ${wsRect.modelData.id} }
-                        )`)
-                    }
-                }
+                }  
             }
         }
     }

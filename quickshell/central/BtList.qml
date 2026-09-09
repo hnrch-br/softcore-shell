@@ -136,6 +136,7 @@ ColumnLayout {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 10
+                anchors.right: parent.right
                 spacing: 0
                 Text {
                     text: "explore"
