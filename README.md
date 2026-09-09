@@ -2,5 +2,5 @@
 ![image](./photos/2026-09-09-121047_hyprshot.png)
 ![image](./photos/2026-09-09-121058_hyprshot.png)
 ![image](./photos/2026-09-09-121106_hyprshot.png)
-![image](./photos/2026-09-09-125210_hyprshot.png)
+![image](./photos/2026-09-09-160432_hyprshot.png)
 ![image](./photos/2026-09-09-125232_hyprshot.png)
