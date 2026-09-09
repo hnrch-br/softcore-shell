@@ -1,5 +1,5 @@
 ## Softcore Shell
-<em>A self centered shell because i don't have other devices to test on*</em>
+<em>A self centered shell because i don't have other devices to test on</em>
 
 ### contents of the shell
 ___
