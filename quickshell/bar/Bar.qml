@@ -11,8 +11,9 @@ import qs.services
 Scope {
     PanelWindow {
         id: root
-        property color mColor: "#3a2b2a"
-        property color sColor: "#faebd7"
+        readonly property color mColor: "#3a2b2a"
+        readonly property color sColor: "#faebd7"
+        
         color: "transparent"
 
         mask: Region {

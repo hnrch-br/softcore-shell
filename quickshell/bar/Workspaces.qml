@@ -1,13 +1,17 @@
 pragma ComponentBehavior: Bound
 
 import Quickshell
+import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 
 import qs.services
 
 Item {
-    id: root 
+    id: root
+
+    readonly property color mColor: "#3a2b2a"
+    readonly property color sColor: "#ccfaebd7"
 
     implicitWidth: wsRow.implicitWidth
     implicitHeight: wsRow.implicitHeight
@@ -75,11 +79,11 @@ Item {
                 property bool isFocused: wsRect.modelData.id === Hypr.focusedId
 
                 radius: 3
-                implicitWidth: wsRect.isFocused ? 18 : 10
+                implicitWidth: wsRect.isFocused ? 26 : 10
                 implicitHeight: wsRect.isFocused ? 24 : 20
                 color: wsRect.isFocused
-                    ? "#ccfaebd7"
-                    : "#cc3d3636"
+                    ? root.sColor
+                    : Qt.darker(root.mColor, 0.75)
 
                 Behavior on implicitWidth {
                     NumberAnimation {
@@ -100,7 +104,21 @@ Item {
                         duration: 50;
                         easing.type: Easing.OutQuad
                     }
-                }  
+                }
+                
+                Text {
+                    visible: wsRect.isFocused
+                    text: wsRect.modelData.id
+                    anchors {
+                        centerIn: parent
+                    }
+                    leftPadding: 3
+                    color: root.mColor
+                    font {
+                        pixelSize: 18
+                        family: "Bytesized"
+                    }
+                }
             }
         }
     }

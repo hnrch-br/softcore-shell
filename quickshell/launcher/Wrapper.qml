@@ -188,7 +188,7 @@ Scope {
                         PropertyChanges {
                             target: wrapper
                             implicitHeight: 0
-                            implicitWidth: 0
+                            implicitWidth: 100
                             opacity: 0
                         }
                     }

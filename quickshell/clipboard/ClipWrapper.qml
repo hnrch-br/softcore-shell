@@ -83,11 +83,12 @@ Scope {
                 color: root.mColor
                 state: root.isOpen ? "opened" : "closed"
 
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottom: parent.bottom
-
                 topLeftRadius: 25
                 topRightRadius: 25
+                bottomLeftRadius: 15
+                bottomRightRadius: 15
+
+                anchors.centerIn: parent
 
                 Keys.onUpPressed: root.moveSelection(-1)
                 Keys.onDownPressed: root.moveSelection(1)
@@ -127,20 +128,6 @@ Scope {
                     ClipList {}
                 }
 
-                Corner {
-                    id: leftCorner
-                    x: -radius
-                    anchors.bottom: parent.bottom
-                    rotation: 180
-                }
-
-                Corner {
-                    id: rightCorner
-                    x: parent.width
-                    anchors.bottom: parent.bottom
-                    rotation: 270
-                }
-
                 states: [
                     State {
                         name: "opened"
@@ -157,8 +144,8 @@ Scope {
                             target: clipWrapper
                             implicitHeight: 0
                             implicitWidth: 0
-                            opacity: 0
-                        }
+                            opacity: 0 
+                        } 
                     }
                 ]
                 transitions: [
@@ -175,7 +162,7 @@ Scope {
                                 NumberAnimation {
                                     target: clipWrapper
                                     property: "implicitHeight"
-                                    duration: 150
+                                    duration: 200
                                     easing.type: Easing.OutQuad
                                 }
                                 NumberAnimation {
@@ -201,7 +188,7 @@ Scope {
                                 NumberAnimation {
                                     target: clipWrapper
                                     property: "implicitHeight"
-                                    duration: 150
+                                    duration: 200
                                     easing.type: Easing.OutQuad
                                 }
                                 NumberAnimation {
@@ -215,7 +202,7 @@ Scope {
                                     property: "opacity"
                                     duration: 200
                                     easing.type: Easing.OutQuad
-                                }
+                                } 
                             }
                             PropertyAction {
                                 target: clipboard
@@ -225,37 +212,6 @@ Scope {
                         }
                     }
                 ]
-            }
-        }
-    }
-
-    component Corner: Shape {
-        id: corner
-        preferredRendererType: Shape.CurveRenderer
-
-        property real radius: 30
-
-        ShapePath {
-            strokeWidth: 0
-            fillColor: root.mColor
-
-            startX: corner.radius
-
-            PathArc {
-                relativeX: -corner.radius
-                relativeY: corner.radius
-                radiusX: corner.radius
-                radiusY: corner.radius
-                direction: PathArc.Counterclockwise
-            }
-
-            PathLine {
-                relativeX: 0
-                relativeY: -corner.radius
-            }
-            PathLine {
-                relativeX: corner.radius
-                relativeY: 0
             }
         }
     }
