@@ -10,7 +10,9 @@ import QtQuick.Shapes
 import QtQuick.Controls
 
 import qs.services
-import qs.central.components
+import qs.central.mainpanel
+import qs.central.netpanel
+import qs.central.bluetoothpanel
 
 Scope {
     id: root

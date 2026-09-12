@@ -34,7 +34,7 @@ Scope {
             implicitHeight: 35
             implicitWidth: leftRow.implicitWidth + 38
             color: root.mColor
-            bottomRightRadius: 10
+            bottomRightRadius: 17.5
 
             anchors {
             	top: parent.top
@@ -64,7 +64,7 @@ Scope {
             implicitHeight: 35
             implicitWidth: rightRow.width + 38
             color: root.mColor
-            bottomLeftRadius: 10
+            bottomLeftRadius: 17.5
             anchors {
             	top: parent.top
             	right: parent.right
@@ -84,12 +84,14 @@ Scope {
                 NumberAnimation { duration: 100 }
             }
         }
+        
         Corner {
             id: rightCorner
             anchors.left: topRight.left
             anchors.leftMargin: -radius
             anchors.top: topRight.top
             rotation: 90
+            radius: 17.5
         }
         Corner {
             id: rightBottomCorner
@@ -97,26 +99,28 @@ Scope {
             anchors.bottom: topRight.bottom
             anchors.bottomMargin: -radius
             rotation: 90
+            radius: 25
         }
-
         Corner { 
             id: leftCorner
             anchors.right: topLeft.right
             anchors.rightMargin: -radius
             anchors.top: topLeft.top
+            radius: 17.5
         }
         Corner {
             id: leftBottomCorner
             anchors.bottom: topLeft.bottom
             anchors.left: topLeft.left 
             anchors.bottomMargin: -radius
+            radius: 25
         } 
 
         component Corner: Shape {
         	id: corner
             preferredRendererType: Shape.CurveRenderer
 
-            property real radius: 25
+            property real radius: 0
 
             ShapePath {
             	strokeWidth: 0

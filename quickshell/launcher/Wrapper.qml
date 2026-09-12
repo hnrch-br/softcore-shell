@@ -266,7 +266,7 @@ Scope {
         id: corner
         preferredRendererType: Shape.CurveRenderer
 
-        property real radius: 30
+        readonly property real radius: 30
 
         ShapePath {
             strokeWidth: 0
@@ -281,7 +281,6 @@ Scope {
                 radiusY: corner.radius
                 direction: PathArc.Counterclockwise
             }
-
             PathLine {
                 relativeX: 0
                 relativeY: -corner.radius

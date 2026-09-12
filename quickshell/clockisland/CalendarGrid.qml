@@ -20,10 +20,13 @@ MonthGrid {
         implicitHeight: 30
 
         required property var model
+        
         property bool isCurrentMonth: model.month === root.month
+        
         property bool isToday: {
             model.date.toDateString() === root.currentDate.toDateString()
         }
+        
         property bool isSelected: { 
             model.date.toDateString() === root.selectedDate.toDateString()
         }
@@ -36,7 +39,7 @@ MonthGrid {
         radius: 4
 
         MouseArea {
-            anchors.fill: parent
+            anchors.fill: gridRect
             cursorShape: Qt.PointingHandCursor
             hoverEnabled: true
             onClicked: root.selectedDate = gridRect.model.date
@@ -45,12 +48,12 @@ MonthGrid {
         Text {
             id: monthDays
             anchors.centerIn: gridRect
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
             text: gridRect.model.day
-            font.family: "Bytesized"
+            font {
+                family: "Bytesized"
+                pixelSize: 16
+            }
             opacity: root.visible ? 1 : 0
-            font.pixelSize: 16
             color: gridRect.isSelected 
                 ? Qt.darker(root.sTxtColor, 0.9) 
                 : gridRect.isToday 

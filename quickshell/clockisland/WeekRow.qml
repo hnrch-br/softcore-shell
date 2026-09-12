@@ -11,6 +11,7 @@ DayOfWeekRow {
     Layout.fillWidth: true
     opacity: root.visible ? 1 : 0
     spacing: 3
+    
     delegate: Text {
         required property string shortName
 
@@ -18,7 +19,7 @@ DayOfWeekRow {
         font.family: "Sixtyfour"
         font.pixelSize: 7
         color: Qt.tint(root.sColor, "#54ed752b")
-        leftPadding: 4
+        horizontalAlignment: Text.AlignHCenter
     }
 
     Behavior on opacity {

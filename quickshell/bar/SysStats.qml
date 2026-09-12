@@ -38,6 +38,7 @@ Item {
             radius: 2
             clip: true 
             RowLayout {
+                z: 1
                 id: cpuRow
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
@@ -77,6 +78,7 @@ Item {
             radius: 2
             clip: true
             RowLayout {
+                z: 1
                 id: gpuRow
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter 
@@ -116,6 +118,7 @@ Item {
             radius: 2
             clip: true
             RowLayout {
+                z: 1
                 id: ramRow
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter

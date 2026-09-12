@@ -23,9 +23,7 @@ Scope {
     property string query: ""
 
     function results(list, q): void {
-        if (q.length === 0) {
-            list;
-        }
+        if (q.length === 0) return list;
         const f = q.toLowerCase();
         return list.filter(entry => entry.content && entry.content.toLowerCase().includes(f));
     }

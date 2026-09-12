@@ -79,8 +79,8 @@ Item {
                 property bool isFocused: wsRect.modelData.id === Hypr.focusedId
 
                 radius: 3
-                implicitWidth: wsRect.isFocused ? 26 : 10
-                implicitHeight: wsRect.isFocused ? 24 : 20
+                implicitWidth: wsRect.isFocused ? 26 : mousearea.containsMouse ? 26 : 10
+                implicitHeight: wsRect.isFocused ? 24 : mousearea.containsMouse ? 24 : 20
                 color: wsRect.isFocused
                     ? root.sColor
                     : Qt.darker(root.mColor, 0.75)
@@ -118,6 +118,14 @@ Item {
                         pixelSize: 18
                         family: "Bytesized"
                     }
+                }
+
+                MouseArea {
+                    id: mousearea
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: Hypr.focusWorkspace(wsRect.modelData.id)
                 }
             }
         }

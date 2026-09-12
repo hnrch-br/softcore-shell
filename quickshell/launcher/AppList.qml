@@ -28,7 +28,7 @@ ListView {
         property bool isSelected: index === root.selectedIndex
 
         implicitWidth: 480
-        implicitHeight: isSelected ? 46 : 42
+        implicitHeight: 46
         radius: 10
         color: isSelected
             ? Qt.tint(root.sColor, "#cced752b")
@@ -43,7 +43,7 @@ ListView {
 
         RowLayout {
             anchors.fill: parent
-            anchors.leftMargin: listRow.isSelected ? 20 : 8
+            anchors.leftMargin: listRow.isSelected ? 28 : 10
             anchors.rightMargin: 8
             spacing: 10
 
@@ -79,7 +79,7 @@ ListView {
                     ? Qt.alpha(root.mColor, 1.0)
                     : root.sColor
                 font.family: "Pixelify Sans"
-                font.pixelSize: 16
+                font.pixelSize: (root.selectedIndex === listRow.index) ? 18 : 16
             }
         }
 
@@ -91,8 +91,7 @@ ListView {
             onEntered: root.selectedIndex = listRow.index
             onClicked: root.run(listRow.entry)
             onExited: {
-                if (root.selectedIndex === listRow.index)
-                    return root.selectedIndex = -1;
+                if (root.selectedIndex === listRow.index) return root.selectedIndex = -1;
             }
         }
     }
