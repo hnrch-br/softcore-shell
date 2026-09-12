@@ -32,7 +32,7 @@ Scope {
         Rectangle {
             id: topLeft
             implicitHeight: 35
-            implicitWidth: leftRow.implicitWidth + 38
+            implicitWidth: leftRow.implicitWidth + 37
             color: root.mColor
             bottomRightRadius: 17.5
 
@@ -62,7 +62,7 @@ Scope {
         Rectangle {
             id: topRight
             implicitHeight: 35
-            implicitWidth: rightRow.width + 38
+            implicitWidth: rightRow.width + 37
             color: root.mColor
             bottomLeftRadius: 17.5
             anchors {
@@ -90,16 +90,16 @@ Scope {
             anchors.left: topRight.left
             anchors.leftMargin: -radius
             anchors.top: topRight.top
-            rotation: 90
             radius: 17.5
+            mirror: false
         }
         Corner {
             id: rightBottomCorner
             anchors.right: topRight.right
             anchors.bottom: topRight.bottom
             anchors.bottomMargin: -radius
-            rotation: 90
             radius: 25
+            mirror: false
         }
         Corner { 
             id: leftCorner
@@ -107,6 +107,7 @@ Scope {
             anchors.rightMargin: -radius
             anchors.top: topLeft.top
             radius: 17.5
+            mirror: true
         }
         Corner {
             id: leftBottomCorner
@@ -114,26 +115,28 @@ Scope {
             anchors.left: topLeft.left 
             anchors.bottomMargin: -radius
             radius: 25
+            mirror: true
         } 
 
         component Corner: Shape {
         	id: corner
             preferredRendererType: Shape.CurveRenderer
-
+            
+            property bool mirror: false
             property real radius: 0
 
             ShapePath {
             	strokeWidth: 0
             	fillColor: root.mColor
 
-            	startX: corner.radius
+            	startX: mirror ? corner.radius : 0
 
             	PathArc {
-                    relativeX: -corner.radius
+                    relativeX: mirror ? -corner.radius : corner.radius
                     relativeY: corner.radius
                     radiusX: corner.radius
                     radiusY: corner.radius
-                    direction: PathArc.Counterclockwise
+                    direction: mirror ? PathArc.Counterclockwise : PathArc.Clockwise
                 }
 
                 PathLine {
@@ -142,7 +145,7 @@ Scope {
                 }
 
                 PathLine {
-                	relativeX: corner.radius
+                    relativeX: mirror ? corner.radius : 0
                 	relativeY: 0
                 }
             }
