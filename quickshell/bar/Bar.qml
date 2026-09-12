@@ -145,7 +145,7 @@ Scope {
                 }
 
                 PathLine {
-                    relativeX: mirror ? corner.radius : 0
+                    relativeX: mirror ? corner.radius : -corner.radius
                 	relativeY: 0
                 }
             }
