@@ -17,7 +17,7 @@ Scope {
     property int selectedIndex: 0
 
     readonly property color mColor: "#3a2b2b"
-    readonly property color sColor: "#ccfaebd7"
+    readonly property color sColor: "#d6c5b2"
 
     property var entries: results(Clip.list, query)
     property string query: ""
@@ -50,13 +50,6 @@ Scope {
         PanelWindow {
             id: clipboard
 
-            anchors {
-                top: true
-                bottom: true
-                right: true
-                left: true
-            }
-
             WlrLayershell.layer: WlrLayer.Overlay
             WlrLayershell.namespace: "clipboard"
 
@@ -73,6 +66,9 @@ Scope {
                 }
             }
 
+            implicitWidth: 500
+            implicitHeight: 260
+
             visible: false
 
             Rectangle {
@@ -81,10 +77,7 @@ Scope {
                 color: root.mColor
                 state: root.isOpen ? "opened" : "closed"
 
-                topLeftRadius: 25
-                topRightRadius: 25
-                bottomLeftRadius: 15
-                bottomRightRadius: 15
+                radius: 15
 
                 anchors.centerIn: parent
 

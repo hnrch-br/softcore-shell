@@ -12,13 +12,10 @@ import QtQuick.Controls
 import qs.services
 
 Item {
-    id: root
+    id: sysRoot
     
     implicitWidth: childrenRect.width
     implicitHeight: childrenRect.height 
-
-    readonly property color mColor: "#ccfaebd7"
-    readonly property color sColor: "#423d3636"
 
     readonly property int barWidth: 2
     readonly property int barSpacing: 1
@@ -32,9 +29,9 @@ Item {
         spacing: 2
         Rectangle {
             id: cpuRect
-            implicitWidth: root.rectsWidth
+            implicitWidth: sysRoot.rectsWidth
             implicitHeight: 20
-            color: root.mColor
+            color: root.sColor
             radius: 2
             clip: true 
             RowLayout {
@@ -57,24 +54,24 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 1
-                spacing: root.barSpacing
+                spacing: sysRoot.barSpacing
                 Repeater {
-                    model: Math.round((System.cpuUsage / 100) * root.maxBars)
+                    model: Math.round((System.cpuUsage / 100) * sysRoot.maxBars)
                     delegate: Rectangle {
                         radius: 1
-                        implicitWidth: root.barWidth
-                        implicitHeight: root.barHeight
+                        implicitWidth: sysRoot.barWidth
+                        implicitHeight: sysRoot.barHeight
                         Layout.alignment: Qt.AlignVCenter
-                        color: Qt.tint(Qt.alpha(root.sColor, 0.8), "#a67b5b")
+                        color: Qt.tint(Qt.alpha(root.mColor, 0.8), "#a67b5b")
                     }
                 }
             }
         }
 
         Rectangle {
-            implicitWidth: root.rectsWidth
+            implicitWidth: sysRoot.rectsWidth
             implicitHeight: 20
-            color: root.mColor
+            color: root.sColor
             radius: 2
             clip: true
             RowLayout {
@@ -97,24 +94,24 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 1
-                spacing: root.barSpacing
+                spacing: sysRoot.barSpacing
                 Repeater {
-                    model: Math.round((System.gpuUsage / 100) * root.maxBars)
+                    model: Math.round((System.gpuUsage / 100) * sysRoot.maxBars)
                     delegate: Rectangle {
                         radius: 1
-                        implicitWidth: root.barWidth
-                        implicitHeight: root.barHeight
+                        implicitWidth: sysRoot.barWidth
+                        implicitHeight: sysRoot.barHeight
                         Layout.alignment: Qt.AlignVCenter
-                        color: Qt.tint(Qt.alpha(root.sColor, 0.8), "#a67b5b")
+                        color: Qt.tint(Qt.alpha(root.mColor, 0.8), "#a67b5b")
                     }
                 }
             }
         }
 
         Rectangle {
-            implicitWidth: root.rectsWidth
+            implicitWidth: sysRoot.rectsWidth
             implicitHeight: 20
-            color: root.mColor
+            color: root.sColor
             radius: 2
             clip: true
             RowLayout {
@@ -137,15 +134,15 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 1
-                spacing: root.barSpacing
+                spacing: sysRoot.barSpacing
                 Repeater {
-                    model: Math.round((System.memUsage / 100) * root.maxBars)
+                    model: Math.round((System.memUsage / 100) * sysRoot.maxBars)
                     delegate: Rectangle {
                         radius: 1
-                        implicitWidth: root.barWidth
-                        implicitHeight: root.barHeight
+                        implicitWidth: sysRoot.barWidth
+                        implicitHeight: sysRoot.barHeight
                         Layout.alignment: Qt.AlignVCenter
-                        color: Qt.tint(Qt.alpha(root.sColor, 0.8), "#a67b5b")
+                        color: Qt.tint(Qt.alpha(root.mColor, 0.8), "#a67b5b")
                     }
                 }
             }

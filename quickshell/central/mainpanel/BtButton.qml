@@ -1,5 +1,7 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
+import Quickshell.Widgets
 import QtQuick.Layouts
 import Quickshell.Io
 
@@ -20,6 +22,19 @@ Rectangle {
         ? "transparent" 
         : Qt.alpha(root.sColor, 0.4)
     clip: true
+    
+    Behavior on color {
+        ColorAnimation {
+            duration: 150
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on border.color {
+        ColorAnimation {
+            duration: 100
+            easing.type: Easing.OutQuad
+        }
+    }
     RowLayout {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
@@ -28,18 +43,24 @@ Rectangle {
         anchors.leftMargin: 10
         spacing: 15
         
-        Text {
-            id: btIcon
-            text: Bluetooth.btIcon
-            font {
-                family: "Material Symbols Outlined"
-                pointSize: 16.7 
+        IconImage {
+            source: Qt.resolvedUrl(
+                "../../assets/central/" +
+                Bluetooth.btIcon +
+                ".svg"
+            )
+            implicitSize: 28
+            backer.layer.smooth: true
+            backer.layer.enabled: true
+            backer.layer.effect: MultiEffect {
+                colorization: 1.0
+                colorizationColor: (Bluetooth.enabled && btMA.containsMouse)
+                    ? Qt.alpha(root.mColor, 1.0)
+                    : (Bluetooth.enabled)
+                    ? Qt.darker(root.mColor, 0.8)
+                    : root.sColor
             }
-            color: btMA.containsMouse 
-                ? Qt.alpha(root.mColor, 1.0) 
-                : root.sColor
         }
-
         Text {
             id: btDevice
             text: Bluetooth.deviceName
@@ -48,8 +69,10 @@ Rectangle {
                 family: "Pixelify Sans" 
                 pixelSize: 14
             }
-            color: btMA.containsMouse
+            color: (Bluetooth.enabled && btMA.containsMouse)
                 ? Qt.alpha(root.mColor, 1.0)
+                : (Bluetooth.enabled)
+                ? Qt.darker(root.mColor, 0.8)
                 : root.sColor
             elide: Text.ElideRight
             wrapMode: Text.NoWrap

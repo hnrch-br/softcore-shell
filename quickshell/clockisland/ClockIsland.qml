@@ -7,13 +7,14 @@ import Quickshell.Hyprland
 import QtQuick.Layouts
 import QtQuick.Shapes
 import QtQuick.Controls
+import QtQuick.Effects
 
 import qs.bar
 import qs.services
 
 Scope {
     LazyLoader {
-        active: true
+        loading: true
         PanelWindow {
             id: root
             implicitHeight: 300
@@ -26,16 +27,12 @@ Scope {
             property int year: Time.years
             readonly property var locale: Qt.locale()
 
-            readonly property color mColor: "#faebd7"
+            readonly property color mColor: "#d6c5b2"
             readonly property color sColor: "#3a2b2a"
             readonly property color mTxtColor: "#ff3d3636"
             readonly property color sTxtColor: "#ffcdcdcd"
 
-            anchors {
-                top: true
-                left: true
-                right: true
-            }
+            anchors.top: true
 
             margins.top: 0
 
@@ -81,7 +78,7 @@ Scope {
                 id: clockWrapper
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: Qt.tint(Qt.alpha(root.mColor, 1.0), "#d6c5b2")
+                color: root.mColor
                 bottomLeftRadius: 17.5
                 bottomRightRadius: 17.5
                 clip: true
@@ -120,11 +117,10 @@ Scope {
                         horizontal: false
                     }
 
-                    ColumnLayout {
+                    ColumnLayout { 
                         spacing: 5
 
                         DateRow {}
-                        WeekRow {}
                         CalendarGrid {}
                     }
                 }
@@ -193,6 +189,8 @@ Scope {
                 ]
             }
 
+            Shadow {}
+
             Corner {
                 id: leftCorner
                 anchors.left: clockWrapper.left
@@ -234,6 +232,17 @@ Scope {
                         relativeY: 0
                     }
                 }
+            }
+
+            component Shadow: RectangularShadow {
+                z: -1
+                anchors.fill: clockWrapper
+                color: "black"
+                spread: root.isExpanded ? 0.5 : 6
+                radius: 5
+                blur: root.isExpanded ? 20 : 50
+                offset.x: 0
+                offset.y: -5
             }
         }
     }

@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
@@ -16,10 +18,7 @@ Rectangle {
     implicitHeight: 38
 
     color: root.sColor
-    bottomLeftRadius: 10
-    bottomRightRadius: 10
-    topLeftRadius: 20
-    topRightRadius: 20
+    radius: 10
 
     Connections {
         target: clipboard

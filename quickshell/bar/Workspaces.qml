@@ -8,10 +8,7 @@ import QtQuick.Layouts
 import qs.services
 
 Item {
-    id: root
-
-    readonly property color mColor: "#3a2b2a"
-    readonly property color sColor: "#ccfaebd7"
+    id: wsRoot
 
     implicitWidth: wsRow.implicitWidth
     implicitHeight: wsRow.implicitHeight
@@ -29,7 +26,7 @@ Item {
     Timer {
         id: wsWheelTimer
         interval: 200
-        onTriggered: root.wheelAccumulator = 0
+        onTriggered: wsRoot.wheelAccumulator = 0
     }
 
     WheelHandler {
@@ -37,13 +34,13 @@ Item {
         acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
         onWheel: (wheel) => {
             wsWheelTimer.restart();
-            root.wheelAccumulator -= wheel.angleDelta.y;
+            wsRoot.wheelAccumulator -= wheel.angleDelta.y;
 
             const threshold = 120;
-            if (Math.abs(root.wheelAccumulator) < threshold) return;
+            if (Math.abs(wsRoot.wheelAccumulator) < threshold) return;
 
-            const steps = Math.trunc(root.wheelAccumulator / threshold);
-            root.wheelAccumulator = root.wheelAccumulator % threshold;
+            const steps = Math.trunc(wsRoot.wheelAccumulator / threshold);
+            wsRoot.wheelAccumulator = wsRoot.wheelAccumulator % threshold;
             
             const list = Hypr.workspaces;
             const count = Hypr.workspaceCount;

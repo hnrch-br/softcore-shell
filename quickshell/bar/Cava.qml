@@ -6,7 +6,7 @@ import QtQuick.Controls
 import QtQuick.Shapes
 
 RowLayout {
-    id: root
+    id: cavaRoot
     property var audioBars: []
     readonly property int bars: 16
 
@@ -17,7 +17,7 @@ RowLayout {
         running: true
         command: ["sh", "-c", `cava -p /dev/stdin <<EOF
 [general]
-bars = ${root.bars}
+bars = ${cavaRoot.bars}
 framerate = 15
 autosens = 1
 [input]
@@ -31,7 +31,7 @@ ascii_max_range = 1000
 EOF`]
         stdout: SplitParser {
             onRead: data => {
-                root.audioBars = data.split(";").map(p => {
+                cavaRoot.audioBars = data.split(";").map(p => {
                     const v = parseFloat(p.trim());
                     return isNaN(v) ? 0 : v / 1000;
                 });
@@ -44,7 +44,7 @@ EOF`]
         clip: true
         implicitHeight: 22
         implicitWidth: 76
-        color: "#ccfaebd7"
+        color: root.sColor
         bottomRightRadius: 25
         bottomLeftRadius: 2
         topRightRadius: 25
@@ -56,10 +56,10 @@ EOF`]
             spacing: 2
             Repeater {
                 id: cavarepeater
-                model: root.bars
+                model: cavaRoot.bars
                 Rectangle {
                     width: 2
-                    height: Math.max((root.audioBars[index] ?? 0) * 22, 1)
+                    height: Math.max((cavaRoot.audioBars[index] ?? 0) * 22, 1)
                     color: "#ff3d3636"
                     anchors.bottom: parent.bottom
                     Behavior on height { NumberAnimation { duration: 55 } }

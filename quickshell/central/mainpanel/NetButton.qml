@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import Quickshell.Widgets
+import QtQuick.Effects
 import Quickshell.Io
 
 import qs.services
@@ -25,21 +27,39 @@ Rectangle {
         : Network.wiredConnected
         ? "transparent"
         : root.sColor
+
+    Behavior on color {
+        ColorAnimation {
+            duration: 150
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on border.color {
+        ColorAnimation {
+            duration: 100
+            easing.type: Easing.OutQuad
+        }
+    }
     RowLayout {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.leftMargin: 10
         spacing: 15
-        Text {
-            id: netIcon
-            text: Network.netIcon
-            font { 
-                family: "Material Symbols Outlined"
-                pointSize: 16.7
+        IconImage {
+            source: Qt.resolvedUrl(
+                "../../assets/central/" +
+                Network.netIcon +
+                ".svg"
+            )
+            implicitSize: 28
+            backer.layer.smooth: true
+            backer.layer.enabled: true
+            backer.layer.effect: MultiEffect {
+                colorization: 1.0
+                colorizationColor: (netMA.containsMouse && Network.wirelessConnected)
+                    ? Qt.alpha(root.mColor, 1.0) 
+                    : root.sColor
             }
-            color: (Network.wirelessConnected && netMA.containsMouse)
-                ? Qt.alpha(root.mColor, 1.0)
-                : Qt.alpha(root.sColor, 0.6)
         }
 
         Text {
@@ -49,7 +69,7 @@ Rectangle {
                 family: "Pixelify Sans"
                 pixelSize: 14
             }
-            color: (Network.wirelessConnected && netMA.containsMouse)
+            color: (netMA.containsMouse && Network.wirelessConnected)
                 ? Qt.alpha(root.mColor, 1.0)
                 : Qt.alpha(root.sColor, 0.6)
             elide: Text.ElideRight

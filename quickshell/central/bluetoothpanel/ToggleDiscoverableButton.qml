@@ -1,5 +1,7 @@
 import Quickshell
+import Quickshell.Widgets
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Layouts
 
 import qs.services
@@ -19,17 +21,21 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.leftMargin: 10
-        anchors.right: parent.right
-        spacing: 0
-        Text {
-            text: "explore"
-            font {
-                family: "Material Symbols Outlined"
-                pointSize: 14
+        spacing: 15
+        IconImage {
+            id: discIcon
+            implicitSize: 24
+            backer.fillMode: Image.PreserveAspectCrop
+            backer.smooth: true
+            layer.enabled: true
+            layer.effect: MultiEffect {
+                colorization: 1.0
+                colorizationColor: (Bluetooth.enabled && discoverMA.containsMouse)
+                    ? Qt.alpha(root.mColor, 1.0)
+                    : Qt.darker(root.sColor, 1.3)
             }
-            color: discoverMA.containsMouse
-                ? Qt.alpha(root.mColor, 1.0)
-                : Qt.alpha(root.sColor, 0.8)
+            source: Qt.resolvedUrl("../../assets/central/explore.svg")
+            asynchronous: true
         }
         Text {
             text: Bluetooth.discoverStatus
@@ -37,9 +43,9 @@ Rectangle {
                 family: "Pixelify Sans"
                 pixelSize: 15
             }
-            color: discoverMA.containsMouse
+            color: (Bluetooth.enabled && discoverMA.containsMouse)
                 ? Qt.alpha(root.mColor, 1.0)
-                : Qt.alpha(root.sColor, 0.8)
+                : Qt.alpha(root.sColor, 0.6)
         }
     }
 
@@ -47,7 +53,7 @@ Rectangle {
         id: discoverMA
         anchors.fill: parent
         hoverEnabled: Bluetooth.enabled ? true : false
-        cursorShape: Bluetooth.enabled ? Qt.PointingHandCursor : Qt.ForbiddenCursor
+        cursorShape: Bluetooth.enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
         onClicked: Bluetooth.toggleDiscoverable()
     }
 }

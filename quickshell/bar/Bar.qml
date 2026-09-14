@@ -1,6 +1,7 @@
 import Quickshell
 import Quickshell.Wayland
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Shapes
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -12,8 +13,8 @@ Scope {
     PanelWindow {
         id: root
         readonly property color mColor: "#3a2b2a"
-        readonly property color sColor: "#faebd7"
-        
+        readonly property color sColor: "#d6c5b2"
+
         color: "transparent"
 
         mask: Region {
@@ -24,7 +25,7 @@ Scope {
         anchors {
         	left: true
         	top: true
-            right: true 
+            right: true
         }
 
         exclusionMode: ExclusionMode.Ignore
@@ -55,6 +56,8 @@ Scope {
                     Cava {}
                 }
             }
+
+            Shadow {}
         }
 
         ClockIsland { id: clockisland }
@@ -80,9 +83,7 @@ Scope {
                 SysStats {}
                 CentralButton {}
             }
-            Behavior on implicitWidth {
-                NumberAnimation { duration: 100 }
-            }
+            Shadow {}
         }
         
         Corner {
@@ -149,6 +150,16 @@ Scope {
                 	relativeY: 0
                 }
             }
+        }
+
+        component Shadow: RectangularShadow {
+            z: -1
+            anchors.fill: parent
+            color: "black"
+            spread: 0.5
+            blur: 30
+            offset.x: 0
+            offset.y: 5
         }
 
         Scope {

@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
@@ -245,7 +247,9 @@ Item {
                 bottomRightRadius: 2
                 topRightRadius: 2
                 opacity: root.visible ? 1 : 0
-                color: lastMonth.down ? Qt.tint(Qt.alpha(root.mColor, 1.0), "#cced752b") : root.sColor
+                color: lastMonth.down
+                    ? Qt.tint(Qt.alpha(root.mColor, 1.0), "#cced752b")
+                    : root.sColor
                 anchors.centerIn: parent
                 Behavior on opacity {
                     NumberAnimation {
@@ -337,7 +341,9 @@ Item {
                 bottomRightRadius: 8
                 topRightRadius: 8
                 opacity: root.visible ? 1 : 0
-                color: nextMonth.down ? Qt.tint(Qt.alpha(root.mColor, 1.0), "#cced752b") : root.sColor
+                color: nextMonth.down
+                    ? Qt.tint(Qt.alpha(root.mColor, 1.0), "#cced752b")
+                    : root.sColor
                 anchors.centerIn: parent
 
                 Behavior on opacity {

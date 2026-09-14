@@ -19,7 +19,7 @@ Scope {
 
     property bool isOpen: false
     readonly property color mColor: "#3a2b2b"
-    readonly property color sColor: "#ccfaebd7"
+    readonly property color sColor: "#d6c5b2"
     property string activeView: "main"
 
     LazyLoader {

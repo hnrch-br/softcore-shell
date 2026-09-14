@@ -11,7 +11,7 @@ import qs.services
 import qs.bar
 
 RowLayout {
-    id: root
+    id: mediaRoot
 
     Layout.alignment: Qt.AlignVCenter
 
@@ -56,7 +56,7 @@ RowLayout {
         id: marqueeContainer
         implicitWidth: isPlaying ? 220 : 100
         implicitHeight: 22
-        color: "#ccfaebd7"
+        color: root.sColor
         bottomLeftRadius: 25
         topLeftRadius: 25
         bottomRightRadius: 2

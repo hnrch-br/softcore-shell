@@ -3,10 +3,7 @@ import Quickshell
 import QtQuick.Layouts
 
 RowLayout {
-    id: root
-
-    readonly property color mColor: "#ccfaebd7"
-    readonly property color sColor: "#ff3d3636"
+    id: centralRoot
 
     Rectangle {
         id: centralRect
@@ -18,7 +15,7 @@ RowLayout {
         bottomRightRadius: 25
         topRightRadius: 25
 
-        color: root.mColor
+        color: root.sColor
 
         RowLayout {
             anchors.verticalCenter: parent.verticalCenter
@@ -27,7 +24,7 @@ RowLayout {
                 id: homeIcon
                 text: "home"
                 font { family: "Material Symbols Rounded"; pointSize: 12 }
-                color: root.sColor
+                color: root.mColor
                 rightPadding: 1
             }
         }

@@ -56,7 +56,9 @@ ColumnLayout {
                         Layout.alignment: Qt.AlignBottom
                         required property int index
                         implicitWidth: 2
-                        implicitHeight: (index%2 === 0) ? sliderColumn.maxHeight : sliderColumn.minHeight
+                        implicitHeight: (index%2 === 0)
+                            ? sliderColumn.maxHeight
+                            : sliderColumn.minHeight
                         radius: 1
                         color: root.sColor
                     }

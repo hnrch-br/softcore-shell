@@ -1,5 +1,7 @@
 import Quickshell
 import QtQuick
+import Quickshell.Widgets
+import QtQuick.Effects
 import QtQuick.Layouts
 
 import qs.services
@@ -19,17 +21,22 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.leftMargin: 10
-        anchors.right: parent.right
-        spacing: 0
-        Text {
-            text: Bluetooth.btIcon
-            font {
-                family: "Material Symbols Outlined"
-                pointSize: 14
+        spacing: 15
+        IconImage {
+            source: Qt.resolvedUrl(
+                "../../assets/central/" +
+                Bluetooth.btIcon +
+                ".svg"
+            )
+            implicitSize: 24
+            backer.layer.smooth: true
+            backer.layer.enabled: true
+            backer.layer.effect: MultiEffect {
+                colorization: 1.0
+                colorizationColor: statusMA.containsMouse
+                    ? Qt.alpha(root.mColor, 1.0) 
+                    : root.sColor
             }
-            color: statusMA.containsMouse
-                ? Qt.alpha(root.mColor, 1.0)
-                : Qt.alpha(root.sColor, 0.8)
         }
         Text {
             text: Bluetooth.btStatus

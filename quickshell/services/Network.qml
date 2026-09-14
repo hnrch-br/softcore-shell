@@ -46,9 +46,9 @@ Singleton {
 
     readonly property var netIcon: {
         if (root.wiredConnected) {
-            return "conversion_path"
+            return "settings_ethernet"
         } else {
-            return "conversion_path_off"
+            return "wifi_off"
         }
         if (root.wirelessConnected) {
             const s = root.signalStrength;
@@ -57,7 +57,7 @@ Singleton {
             if (s >= 0.2) return "wifi_1_bar";
             return "wifi_off";
         }
-        return "block";
+        return "wifi_off";
     } 
 
     readonly property var networks: {

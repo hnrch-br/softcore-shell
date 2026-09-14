@@ -1,5 +1,7 @@
 import Quickshell
+import Quickshell.Widgets
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Layouts
 
 import qs.services
@@ -18,16 +20,22 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.leftMargin: 10
-        anchors.right: parent.right
-        Text {
-            text: Network.netIcon
-            font { 
-                family: "Material Symbols Outlined"
-                pointSize: 14 
+        spacing: 15
+        IconImage {
+            source: Qt.resolvedUrl(
+                "../../assets/central/" +
+                Network.netIcon +
+                ".svg"
+            )
+            implicitSize: 28
+            backer.layer.smooth: true
+            backer.layer.enabled: true
+            backer.layer.effect: MultiEffect {
+                colorization: 1.0
+                colorizationColor: statusMA.containsMouse
+                    ? Qt.alpha(root.mColor, 1.0) 
+                    : root.sColor
             }
-            color: (Network.wirelessConnected && statusMA.containsMouse)
-                ? Qt.alpha(root.mColor, 1.0)
-                : Qt.alpha(root.sColor, 0.6)
         }
         Text {
             text: Network.networkLabel

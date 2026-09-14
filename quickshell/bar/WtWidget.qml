@@ -1,12 +1,14 @@
 import QtQuick
 import Quickshell
+import Quickshell.Widgets
 import QtQuick.Layouts
+import QtQuick.Effects
 import QtQuick.Controls
 
 import qs.services
 
 RowLayout {
-    id: root
+    id: wtRoot
 
     Layout.alignment: Qt.AlignVCenter
 
@@ -18,7 +20,7 @@ RowLayout {
         implicitWidth: 70
         implicitHeight: 20
 
-        color: "#ccfaebd7"
+        color: root.sColor
         RowLayout {
             anchors.centerIn: parent
             spacing: 1
@@ -27,17 +29,23 @@ RowLayout {
                 text: Weather.ready
                     ? Weather.tempCur + "°"
                     : "..."
-                color: "#ff3d3636"
+                color: root.mColor
                 font { family: "Sixtyfour"; pixelSize: 10 }
             }
-            Image {
+            IconImage {
                 id: icons
-                Layout.preferredWidth: 14
-                Layout.preferredHeight: 14
+                implicitSize: 14
+                backer.fillMode: Image.PreserveAspectCrop
+                backer.smooth: true 
                 source: Weather.ready
-                    ? Qt.resolvedUrl("../assets/weather/" + Weather.glyph(Weather.codeCur, Weather.isDay) + ".svg")
+                    ? Qt.resolvedUrl(
+                        "../assets/weather/"
+                        + Weather.glyph(Weather.codeCur, Weather.isDay)
+                        + ".svg"
+                    )
                     : ""
-            }
+                asynchronous: true
+            } 
         }
     }
 }

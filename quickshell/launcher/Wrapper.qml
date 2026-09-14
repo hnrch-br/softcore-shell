@@ -20,7 +20,7 @@ Scope {
     readonly property var results: Fuzzy.rank(appEntries, query, usage)
     property bool isOpen: false
     readonly property color mColor: "#3a2b2b"
-    readonly property color sColor: "#ccfaebd7"
+    readonly property color sColor: "#d6c5b2"
 
     readonly property var appEntries: {
         var src = DesktopEntries.applications.values;
@@ -82,18 +82,12 @@ Scope {
     property int selectedIndex: 0
 
     LazyLoader {
-        id: loader
         loading: !root.isOpen
 
         PanelWindow {
             id: launcher
 
-            anchors {
-                bottom: true
-                right: true
-                left: true
-                top: true
-            }
+            anchors.bottom: true
 
             WlrLayershell.layer: WlrLayer.Overlay
             WlrLayershell.namespace: "launcher"
@@ -103,6 +97,9 @@ Scope {
             WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
 
             color: "transparent"
+
+            implicitWidth: 560
+            implicitHeight: 320
 
             IpcHandler {
                 target: "launcher"
