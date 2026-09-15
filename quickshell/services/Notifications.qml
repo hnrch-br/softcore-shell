@@ -106,8 +106,8 @@ Singleton {
             const days = Math.floor(hrs / 24);
 
             if (hrs < 1 && min < 1) return "just now";
-            if (hrs < 1) return `${min} minutes ago`;
-            return `${hrs} hours ago`;
+            if (hrs < 1) return `${min} min ago`;
+            return `${hrs} hrs ago`;
         }
 
         readonly property real timeout: {
