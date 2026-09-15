@@ -6,7 +6,6 @@
 //@ pragma Env QS_NO_RELOAD_POPUP=1
 //@ pragma IconTheme Gruvbox-Plus-Dark
 //@ pragma Env QS_ICON_THEME = Gruvbox-Plus-Dark
-
 import Quickshell
 import QtQuick
 

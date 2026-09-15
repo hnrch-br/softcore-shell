@@ -89,12 +89,12 @@ Singleton {
         property bool popup
         property bool pause: false
 
-        readonly property string body: notification.body ?? ""
-        readonly property string image: notification.image ?? ""
-        readonly property string summary: notification.summary ?? ""
-        readonly property string appIcon: notification.appIcon ?? ""
-        readonly property string appName: notification.appName ?? ""
-        readonly property int urgency: notification.urgency
+        readonly property string body: notification?.body ?? ""
+        readonly property string image: notification?.image ?? ""
+        readonly property string summary: notification?.summary ?? ""
+        readonly property string appIcon: notification?.appIcon ?? ""
+        readonly property string appName: notification?.appName ?? ""
+        readonly property int urgency: notification?.urgency
         readonly property list<NotificationAction> actions: notification.actions
 
         readonly property date currentTime: new Date()

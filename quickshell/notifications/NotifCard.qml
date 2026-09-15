@@ -15,12 +15,18 @@ Item {
     Rectangle {
         id: notifCard
 
+        readonly property string appIcon: itemDelegate.modelData.appIcon
+        readonly property string image: itemDelegate.modelData.image
+        readonly property string appName: itemDelegate.modelData.appName
+        readonly property string summary: itemDelegate.modelData.summary
+        readonly property string body: itemDelegate.modelData.body
+
         property bool isExpanded: false
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: 15
-        implicitWidth: notifCard.isExpanded ? 280 : 160
-        implicitHeight: notifCard.isExpanded ? contentCol.implicitHeight + 10 : 45
+        anchors.topMargin: 25
+        implicitWidth: notifCard.isExpanded ? 300 : Math.min(titleRow.implicitWidth + 20, 280)
+        implicitHeight: notifCard.isExpanded ? Math.min(contentCol.implicitHeight + 10, 280) : 45
         color: root.mColor
         radius: 12
 
@@ -39,36 +45,32 @@ Item {
         }
 
         Shadow {}
- 
+
         ColumnLayout {
             id: contentCol
             anchors.fill: parent
-            spacing: 4
+            spacing: 3
             clip: true
             RowLayout {
-                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+                id: titleRow
+                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                 Layout.topMargin: 12
-                Layout.leftMargin: notifCard.isExpanded ? 12 : 23
-                spacing: 15
+                Layout.leftMargin: 12
+                Layout.rightMargin: 12
+                spacing: 10
                 IconImage {
-                    id: appImage
-                    backer.visible: appImage.source !== ""
-                    source: { 
-                        itemDelegate.modelData.image || itemDelegate.modelData.appIcon
-                    }
+                    id: appIcon
+                    source: notifCard.image || notifCard.appIcon
                     implicitSize: 22
                     backer.fillMode: Image.PreserveAspectFit
                     backer.smooth: true
-                    
                 }
                 Item {
-                    implicitWidth: appName.implicitWidth
-                    implicitHeight: appName.implicitHeight
                     Layout.alignment: Qt.AlignVCenter
+                    implicitWidth: 175
+                    implicitHeight: 12
                     Text {
                         id: appName
-                        anchors.left: parent.left
-                        anchors.right: parent.right
                         text: itemDelegate.modelData.appName
                         color: root.sColor
                         font {
@@ -76,8 +78,12 @@ Item {
                             pixelSize: 11
                         } 
                         elide: Text.ElideRight
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                        }
                     }
-                } 
+                }
             }
             Text {
                 Layout.fillWidth: true
@@ -114,7 +120,8 @@ Item {
                 }
                 opacity: notifCard.isExpanded
                 elide: Text.ElideRight
-                wrapMode: Text.WordWrap
+                linkColor: Qt.darker("blue", 0.5)
+                wrapMode: Text.WordWrap || Text.WrapAnywhere
                 Behavior on opacity {
                     NumberAnimation {
                         duration: 120
@@ -122,13 +129,14 @@ Item {
                     }
                 }
             }
-            Rectangle {
-                Layout.preferredWidth: 240
-                Layout.preferredHeight: 135
+            /*Rectangle {
+                Layout.preferredWidth: notifCard.image !== "" ? 240 : 0
+                Layout.preferredHeight: notifCard.image !== "" ? 135 : 0
                 Layout.alignment: Qt.AlignHCenter
                 opacity: notifCard.isExpanded
                 Layout.bottomMargin: 12
                 color: "black"
+                visible: notifCard.image !== ""
                 radius: 12
                 Behavior on opacity {
                     NumberAnimation {
@@ -137,12 +145,37 @@ Item {
                     }
                 }
                 Image {
+                    id: appImage
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
-                    source: itemDelegate.modelData.image                    
+                    source: notifCard.image
                 }
+            }*/
+        }
+
+        Text {
+            id: timeStamp
+            verticalAlignment: Text.AlignVCenter
+            anchors {
+                right: parent.right
+                top: parent.top
+                topMargin: 12
+                rightMargin: 12
+            }
+            text: itemDelegate.modelData.timeStamp
+            color: root.sColor
+            font {
+                family: "Bytesized"
+                pixelSize: 16
+            }
+            elide: Text.ElideRight
+            opacity: notifCard.isExpanded
+
+            Behavior on opacity {
+                NumberAnimation { duration: 120 }
             }
         }
+
 
         MouseArea {
             anchors.fill: parent

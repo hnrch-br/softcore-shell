@@ -37,7 +37,7 @@ Scope {
                 bottom: true
             }
             margins {
-                top: 45
+                top: 35
                 bottom: 45
             }
 
@@ -47,7 +47,7 @@ Scope {
 
             mask: Region {
                 width: panel.width
-                height: (listView.contentHeight > 0 ? Math.min(listView.contentHeight + 20, 500) : 0)
+                height: (listView.contentHeight > 0 ? Math.min(listView.contentHeight + 20, wrapper.implicitHeight) : 0)
             }
 
             WlrLayershell.namespace: "notifications"
@@ -63,8 +63,7 @@ Scope {
                 ListView {
                     id: listView
                     spacing: 3
-                    width: parent?.width
-                    height: panel.height - 600
+                    anchors.fill: parent
                     model: Notifications.doNotDisturb ? null : Notifications.popups
                     clip: true
                     verticalLayoutDirection: ListView.TopToBottom

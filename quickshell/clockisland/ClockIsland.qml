@@ -238,11 +238,18 @@ Scope {
                 z: -1
                 anchors.fill: clockWrapper
                 color: "black"
-                spread: root.isExpanded ? 0.5 : 6
+                spread: root.isExpanded ? 0.2 : 1
                 radius: 5
-                blur: root.isExpanded ? 20 : 50
+                blur: root.isExpanded ? 30 : 50
                 offset.x: 0
-                offset.y: -5
+                offset.y: 1
+
+                Behavior on spread {
+                    NumberAnimation { duration: 180 }
+                }
+                Behavior on blur {
+                    NumberAnimation { duration: 180 }
+                }
             }
         }
     }
