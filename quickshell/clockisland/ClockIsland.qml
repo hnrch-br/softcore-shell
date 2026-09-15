@@ -17,7 +17,7 @@ Scope {
         loading: true
         PanelWindow {
             id: root
-            implicitHeight: 300
+            implicitHeight: 320
             implicitWidth: 400
             color: "transparent"
 
