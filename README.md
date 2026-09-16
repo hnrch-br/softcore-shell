@@ -25,6 +25,9 @@ ___
 ![image](./photos/2026-09-16-084817_hyprshot.png)
 <p align="center"> <em>launcher</em> </p>
 
+![image](./photos/2026-09-16-085706_hyprshot.png)
+<p align="center"> <em>clipboard</em> </p>
+
 ![image](./photos/2026-09-15-135036_hyprshot.png)
 <p align="center"> <em>central</em> </p>
 
