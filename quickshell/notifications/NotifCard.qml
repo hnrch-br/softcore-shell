@@ -16,17 +16,23 @@ Item {
         id: notifCard
 
         readonly property string appIcon: itemDelegate.modelData.appIcon
+            ? Quickshell.iconPath(itemDelegate.modelData.appIcon, true)
+            : Quickshell.iconPath("image-missing", true)
         readonly property string image: itemDelegate.modelData.image
         readonly property string appName: itemDelegate.modelData.appName
         readonly property string summary: itemDelegate.modelData.summary
         readonly property string body: itemDelegate.modelData.body
-
+        readonly property string timeStamp: itemDelegate.modelData.timeStamp
         property bool isExpanded: false
+
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: 25
-        implicitWidth: notifCard.isExpanded ? 300 : Math.min(titleRow.implicitWidth + 20, 280)
-        implicitHeight: notifCard.isExpanded ? Math.min(contentCol.implicitHeight + 10, 280) : 45
+        implicitWidth: notifCard.isExpanded
+            ? 300
+            : Math.min(appIcon.implicitWidth + appName.implicitWidth + 40, 280)
+        implicitHeight: notifCard.isExpanded
+            ? Math.min(contentCol.implicitHeight + 10, 280)
+            : 45
         color: root.mColor
         radius: 12
 
@@ -54,16 +60,19 @@ Item {
             RowLayout {
                 id: titleRow
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 Layout.topMargin: 12
                 Layout.leftMargin: 12
                 Layout.rightMargin: 12
                 spacing: 10
                 IconImage {
                     id: appIcon
-                    source: notifCard.image || notifCard.appIcon
+                    source: notifCard.appIcon
                     implicitSize: 22
                     backer.fillMode: Image.PreserveAspectFit
                     backer.smooth: true
+                    visible: notifCard.appIcon !== ""
                 }
                 Item {
                     Layout.alignment: Qt.AlignVCenter
@@ -71,7 +80,7 @@ Item {
                     implicitHeight: 12
                     Text {
                         id: appName
-                        text: itemDelegate.modelData.appName
+                        text: notifCard.appName
                         color: root.sColor
                         font {
                             family: "Sixtyfour"
@@ -90,7 +99,7 @@ Item {
                 verticalAlignment: Text.AlignTop
                 Layout.leftMargin: 12
                 Layout.rightMargin: 12
-                text: itemDelegate.modelData.summary
+                text: notifCard.summary
                 color: root.sColor
                 font {
                     family: "Pixelify Sans"
@@ -112,7 +121,7 @@ Item {
                 verticalAlignment: Text.AlignTop
                 Layout.leftMargin: 12
                 Layout.rightMargin: 12
-                text: itemDelegate.modelData.body
+                text: notifCard.body
                 color: root.sColor
                 font {
                     family: "Pixelify Sans"
@@ -129,7 +138,7 @@ Item {
                     }
                 }
             }
-            /*Rectangle {
+            Rectangle {
                 Layout.preferredWidth: notifCard.image !== "" ? 240 : 0
                 Layout.preferredHeight: notifCard.image !== "" ? 135 : 0
                 Layout.alignment: Qt.AlignHCenter
@@ -150,7 +159,7 @@ Item {
                     fillMode: Image.PreserveAspectFit
                     source: notifCard.image
                 }
-            }*/
+            }
         }
 
         Text {
@@ -162,7 +171,7 @@ Item {
                 topMargin: 12
                 rightMargin: 12
             }
-            text: itemDelegate.modelData.timeStamp
+            text: notifCard.timeStamp
             color: root.sColor
             font {
                 family: "Bytesized"

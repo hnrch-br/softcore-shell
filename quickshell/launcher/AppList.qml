@@ -28,7 +28,7 @@ ListView {
         property bool isSelected: index === root.selectedIndex
 
         implicitWidth: 480
-        implicitHeight: 46
+        implicitHeight: 52
         radius: 10
         color: isSelected
             ? Qt.tint(root.sColor, "#cced752b")
@@ -43,7 +43,7 @@ ListView {
 
         RowLayout {
             anchors.fill: parent
-            anchors.leftMargin: listRow.isSelected ? 28 : 10
+            anchors.leftMargin: listRow.isSelected ? 20 : 10
             anchors.rightMargin: 8
             spacing: 10
 
@@ -55,7 +55,7 @@ ListView {
             }
 
             IconImage {
-                implicitSize: 32
+                implicitSize: 48
                 source: listRow.entry
                     ? Quickshell.iconPath(listRow.entry.icon, true)
                     : ""

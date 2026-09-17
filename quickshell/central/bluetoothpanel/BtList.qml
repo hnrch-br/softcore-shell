@@ -75,123 +75,122 @@ ColumnLayout {
                     id: pairedRow
                     required property var modelData
 
-                    anchors.horizontalCenter: parent.horizontalCenter
                     implicitWidth: parent.width
                     implicitHeight: 38
                     radius: 4
                     color: pairedHover.hovered 
                         ? Qt.tint(root.sColor, "#cced752b") 
                         : Qt.alpha(root.mColor, 0.6)
-
-                    Rectangle {
-                        id: optRect
-                        z: 1
-                        opacity: pairedHover.hovered
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                        implicitHeight: 38
-                        implicitWidth: pairedHover.hovered ? 100 : 1
-                        radius: 4
-                        color: Qt.alpha(root.mColor, 0.3)
-                        Behavior on opacity {
-                            NumberAnimation { duration: 100 }
+                    RowLayout {
+                        anchors.fill: parent
+                        Text {
+                            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                            Layout.fillWidth: true
+                            Layout.leftMargin: 5
+                            text: pairedRow.modelData.name || pairedRow.modelData.address
+                            font {
+                                family: "Pixelify Sans"
+                                pixelSize: 16
+                            }
+                            color: pairedHover.hovered
+                                ? Qt.alpha(root.mColor, 1.0)
+                                : Qt.alpha(root.sColor, 0.8)
+                            elide: Text.ElideRight
                         }
-                        Behavior on implicitWidth {
-                            NumberAnimation { duration: 100 }
-                        }
-                        RowLayout {
-                            spacing: 7
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.right: parent.right
-                            anchors.rightMargin: 4
-                            Rectangle {
-                                implicitWidth: root.size
-                                implicitHeight: root.size
-                                radius: 8
-                                color: Qt.alpha(root.mColor, 0.6)
+                        Rectangle {
+                            id: optRect
+                            z: 1
+                            opacity: pairedHover.hovered
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            implicitHeight: 38
+                            implicitWidth: pairedHover.hovered ? 100 : 1
+                            radius: 4
+                            color: Qt.alpha(root.mColor, 0.3)
+                            Behavior on opacity {
+                                NumberAnimation { duration: 100 }
+                            }
+                            Behavior on implicitWidth {
+                                NumberAnimation { duration: 100 }
+                            }
+                            RowLayout {
+                                spacing: 7
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.right: parent.right
+                                anchors.rightMargin: 4
+                                Rectangle {
+                                    implicitWidth: root.size
+                                    implicitHeight: root.size
+                                    radius: 8
+                                    color: Qt.alpha(root.mColor, 0.6)
 
-                                MouseArea {
-                                    anchors.fill: parent
-                                    cursorShape: Qt.PointingHandCursor
-                                    onClicked: pairedRow.modelData.connected
-                                        ? pairedRow.modelData.disconnect()
-                                        : pairedRow.modelData.connect()
-                                }
-
-                                Text {
-                                    anchors.centerIn: parent
-                                    text: pairedRow.modelData.connected ? "link_off" : "link"
-                                    font {
-                                        family: "Material Symbols Outlined"
-                                        pointSize: 8
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+                                        onClicked: pairedRow.modelData.connected
+                                            ? pairedRow.modelData.disconnect()
+                                            : pairedRow.modelData.connect()
                                     }
-                                    color: root.sColor
+
+                                    Text {
+                                        anchors.centerIn: parent
+                                        text: pairedRow.modelData.connected ? "link_off" : "link"
+                                        font {
+                                            family: "Material Symbols Outlined"
+                                            pointSize: 8
+                                        }
+                                        color: root.sColor
+                                    }
+                                }
+                                Rectangle {
+                                    implicitWidth: root.size
+                                    implicitHeight: root.size
+                                    radius: 8
+                                    color: Qt.alpha(root.mColor, 0.6)
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+                                        onClicked: pairedRow.modelData.forget()
+                                    }
+
+                                    Text {
+                                        anchors.centerIn: parent
+                                        text: "remove"
+                                        font {
+                                            family: "Material Symbols Outlined"
+                                            pointSize: 8
+                                        }
+                                        color: root.sColor
+                                    }
+                                }
+                                Rectangle {
+                                    implicitWidth: root.size
+                                    implicitHeight: root.size
+                                    radius: 8
+                                    color: Qt.alpha(root.mColor, 0.6)
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+                                        onClicked: pairedRow.modelData.trusted = !pairedRow.modelData.trusted
+                                    }
+
+                                    Text {
+                                        anchors.centerIn: parent
+                                        text: pairedRow.modelData.trusted ? "block" : "handshake"
+                                        font {
+                                            family: "Material Symbols Outlined"
+                                            pointSize: 8
+                                        }
+                                        color: root.sColor
+                                    }
                                 }
                             }
-                            Rectangle {
-                                implicitWidth: root.size
-                                implicitHeight: root.size
-                                radius: 8
-                                color: Qt.alpha(root.mColor, 0.6)
-
-                                MouseArea {
-                                    anchors.fill: parent
-                                    cursorShape: Qt.PointingHandCursor
-                                    onClicked: pairedRow.modelData.forget()
-                                }
-
-                                Text {
-                                    anchors.centerIn: parent
-                                    text: "remove"
-                                    font {
-                                        family: "Material Symbols Outlined"
-                                        pointSize: 8
-                                    }
-                                    color: root.sColor
-                                }
-                            }
-                            Rectangle {
-                                implicitWidth: root.size
-                                implicitHeight: root.size
-                                radius: 8
-                                color: Qt.alpha(root.mColor, 0.6)
-
-                                MouseArea {
-                                    anchors.fill: parent
-                                    cursorShape: Qt.PointingHandCursor
-                                    onClicked: pairedRow.modelData.trusted = !pairedRow.modelData.trusted
-                                }
-                                
-                                Text {
-                                    anchors.centerIn: parent
-                                    text: pairedRow.modelData.trusted ? "block" : "handshake"
-                                    font {
-                                        family: "Material Symbols Outlined"
-                                        pointSize: 8
-                                    }
-                                    color: root.sColor
-                                }
-                            }
                         }
-                    }
 
-                    Text {
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: parent.left
-                        anchors.leftMargin: 5 
-                        anchors.right: parent.right
-                        text: pairedRow.modelData.name || pairedRow.modelData.address
-                        font {
-                            family: "Pixelify Sans"
-                            pixelSize: 16
+                        HoverHandler {
+                            id: pairedHover
                         }
-                        color: pairedHover.hovered
-                            ? Qt.alpha(root.mColor, 1.0)
-                            : Qt.alpha(root.sColor, 0.8)
-                        elide: Text.ElideRight
-                    }
-                    HoverHandler {
-                        id: pairedHover
                     }
                 }
             }

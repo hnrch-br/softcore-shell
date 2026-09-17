@@ -7,6 +7,11 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.fillHeight: true
     Layout.topMargin: 15
+    opacity: root.isExpanded
+
+    Behavior on opacity {
+        NumberAnimation { duration: 120 }
+    }
 
     MonthGrid {
         id: grid 

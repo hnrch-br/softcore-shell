@@ -28,6 +28,14 @@ Scope {
         return list.filter(entry => entry.content && entry.content.toLowerCase().includes(f));
     }
 
+    IpcHandler {
+        target: "clipboard"
+
+        function toggleVisible(): void {
+            root.isOpen = !root.isOpen;
+        }
+    }
+
     function moveSelection(delta) {
         if (root.entries.length === 0)
             return;
@@ -56,15 +64,7 @@ Scope {
             exclusionMode: ExclusionMode.Ignore
 
             WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
-            color: "transparent"
-
-            IpcHandler {
-                target: "clipboard"
-
-                function toggleVisible(): void {
-                    root.isOpen = !root.isOpen;
-                }
-            }
+            color: "transparent" 
 
             implicitWidth: 500
             implicitHeight: 260
@@ -73,6 +73,7 @@ Scope {
 
             Rectangle {
                 id: clipWrapper
+                focus: true
 
                 color: root.mColor
                 state: root.isOpen ? "opened" : "closed"
@@ -88,7 +89,14 @@ Scope {
                         var entry = root.entries[root.selectedIndex];
                         if (entry) {
                             Clip.copyEntry(entry.id);
-                            root.isOpen = false;
+                            root.isOpen = true;
+                        }
+                        e.accepted = true;
+                    }
+                    if (e.key === Qt.Key_Delete || e.key === Qt.Key_Backspace) {
+                        var entry = root.entries[root.selectedIndex];
+                        if (entry) {
+                            Clip.deleteEntry(entry.id);
                         }
                         e.accepted = true;
                     }
@@ -96,6 +104,7 @@ Scope {
                         root.isOpen = false;
                         e.accepted = true;
                     }
+                    return;
                 }
 
                 ClipSearch {}
@@ -191,7 +200,7 @@ Scope {
                                 NumberAnimation {
                                     target: clipWrapper
                                     property: "opacity"
-                                    duration: 200
+                                    duration: 100
                                     easing.type: Easing.OutQuad
                                 } 
                             }

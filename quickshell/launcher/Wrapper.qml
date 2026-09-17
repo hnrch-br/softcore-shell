@@ -70,6 +70,14 @@ Scope {
         }
     }
 
+    IpcHandler {
+        target: "launcher"
+
+        function toggleVisible(): void {
+            root.isOpen = !root.isOpen;
+        }
+    }
+
     FileView {
         id: usageStore
         path: Quickshell.env("HOME") + "/.cache/recent-apps.json"
@@ -99,15 +107,7 @@ Scope {
             color: "transparent"
 
             implicitWidth: 560
-            implicitHeight: 320
-
-            IpcHandler {
-                target: "launcher"
-
-                function toggleVisible(): void {
-                    root.isOpen = !root.isOpen;
-                }
-            }
+            implicitHeight: 320 
 
             visible: false
 

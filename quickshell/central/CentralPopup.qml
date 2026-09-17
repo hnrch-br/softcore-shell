@@ -6,6 +6,7 @@ import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Hyprland
 import QtQuick.Layouts
+import QtQuick.Effects
 import QtQuick.Shapes
 import QtQuick.Controls
 
@@ -66,15 +67,13 @@ Scope {
 
             margins.top: 35
 
-            implicitWidth: 325
-            implicitHeight: 500
+            implicitWidth: 350
+            implicitHeight: 530
 
             Rectangle {
                 id: centralWrapper
 
                 anchors.right: parent.right
-                implicitWidth: 300
-                implicitHeight: 475
 
                 color: root.mColor
                 state: root.isOpen ? "opened" : "closed"
@@ -82,7 +81,6 @@ Scope {
                 topLeftRadius: 0
                 bottomLeftRadius: 10
                 bottomRightRadius: 0
-
                 clip: true
 
                 MainPanel {
@@ -134,7 +132,7 @@ Scope {
                                 NumberAnimation {
                                     target: centralWrapper
                                     property: "implicitHeight"
-                                    duration: 100
+                                    duration: 250
                                     easing.type: Easing.OutQuad
                                 }
                                 NumberAnimation {
@@ -160,7 +158,7 @@ Scope {
                                 NumberAnimation {
                                     target: centralWrapper
                                     property: "implicitHeight"
-                                    duration: 100
+                                    duration: 250
                                     easing.type: Easing.OutQuad
                                 }
                                 NumberAnimation {
@@ -185,6 +183,8 @@ Scope {
                     }
                 ]
             }
+
+            Shadow {}
 
             Corner {
                 id: cornerLeftTop
@@ -257,5 +257,16 @@ Scope {
                 relativeY: 0
             }
         }
+    }
+
+    component Shadow: RectangularShadow {
+        z: -1
+        anchors.fill: centralWrapper
+        color: "black"
+        blur: 25
+        bottomLeftRadius: 10
+        spread: 0.5
+        offset.x: -1
+        offset.y: 1
     }
 }

@@ -1,7 +1,7 @@
 import Quickshell
 import QtQuick
 import QtQuick.Layouts
-
+import Quickshell.Widgets
 import qs.services
 
 Rectangle {
@@ -12,16 +12,4 @@ Rectangle {
     radius: 10
     clip: true
     color: notifArea.backColor
-
-    ListView {
-        anchors.fill: parent
-        model: Notifications.popups
-        clip: true
-        verticalLayoutDirection: ListView.TopToBottom
-        delegate: Rectangle {
-            ColumnLayout {
-
-            }
-        }
-    }
 }

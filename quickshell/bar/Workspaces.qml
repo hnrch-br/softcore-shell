@@ -109,7 +109,7 @@ Item {
                     anchors {
                         centerIn: parent
                     }
-                    leftPadding: 3
+                    leftPadding: 2.7
                     color: root.mColor
                     font {
                         pixelSize: 18

@@ -57,10 +57,12 @@ Scope {
                 }
             }
 
-            Shadow {}
+            Shadow {
+                bottomRightRadius: 10
+            }
         }
 
-        ClockIsland { id: clockisland }
+        ClockIsland {}
 
         Rectangle {
             id: topRight
@@ -83,7 +85,9 @@ Scope {
                 SysStats {}
                 CentralButton {}
             }
-            Shadow {}
+            Shadow {
+                bottomLeftRadius: 10
+            }
         }
         
         Corner {
@@ -156,8 +160,8 @@ Scope {
             z: -1
             anchors.fill: parent
             color: "black"
-            spread: 0.5
-            blur: 30
+            spread: 0.8
+            blur: 24
             offset.x: 0
             offset.y: 5
         }

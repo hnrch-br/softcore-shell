@@ -14,15 +14,6 @@ Singleton {
     property bool isDecoding: false
 
     Process {
-        id: watchProc
-        command: ["sh", "-c", "wl-paste --watch echo x"]
-        running: true
-        stdout: SplitParser {
-            onRead: line => root.refresh()
-        }
-    }
-
-    Process {
         id: listProc
         command: ["cliphist", "list"]
         stdout: StdioCollector {
@@ -43,6 +34,7 @@ Singleton {
 
                     entries.push({
                         id: id,
+                        line: line,
                         content: isImg ? `${img[2]}, ${img[1]}, ${img[3]}` : content,
                         imgType: isImg ? img[2] : "",
                         imgSize: isImg ? img[1] : "",
@@ -80,6 +72,32 @@ Singleton {
         }
     }
 
+    Process {
+        id: deleteProc
+        property int targetId: -1
+        command: ["sh", "-c", `echo ${targetId} | cliphist delete`]
+        onExited: {
+            if (exitCode === 0) {
+                root.refresh();
+            } else {
+                console.error("clipboard: failed to delete entry", exitCode);
+            }
+        }
+    }
+
+    Process {
+        id: copyProc
+        property int targetId: -1        
+        command: ["sh", "-c", `cliphist decode ${targetId} | wl-copy`]
+        onExited: {
+            if (exitCode === 0) {
+                root.refresh();
+            } else {
+                console.error("clipboard: failed to copy entry", exitCode);
+            }
+        }
+    }
+
     function process() {
         if (root.isDecoding || root.decode.length === 0)
             return;
@@ -100,7 +118,13 @@ Singleton {
     }
 
     function copyEntry(id: int) {
-        Quickshell.execDetached(["sh", "-c", `cliphist decode ${id} | wl-copy`]);
+        copyProc.running = true;
+        copyProc.targetId = id;
+    }
+
+    function deleteEntry(id: int) {
+        deleteProc.running = true;
+        deleteProc.targetId = id;
     }
 
     function refresh() {
@@ -109,5 +133,5 @@ Singleton {
         listProc.running = true;
     }
 
-    Component.onCompleted: listProc.running = true
+    Component.onCompleted: root.refresh()
 }

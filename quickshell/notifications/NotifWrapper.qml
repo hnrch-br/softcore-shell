@@ -36,10 +36,6 @@ Scope {
                 top: true
                 bottom: true
             }
-            margins {
-                top: 35
-                bottom: 45
-            }
 
             implicitWidth: 360
             color: "transparent"
@@ -47,7 +43,7 @@ Scope {
 
             mask: Region {
                 width: panel.width
-                height: (listView.contentHeight > 0 ? Math.min(listView.contentHeight + 20, wrapper.implicitHeight) : 0)
+                height: panel.height
             }
 
             WlrLayershell.namespace: "notifications"
@@ -60,20 +56,22 @@ Scope {
                 implicitWidth: 360
                 implicitHeight: panel.height
                 anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.topMargin: 45
                 ListView {
                     id: listView
                     spacing: 3
                     anchors.fill: parent
                     model: Notifications.doNotDisturb ? null : Notifications.popups
-                    clip: true
                     verticalLayoutDirection: ListView.TopToBottom
                     delegate: NotifCard {}
+                    anchors.topMargin: 10
 
                     add: Transition {
                         NumberAnimation {
                             properties: "y"
-                            from: -wrapper.implicitHeight
-                            duration: 200
+                            from: -200
+                            duration: 260
                             easing.type: Easing.OutQuad
                         }
                         NumberAnimation {
@@ -87,8 +85,8 @@ Scope {
                     remove: Transition {
                         NumberAnimation {
                             properties: "y"
-                            to: -wrapper.implicitHeight
-                            duration: 200
+                            to: -200
+                            duration: 260
                             easing.type: Easing.OutQuad
                         }
                         NumberAnimation {
@@ -102,7 +100,7 @@ Scope {
                     displaced: Transition {
                         NumberAnimation {
                             properties: "y"
-                            duration: 250
+                            duration: 260
                             easing.type: Easing.OutQuad
                         }
                     }
@@ -137,7 +135,7 @@ Scope {
                             NumberAnimation {
                                 target: wrapper
                                 property: "opacity"
-                                duration: 100
+                                duration: 380
                             }
                         }
                     },
@@ -148,7 +146,7 @@ Scope {
                             NumberAnimation {
                                 target: wrapper
                                 property: "opacity"
-                                duration: 100
+                                duration: 380
                             }
                             PropertyAction {
                                 target: panel

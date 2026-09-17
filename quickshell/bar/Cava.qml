@@ -7,8 +7,8 @@ import QtQuick.Shapes
 
 RowLayout {
     id: cavaRoot
-    property var audioBars: []
-    readonly property int bars: 16
+    property list<int> values: Array(cavaRoot.bars)
+    readonly property int bars: 16 
 
     Layout.alignment: Qt.AlignVCenter
 
@@ -17,24 +17,21 @@ RowLayout {
         running: true
         command: ["sh", "-c", `cava -p /dev/stdin <<EOF
 [general]
-bars = ${cavaRoot.bars}
-framerate = 15
-autosens = 1
-[input]
-method = pulse
-source = $(pactl get-default-sink).monitor
+bars=${cavaRoot.bars}
+framerate=60
+autosens=1
 [output]
-method = raw
-raw_target = /dev/stdout
-data_format = ascii
-ascii_max_range = 1000
+channels=stereo
+method=raw
+raw_target=/dev/stdout
+data_format=ascii
+ascii_max_range=100
+[smoothing]
+noise_reduction=11
 EOF`]
         stdout: SplitParser {
             onRead: data => {
-                cavaRoot.audioBars = data.split(";").map(p => {
-                    const v = parseFloat(p.trim());
-                    return isNaN(v) ? 0 : v / 1000;
-                });
+                cavaRoot.values = data.slice(0, -1).split(";").map(v => parseInt(v, 10));
             }
         }
     }
@@ -55,11 +52,14 @@ EOF`]
             leftPadding: 4
             spacing: 2
             Repeater {
-                id: cavarepeater
                 model: cavaRoot.bars
                 Rectangle {
+                    required property int index
                     width: 2
-                    height: Math.max((cavaRoot.audioBars[index] ?? 0) * 22, 1)
+                    height: {
+                        const value = cavaRoot.values[index] || 0;
+                        return Math.max(1, value * 0.58);
+                    }
                     color: "#ff3d3636"
                     anchors.bottom: parent.bottom
                     Behavior on height { NumberAnimation { duration: 55 } }

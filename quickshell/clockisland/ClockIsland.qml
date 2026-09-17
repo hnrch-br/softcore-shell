@@ -99,27 +99,32 @@ Scope {
 
                 RowLayout {
                     opacity: root.isExpanded
-
-                    spacing: 20
-
+                    spacing: 18
                     clip: true
 
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: parent.top
+                    anchors.fill: parent
                     anchors.topMargin: 12
-
+                    anchors.leftMargin: 12
+                    anchors.rightMargin: 12
                     Behavior on opacity {
                         NumberAnimation { duration: 200 }
                     }
 
                     Clock {
                         Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        Layout.leftMargin: 12
+                        Layout.bottomMargin: 26
                         horizontal: false
                     }
 
                     ColumnLayout { 
                         spacing: 5
-
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        Layout.rightMargin: 9
+                        Layout.bottomMargin: 36
                         DateRow {}
                         CalendarGrid {}
                     }
