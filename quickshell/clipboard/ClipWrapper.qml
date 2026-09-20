@@ -7,6 +7,7 @@ import Quickshell.Io
 import QtQuick.Layouts
 import QtQuick.Controls
 import QtQuick.Shapes
+import QtQuick.Effects
 
 import qs.services
 
@@ -25,7 +26,9 @@ Scope {
     function results(list, q): void {
         if (q.length === 0) return list;
         const f = q.toLowerCase();
-        return list.filter(entry => entry.content && entry.content.toLowerCase().includes(f));
+        return list.filter(
+            entry => entry.content && entry.content.toLowerCase().includes(f)
+        );
     }
 
     IpcHandler {
@@ -37,13 +40,14 @@ Scope {
     }
 
     function moveSelection(delta) {
-        if (root.entries.length === 0)
-            return;
+        if (root.entries.length === 0) return;
         var n = root.selectedIndex + delta;
-        if (n < 0)
+        if (n < 0) {
             n = 0;
-        if (n > root.entries.length - 1)
+        }
+        if (n > root.entries.length - 1) {
             n = root.entries.length - 1;
+        }
         root.selectedIndex = n;
     } 
 
@@ -66,14 +70,13 @@ Scope {
             WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
             color: "transparent" 
 
-            implicitWidth: 500
-            implicitHeight: 260
+            implicitWidth: 580
+            implicitHeight: 300
 
             visible: false
 
             Rectangle {
                 id: clipWrapper
-                focus: true
 
                 color: root.mColor
                 state: root.isOpen ? "opened" : "closed"
@@ -90,13 +93,6 @@ Scope {
                         if (entry) {
                             Clip.copyEntry(entry.id);
                             root.isOpen = true;
-                        }
-                        e.accepted = true;
-                    }
-                    if (e.key === Qt.Key_Delete || e.key === Qt.Key_Backspace) {
-                        var entry = root.entries[root.selectedIndex];
-                        if (entry) {
-                            Clip.deleteEntry(entry.id);
                         }
                         e.accepted = true;
                     }
@@ -128,6 +124,8 @@ Scope {
                     ClipList {}
                 }
 
+                Shadow {}
+
                 states: [
                     State {
                         name: "opened"
@@ -143,7 +141,7 @@ Scope {
                         PropertyChanges {
                             target: clipWrapper
                             implicitHeight: 0
-                            implicitWidth: 0
+                            implicitWidth: 100
                             opacity: 0 
                         } 
                     }
@@ -168,7 +166,7 @@ Scope {
                                 NumberAnimation {
                                     target: clipWrapper
                                     property: "implicitWidth"
-                                    duration: 100
+                                    duration: 150
                                     easing.type: Easing.OutQuad
                                 }
                                 NumberAnimation {
@@ -194,7 +192,7 @@ Scope {
                                 NumberAnimation {
                                     target: clipWrapper
                                     property: "implicitWidth"
-                                    duration: 100
+                                    duration: 150
                                     easing.type: Easing.OutQuad
                                 }
                                 NumberAnimation {
@@ -212,6 +210,13 @@ Scope {
                         }
                     }
                 ]
+            }
+            component Shadow: RectangularShadow {
+                z: -1
+                anchors.fill: parent
+                blur: 20
+                radius: 15
+                spread: 0.4
             }
         }
     }

@@ -107,13 +107,12 @@ Scope {
             color: "transparent"
 
             implicitWidth: 560
-            implicitHeight: 320 
+            implicitHeight: 400 
 
             visible: false
 
             Rectangle {
                 id: wrapper
-
                 color: root.mColor
                 state: root.isOpen ? "opened" : "closed"
 
@@ -155,6 +154,8 @@ Scope {
 
                     AppList {}
                 }
+
+                Shadow {}
 
                 Corner {
                     id: leftCorner
@@ -287,5 +288,17 @@ Scope {
                 relativeY: 0
             }
         }
+    }
+
+    component Shadow: RectangularShadow {
+        z: -1
+        anchors.fill: parent
+        color: "black"
+        blur: 20
+        topLeftRadius: 25
+        topRightRadius: 25
+        spread: 0.3
+        offset.x: 0
+        offset.y: -1
     }
 }

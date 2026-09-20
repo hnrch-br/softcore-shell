@@ -17,15 +17,14 @@ ColumnLayout {
         id: grid 
         month: root.month
         year: root.year
-        spacing: 3
         locale: root.locale
         Layout.fillWidth: true
         Layout.fillHeight: true
 
         delegate: Rectangle {
             id: gridRect
-            implicitWidth: 30
-            implicitHeight: 30
+            implicitWidth: 20
+            implicitHeight: 20
 
             required property var model
 

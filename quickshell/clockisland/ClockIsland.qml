@@ -99,7 +99,7 @@ Scope {
 
                 RowLayout {
                     opacity: root.isExpanded
-                    spacing: 18
+                    spacing: 28
                     clip: true
 
                     anchors.fill: parent
@@ -114,8 +114,8 @@ Scope {
                         Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
                         Layout.fillWidth: true
                         Layout.fillHeight: true
+                        Layout.bottomMargin: 38
                         Layout.leftMargin: 12
-                        Layout.bottomMargin: 26
                         horizontal: false
                     }
 
@@ -123,8 +123,9 @@ Scope {
                         spacing: 5
                         Layout.fillWidth: true
                         Layout.fillHeight: true
-                        Layout.rightMargin: 9
-                        Layout.bottomMargin: 36
+                        Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                        Layout.rightMargin: 12
+                        Layout.bottomMargin: 38
                         DateRow {}
                         CalendarGrid {}
                     }
@@ -244,7 +245,8 @@ Scope {
                 anchors.fill: clockWrapper
                 color: "black"
                 spread: root.isExpanded ? 0.2 : 1
-                radius: 5
+                bottomRightRadius: 17.5
+                bottomLeftRadius: 17.5
                 blur: root.isExpanded ? 30 : 50
                 offset.x: 0
                 offset.y: 1

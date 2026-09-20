@@ -43,10 +43,11 @@ Rectangle {
             family: "Bytesized"
             pixelSize: 18
         }
+        focus: true
+
         placeholderText: "Search"
         placeholderTextColor: Qt.alpha(root.mColor, 0.6)
         selectByMouse: true
-        focus: true
 
         cursorDelegate: Rectangle {
             id: cursorDelegate

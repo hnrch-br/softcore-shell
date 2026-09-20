@@ -30,7 +30,7 @@ RowLayout {
                     ? Weather.tempCur + "°"
                     : "..."
                 color: root.mColor
-                font { family: "Sixtyfour"; pixelSize: 10 }
+                font { family: "Sixtyfour"; pixelSize: 9 }
             }
             IconImage {
                 id: icons

@@ -3,10 +3,8 @@ pragma ComponentBehavior: Bound
 import Quickshell
 import QtQuick
 import Quickshell.Io
-import Quickshell.Hyprland
-import Quickshell.Wayland
+import Quickshell.Widgets
 import QtQuick.Layouts
-import QtQuick.Shapes
 import QtQuick.Controls
 
 import qs.services
@@ -34,20 +32,25 @@ Item {
             color: root.sColor
             radius: 2
             clip: true 
-            RowLayout {
+            Rectangle {
                 z: 1
-                id: cpuRow
+                implicitHeight: 20
+                implicitWidth: 20
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                Image {
+                radius: 5
+                color: Qt.alpha(root.sColor, 0.7)
+                IconImage {
+                    z: 2
                     id: iconCPU
-                    Layout.preferredWidth: 14
-                    Layout.preferredHeight: 14
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenterOffset: 0.25
                     source: Qt.resolvedUrl("../assets/components/cpu.svg")
-                    sourceSize.width: 14
-                    sourceSize.height: 14
-                    fillMode: Image.PreserveAspectFit
-                    smooth: true
+                    implicitSize: 14
+                    backer.fillMode: Image.PreserveAspectFit
+                    backer.smooth: true
+                    mipmap: true
                 }
             }
             RowLayout {
@@ -74,20 +77,25 @@ Item {
             color: root.sColor
             radius: 2
             clip: true
-            RowLayout {
+            Rectangle {
                 z: 1
-                id: gpuRow
+                implicitHeight: 20
+                implicitWidth: 20
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter 
-                Image {
+                anchors.verticalCenter: parent.verticalCenter
+                radius: 5
+                color: Qt.alpha(root.sColor, 0.7)
+                IconImage {
+                    z: 2
                     id: iconGPU
-                    Layout.preferredWidth: 14
-                    Layout.preferredHeight: 14
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenterOffset: 0.1
                     source: Qt.resolvedUrl("../assets/components/gpu.svg")
-                    sourceSize.width: 14
-                    sourceSize.height: 14
-                    fillMode: Image.PreserveAspectFit
-                    smooth: true
+                    implicitSize: 14
+                    backer.fillMode: Image.PreserveAspectFit
+                    backer.smooth: true
+                    mipmap: true
                 }
             }
             RowLayout {
@@ -114,20 +122,25 @@ Item {
             color: root.sColor
             radius: 2
             clip: true
-            RowLayout {
+            Rectangle {
                 z: 1
-                id: ramRow
+                implicitHeight: 20
+                implicitWidth: 20
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                Image {
+                radius: 5
+                color: Qt.alpha(root.sColor, 0.7)
+                IconImage {
+                    z: 2
                     id: iconMEM
-                    Layout.preferredWidth: 14
-                    Layout.preferredHeight: 14
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenterOffset: 0.2
                     source: Qt.resolvedUrl("../assets/components/memory-stick.svg")
-                    sourceSize.width: 14
-                    sourceSize.height: 14
-                    fillMode: Image.PreserveAspectFit
-                    smooth: true
+                    implicitSize: 14
+                    backer.fillMode: Image.PreserveAspectFit
+                    backer.smooth: true
+                    mipmap: true
                 }
             }
             RowLayout {
