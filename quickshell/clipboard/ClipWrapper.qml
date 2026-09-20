@@ -92,7 +92,7 @@ Scope {
                         var entry = root.entries[root.selectedIndex];
                         if (entry) {
                             Clip.copyEntry(entry.id);
-                            root.isOpen = true;
+                            root.isOpen = false;
                         }
                         e.accepted = true;
                     }
