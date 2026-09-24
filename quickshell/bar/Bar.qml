@@ -35,7 +35,7 @@ Scope {
             implicitHeight: 35
             implicitWidth: leftRow.implicitWidth + 37
             color: root.mColor
-            bottomRightRadius: 17.5
+            bottomRightRadius: 6
 
             anchors {
             	top: parent.top
@@ -44,7 +44,7 @@ Scope {
 
             RowLayout {
                 id: leftRow
-                spacing: 5
+                spacing: 10
                 anchors.left: parent.left
                 anchors.leftMargin: 30
                 anchors.verticalCenter: parent.verticalCenter
@@ -62,14 +62,14 @@ Scope {
             }
         }
 
-        ClockIsland {}
+        ClockIsland { id: clockisland }
 
         Rectangle {
             id: topRight
             implicitHeight: 35
             implicitWidth: rightRow.width + 37
             color: root.mColor
-            bottomLeftRadius: 17.5
+            bottomLeftRadius: 6
             anchors {
             	top: parent.top
             	right: parent.right

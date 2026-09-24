@@ -12,8 +12,8 @@ RowLayout {
         implicitHeight: 20
         bottomLeftRadius: 2
         topLeftRadius: 2
-        bottomRightRadius: 25
-        topRightRadius: 25
+        bottomRightRadius: 4
+        topRightRadius: 4
 
         color: root.sColor
 
@@ -25,7 +25,7 @@ RowLayout {
                 text: "home"
                 font { family: "Material Symbols Rounded"; pointSize: 12 }
                 color: root.mColor
-                rightPadding: 1
+                rightPadding: 0
             }
         }
 

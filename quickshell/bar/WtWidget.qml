@@ -13,8 +13,8 @@ RowLayout {
     Layout.alignment: Qt.AlignVCenter
 
     Rectangle {
-        bottomLeftRadius: 25
-        topLeftRadius: 25
+        bottomLeftRadius: 4
+        topLeftRadius: 4
         bottomRightRadius: 2
         topRightRadius: 2
         implicitWidth: 70

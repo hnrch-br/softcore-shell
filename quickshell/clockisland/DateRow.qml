@@ -18,9 +18,6 @@ Item {
         anchors.top: parent.bottom
         anchors.topMargin: 15
 
-        implicitHeight: 160
-        implicitWidth: 150
-
         radius: 3
 
         state: "closed"
@@ -147,6 +144,7 @@ Item {
                 PropertyChanges {
                     target: dropdown
                     implicitHeight: 120
+                    implicitWidth: 150
                     opacity: 1
                 }
             },
@@ -155,6 +153,7 @@ Item {
                 PropertyChanges {
                     target: dropdown
                     implicitHeight: 1
+                    implicitWidth: 20
                     opacity: 0
                 }
             }
@@ -178,8 +177,14 @@ Item {
                         }
                         NumberAnimation {
                             target: dropdown
+                            property: "implicitWidth"
+                            duration: 150
+                            easing.type: Easing.OutCubic
+                        }
+                        NumberAnimation {
+                            target: dropdown
                             property: "opacity"
-                            duration: 130
+                            duration: 100
                             easing.type: Easing.OutQuad
                         }
                     }
@@ -194,6 +199,12 @@ Item {
                             target: dropdown
                             property: "implicitHeight"
                             duration: 120
+                            easing.type: Easing.OutCubic
+                        }
+                        NumberAnimation {
+                            target: dropdown
+                            property: "implicitWidth"
+                            duration: 150
                             easing.type: Easing.OutCubic
                         }
                         NumberAnimation {

@@ -40,7 +40,7 @@ Rectangle {
         IconImage {
             source: Qt.resolvedUrl(
                 "../../assets/central/" +
-                (Notifications.doNotDisturb ? "do_not_disturb_on" : "do_not_disturb_off")+
+                (Notifications.doNotDisturb ? "do_not_disturb_on" : "do_not_disturb_off") +
                 ".svg"
             )
             implicitSize: 28

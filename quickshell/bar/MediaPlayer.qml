@@ -57,8 +57,8 @@ RowLayout {
         implicitWidth: isPlaying ? 220 : 100
         implicitHeight: 22
         color: root.sColor
-        bottomLeftRadius: 25
-        topLeftRadius: 25
+        bottomLeftRadius: 4
+        topLeftRadius: 4
         bottomRightRadius: 2
         topRightRadius: 2
         clip: true

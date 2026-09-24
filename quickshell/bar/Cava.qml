@@ -42,9 +42,9 @@ EOF`]
         implicitHeight: 22
         implicitWidth: 76
         color: root.sColor
-        bottomRightRadius: 25
+        bottomRightRadius: 4
         bottomLeftRadius: 2
-        topRightRadius: 25
+        topRightRadius: 4
         topLeftRadius: 2
         Row {
             anchors.bottom: parent.bottom

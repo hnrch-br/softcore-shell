@@ -79,8 +79,8 @@ Scope {
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: root.mColor
-                bottomLeftRadius: 17.5
-                bottomRightRadius: 17.5
+                bottomLeftRadius: root.isExpanded ? 12 : 7
+                bottomRightRadius: root.isExpanded ? 12 : 7
                 clip: true
 
                 state: root.isExpanded ? "expanded" : "closed"
@@ -214,7 +214,7 @@ Scope {
                 id: corner
                 preferredRendererType: Shape.CurveRenderer
 
-                property real radius: 17.5
+                property real radius: 20
 
                 ShapePath {
                     strokeWidth: 0
