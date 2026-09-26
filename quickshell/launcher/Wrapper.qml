@@ -119,8 +119,8 @@ Scope {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
 
-                topLeftRadius: 25
-                topRightRadius: 25
+                topLeftRadius: 15
+                topRightRadius: 15
 
                 Keys.onUpPressed: root.moveSelection(-1)
                 Keys.onDownPressed: root.moveSelection(1)

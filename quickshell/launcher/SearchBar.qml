@@ -11,7 +11,7 @@ Rectangle {
     implicitHeight: 45
 
     color: root.sColor
-    radius: 15
+    radius: 10
 
     anchors {
         horizontalCenter: parent.horizontalCenter

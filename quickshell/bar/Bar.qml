@@ -58,7 +58,7 @@ Scope {
             }
 
             Shadow {
-                bottomRightRadius: 10
+                bottomRightRadius: 6
             }
         }
 
@@ -86,7 +86,7 @@ Scope {
                 CentralButton {}
             }
             Shadow {
-                bottomLeftRadius: 10
+                bottomLeftRadius: 6
             }
         }
         
@@ -95,7 +95,7 @@ Scope {
             anchors.left: topRight.left
             anchors.leftMargin: -radius
             anchors.top: topRight.top
-            radius: 17.5
+            radius: 18
             mirror: false
         }
         Corner {
@@ -103,7 +103,7 @@ Scope {
             anchors.right: topRight.right
             anchors.bottom: topRight.bottom
             anchors.bottomMargin: -radius
-            radius: 25
+            radius: 20
             mirror: false
         }
         Corner { 
@@ -111,7 +111,7 @@ Scope {
             anchors.right: topLeft.right
             anchors.rightMargin: -radius
             anchors.top: topLeft.top
-            radius: 17.5
+            radius: 18
             mirror: true
         }
         Corner {
@@ -119,7 +119,7 @@ Scope {
             anchors.bottom: topLeft.bottom
             anchors.left: topLeft.left 
             anchors.bottomMargin: -radius
-            radius: 25
+            radius: 20
             mirror: true
         } 
 

@@ -11,7 +11,7 @@ Item {
     id: wsRoot
 
     implicitWidth: wsRow.implicitWidth
-    implicitHeight: wsRow.implicitHeight
+    implicitHeight: wsRow.implicitHeight + 10
     clip: true
 
     Behavior on implicitWidth {

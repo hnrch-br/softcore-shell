@@ -40,7 +40,7 @@ EOF`]
         id: cavaRect
         clip: true
         implicitHeight: 22
-        implicitWidth: 76
+        implicitWidth: 72
         color: root.sColor
         bottomRightRadius: 4
         bottomLeftRadius: 2

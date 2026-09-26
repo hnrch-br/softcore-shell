@@ -6,6 +6,8 @@ import QtQuick.Effects
 import Quickshell.Widgets
 import QtQuick.Layouts
 
+import qs.services
+
 Item {
     id: itemDelegate
     implicitWidth: 360
@@ -34,7 +36,7 @@ Item {
             ? Math.min(contentCol.implicitHeight + 10, 280)
             : 45
         color: root.mColor
-        radius: 12
+        radius: 8
 
         Behavior on implicitHeight {
             NumberAnimation {
@@ -204,6 +206,30 @@ Item {
             blur: 30
             offset.x: 0
             offset.y: 5
+        }
+
+        DragHandler {
+            id: dragHandler
+            acceptedButtons: Qt.LeftButton
+            acceptedModifiers: Qt.NoModifier
+            target: itemDelegate
+            xAxis {
+                enabled: true
+                maximum: notifCard.width / 2
+                minimum: -notifCard.width / 2
+            }
+            yAxis.enabled: false
+
+            onActiveChanged: {
+                if (active) return;
+                
+                const threshold = notifCard.width * 0.4;
+                if (Math.abs(itemDelegate.x) > threshold) {
+                    Notifications.remove(itemDelegate.modelData);
+                } else {
+                    itemDelegate.x = 0;
+                }
+            }
         }
     }
 }

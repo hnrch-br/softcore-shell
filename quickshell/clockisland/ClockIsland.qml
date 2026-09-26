@@ -201,41 +201,47 @@ Scope {
                 id: leftCorner
                 anchors.left: clockWrapper.left
                 anchors.leftMargin: -radius
-                rotation: 90
+                radius: 20
+                mirror: false
             }   
 
             Corner {
                 id: rightCorner
                 anchors.right: clockWrapper.right
                 anchors.rightMargin: -radius
+                radius: 20
+                mirror: true
             }
 
             component Corner: Shape {
-                id: corner
+        	    id: corner
                 preferredRendererType: Shape.CurveRenderer
 
-                property real radius: 20
+                property bool mirror: false
+                property real radius: 0
 
                 ShapePath {
-                    strokeWidth: 0
-                    fillColor: Qt.tint(Qt.alpha(root.mColor, 1.0), "#d6c5b2")
+                	strokeWidth: 0
+                	fillColor: root.mColor
 
-                    startX: corner.radius
+                	startX: mirror ? corner.radius : 0
 
-                    PathArc {
-                        relativeX: -corner.radius
+                	PathArc {
+                        relativeX: mirror ? -corner.radius : corner.radius
                         relativeY: corner.radius
                         radiusX: corner.radius
                         radiusY: corner.radius
-                        direction: PathArc.Counterclockwise
+                        direction: mirror ? PathArc.Counterclockwise : PathArc.Clockwise
                     }
+
                     PathLine {
-                        relativeX: 0
-                        relativeY: -corner.radius
+                    	relativeX: 0
+                    	relativeY: -corner.radius
                     }
+
                     PathLine {
-                        relativeX: corner.radius
-                        relativeY: 0
+                        relativeX: mirror ? corner.radius : -corner.radius
+                    	relativeY: 0
                     }
                 }
             }
@@ -245,8 +251,8 @@ Scope {
                 anchors.fill: clockWrapper
                 color: "black"
                 spread: root.isExpanded ? 0.2 : 1
-                bottomRightRadius: 17.5
-                bottomLeftRadius: 17.5
+                bottomRightRadius: 6
+                bottomLeftRadius: 6
                 blur: root.isExpanded ? 30 : 50
                 offset.x: 0
                 offset.y: 1
