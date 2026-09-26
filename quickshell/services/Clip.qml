@@ -14,6 +14,15 @@ Singleton {
     property bool isDecoding: false
 
     Process {
+        id: watchProc
+        command: ["sh", "-c", "wl-paste --watch echo x"]
+        running: true
+        stdout: SplitParser {
+            onRead: line => root.refresh()
+        }
+    }
+
+    Process {
         id: listProc
         command: ["cliphist", "list"]
         stdout: StdioCollector {
