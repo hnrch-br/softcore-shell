@@ -132,19 +132,19 @@ Scope {
                                 NumberAnimation {
                                     target: centralWrapper
                                     property: "implicitHeight"
-                                    duration: 250
+                                    duration: 200
                                     easing.type: Easing.OutQuad
                                 }
                                 NumberAnimation {
                                     target: centralWrapper
                                     property: "implicitWidth"
-                                    duration: 200
+                                    duration: 150
                                     easing.type: Easing.OutQuad
                                 }
                                 NumberAnimation {
                                     target: centralWrapper
                                     property: "opacity"
-                                    duration: 200
+                                    duration: 150
                                     easing.type: Easing.OutQuad
                                 }
                             }
@@ -158,19 +158,19 @@ Scope {
                                 NumberAnimation {
                                     target: centralWrapper
                                     property: "implicitHeight"
-                                    duration: 250
+                                    duration: 200
                                     easing.type: Easing.OutQuad
                                 }
                                 NumberAnimation {
                                     target: centralWrapper
                                     property: "implicitWidth"
-                                    duration: 200
+                                    duration: 150
                                     easing.type: Easing.OutQuad
                                 }
                                 NumberAnimation {
                                     target: centralWrapper
                                     property: "opacity"
-                                    duration: 200
+                                    duration: 150
                                     easing.type: Easing.OutQuad
                                 }
                             }

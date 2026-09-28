@@ -12,6 +12,9 @@ import qs.services
 Scope {
     PanelWindow {
         id: root
+
+        screen: Quickshell.screens[0]
+
         readonly property color mColor: "#3a2b2a"
         readonly property color sColor: "#d6c5b2"
 
@@ -22,13 +25,11 @@ Scope {
             Region { item: topRight }
         }
 
-        anchors {
-        	left: true
-        	top: true
-            right: true
-        }
-
+        anchors.top: true
         exclusionMode: ExclusionMode.Ignore
+
+        implicitWidth: screen.width
+        implicitHeight: 65
 
         Rectangle {
             id: topLeft

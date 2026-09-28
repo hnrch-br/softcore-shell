@@ -19,7 +19,7 @@ Slider {
         implicitHeight: 8
         width: volSlider.availableWidth
         height: implicitHeight
-        radius: 4
+        radius: 2
         color: volSlider.backColor
         x: volSlider.leftPadding
         y: volSlider.topPadding 
@@ -30,7 +30,7 @@ Slider {
     handle: Rectangle {
         implicitWidth: 8
         implicitHeight: 32
-        radius: 4
+        radius: 2
         x: volSlider.leftPadding 
             + volSlider.visualPosition 
             * (volSlider.availableWidth - width)
