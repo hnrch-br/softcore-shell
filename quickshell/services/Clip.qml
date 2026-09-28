@@ -14,15 +14,6 @@ Singleton {
     property bool isDecoding: false
 
     Process {
-        id: watchProc
-        command: ["sh", "-c", "wl-paste --watch echo x"]
-        running: true
-        stdout: SplitParser {
-            onRead: line => root.refresh()
-        }
-    }
-
-    Process {
         id: listProc
         command: ["cliphist", "list"]
         stdout: StdioCollector {
@@ -96,7 +87,7 @@ Singleton {
 
     Process {
         id: copyProc
-        property int targetId: -1        
+        property int targetId: -1       
         command: ["sh", "-c", `cliphist decode ${targetId} | wl-copy`]
         onExited: {
             if (exitCode === 0) {
@@ -127,11 +118,13 @@ Singleton {
     }
 
     function copyEntry(id: int) {
+        copyProc.targetId = id;
         copyProc.running = true;
         copyProc.targetId = id;
     }
 
     function deleteEntry(id: int) {
+        deleteProc.targetId = id;
         deleteProc.running = true;
         deleteProc.targetId = id;
     }
