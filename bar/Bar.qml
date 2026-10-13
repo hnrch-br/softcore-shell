@@ -1,0 +1,178 @@
+pragma ComponentBehavior: Bound
+
+import Quickshell
+import Quickshell.Wayland
+import QtQuick
+import QtQuick.Effects
+import QtQuick.Shapes
+import QtQuick.Controls
+import QtQuick.Layouts
+
+import qs.clockisland
+import qs.services
+
+Scope {
+    PanelWindow {
+        id: root
+
+        screen: Quickshell.screens[0]
+
+        readonly property color mColor: "#3a2b2a"
+        readonly property color sColor: "#d6c5b2"
+
+        color: "transparent"
+
+        mask: Region {
+            Region {
+                item: topLeft
+            }
+            Region {
+                item: topRight
+            }
+        }
+
+        anchors.top: true
+        exclusionMode: ExclusionMode.Ignore
+
+        implicitWidth: screen.width
+        implicitHeight: 65
+
+        Rectangle {
+            id: topLeft
+            implicitHeight: 35
+            implicitWidth: leftRow.implicitWidth + 37
+            color: root.mColor
+            bottomRightRadius: 6
+
+            anchors {
+                top: parent.top
+                left: parent.left
+            }
+
+            RowLayout {
+                id: leftRow
+                spacing: 10
+                anchors.left: parent.left
+                anchors.leftMargin: 30
+                anchors.verticalCenter: parent.verticalCenter
+                Workspaces {}
+                RowLayout {
+                    spacing: 2
+                    Layout.alignment: Qt.AlignVCenter
+                    MediaPlayer {}
+                    Cava {}
+                }
+            }
+
+            Shadow {
+                bottomRightRadius: 6
+            }
+        }
+
+        ClockIsland {
+            id: clockisland
+        }
+
+        Rectangle {
+            id: topRight
+            implicitHeight: 35
+            implicitWidth: rightRow.width + 37
+            color: root.mColor
+            bottomLeftRadius: 6
+            anchors {
+                top: parent.top
+                right: parent.right
+            }
+
+            RowLayout {
+                id: rightRow
+                anchors.right: parent.right
+                anchors.rightMargin: 30
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 2
+                WtWidget {}
+                SysStats {}
+                CentralButton {}
+            }
+            Shadow {
+                bottomLeftRadius: 6
+            }
+        }
+
+        Corner {
+            id: rightCorner
+            anchors.left: topRight.left
+            anchors.leftMargin: -radius
+            anchors.top: topRight.top
+            radius: 18
+            mirror: false
+        }
+        Corner {
+            id: rightBottomCorner
+            anchors.right: topRight.right
+            anchors.bottom: topRight.bottom
+            anchors.bottomMargin: -radius
+            radius: 20
+            mirror: false
+        }
+        Corner {
+            id: leftCorner
+            anchors.right: topLeft.right
+            anchors.rightMargin: -radius
+            anchors.top: topLeft.top
+            radius: 18
+            mirror: true
+        }
+        Corner {
+            id: leftBottomCorner
+            anchors.bottom: topLeft.bottom
+            anchors.left: topLeft.left
+            anchors.bottomMargin: -radius
+            radius: 20
+            mirror: true
+        }
+    }
+
+    component Corner: Shape {
+        id: corner
+        preferredRendererType: Shape.CurveRenderer
+
+        property bool mirror: false
+        property real radius: 0
+
+        ShapePath {
+            strokeWidth: 0
+            fillColor: root.mColor
+
+            startX: corner.mirror ? corner.radius : 0
+
+            PathArc {
+                relativeX: corner.mirror ? -corner.radius : corner.radius
+                relativeY: corner.radius
+                radiusX: corner.radius
+                radiusY: corner.radius
+                direction: corner.mirror ? PathArc.Counterclockwise : PathArc.Clockwise
+            }
+
+            PathLine {
+                relativeX: 0
+                relativeY: -corner.radius
+            }
+
+            PathLine {
+                relativeX: mirror ? corner.radius : -corner.radius
+                relativeY: 0
+            }
+        }
+    }
+
+    component Shadow: RectangularShadow {
+        z: -1
+        anchors.fill: parent
+        color: "black"
+        spread: 0.8
+        blur: 24
+        offset.x: 0
+        offset.y: 5
+    }
+}

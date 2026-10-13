@@ -1,0 +1,269 @@
+pragma ComponentBehavior: Bound
+
+import QtQuick
+import Quickshell
+import Quickshell.Wayland
+import Quickshell.Hyprland
+import QtQuick.Layouts
+import QtQuick.Shapes
+import QtQuick.Controls
+import QtQuick.Effects
+
+import qs.bar
+import qs.services
+
+Scope {
+    LazyLoader {
+        loading: true
+        PanelWindow {
+            id: root
+            implicitHeight: 320
+            implicitWidth: 400
+            color: "transparent"
+
+            property date currentDate: Time.date
+            property date selectedDate: Time.date
+            property int month: Time.months
+            property int year: Time.years
+            readonly property var locale: Qt.locale()
+
+            readonly property color mColor: "#d6c5b2"
+            readonly property color sColor: "#3a2b2a"
+            readonly property color mTxtColor: "#ff3d3636"
+            readonly property color sTxtColor: "#ffcdcdcd"
+
+            anchors.top: true
+
+            margins.top: 0
+
+            WlrLayershell.layer: WlrLayer.Top
+            WlrLayershell.namespace: "clock"
+            WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+            exclusionMode: ExclusionMode.Ignore
+
+            property bool isHovered: hover.hovered
+            property bool isExpanded: false
+
+            function resetDate() {
+                currentDate = new Date();
+                selectedDate = currentDate;
+                month = currentDate.getMonth();
+                year = currentDate.getFullYear();
+            }
+
+            onIsHoveredChanged: {
+                if (isHovered) { 
+                    root.isExpanded = true;
+                    closeTimer.stop();
+                } else {
+                    closeTimer.restart();
+                }
+            }
+
+            onIsExpandedChanged: resetDate()
+
+            Timer {
+                id: closeTimer
+                interval: 150
+                onTriggered: isExpanded = false
+            }
+
+            mask: Region {
+                item: clockWrapper
+            }
+
+            exclusiveZone: 35
+
+            Rectangle {
+                id: clockWrapper
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: root.mColor
+                bottomLeftRadius: root.isExpanded ? 12 : 7
+                bottomRightRadius: root.isExpanded ? 12 : 7
+                clip: true
+
+                state: root.isExpanded ? "expanded" : "closed"
+
+                HoverHandler {
+                    id: hover
+                }
+
+                Clock {
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        verticalCenter: parent.verticalCenter
+                    }
+                    horizontal: true
+                }
+
+                RowLayout {
+                    opacity: root.isExpanded
+                    spacing: 28
+                    clip: true
+
+                    anchors.fill: parent
+                    anchors.topMargin: 12
+                    anchors.leftMargin: 12
+                    anchors.rightMargin: 12
+                    Behavior on opacity {
+                        NumberAnimation { duration: 200 }
+                    }
+
+                    Clock {
+                        Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        Layout.bottomMargin: 38
+                        Layout.leftMargin: 12
+                        horizontal: false
+                    }
+
+                    ColumnLayout { 
+                        spacing: 5
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                        Layout.rightMargin: 12
+                        Layout.bottomMargin: 38
+                        DateRow {}
+                        CalendarGrid {}
+                    }
+                }
+
+                states: [
+                    State {
+                        name: "expanded"
+                        PropertyChanges {
+                            target: clockWrapper
+                            implicitWidth: 340
+                            implicitHeight: 277
+                            opacity: 1
+                        }
+                    },
+                    State {
+                        name: "closed"
+                        PropertyChanges {
+                            target: clockWrapper
+                            implicitWidth: 130
+                            implicitHeight: 35
+                        }
+                    }
+                ]
+
+                transitions: [
+                    Transition {
+                        from: "closed"
+                        to: "expanded"
+                        SequentialAnimation {
+                            ParallelAnimation {
+                                NumberAnimation {
+                                    target: clockWrapper
+                                    property: "implicitHeight"
+                                    duration: 200
+                                    easing.type: Easing.OutQuad
+                                }
+                                NumberAnimation {
+                                    target: clockWrapper
+                                    property: "implicitWidth"
+                                    duration: 150
+                                    easing.type: Easing.OutQuad
+                                } 
+                            }
+                        }
+                    },
+                    Transition {
+                        from: "expanded"
+                        to: "closed"
+                        SequentialAnimation {                
+                            ParallelAnimation {
+                                NumberAnimation {
+                                    target: clockWrapper
+                                    property: "implicitHeight"
+                                    duration: 200
+                                    easing.type: Easing.OutQuad
+                                }
+                                NumberAnimation {
+                                    target: clockWrapper
+                                    property: "implicitWidth"
+                                    duration: 150
+                                    easing.type: Easing.OutQuad
+                                }
+                            } 
+                        }
+                    }
+                ]
+            }
+
+            Shadow {}
+
+            Corner {
+                id: leftCorner
+                anchors.left: clockWrapper.left
+                anchors.leftMargin: -radius
+                radius: 20
+                mirror: false
+            }   
+
+            Corner {
+                id: rightCorner
+                anchors.right: clockWrapper.right
+                anchors.rightMargin: -radius
+                radius: 20
+                mirror: true
+            }
+
+            component Corner: Shape {
+        	    id: corner
+                preferredRendererType: Shape.CurveRenderer
+
+                property bool mirror: false
+                property real radius: 0
+
+                ShapePath {
+                	strokeWidth: 0
+                	fillColor: root.mColor
+
+                	startX: mirror ? corner.radius : 0
+
+                	PathArc {
+                        relativeX: mirror ? -corner.radius : corner.radius
+                        relativeY: corner.radius
+                        radiusX: corner.radius
+                        radiusY: corner.radius
+                        direction: mirror ? PathArc.Counterclockwise : PathArc.Clockwise
+                    }
+
+                    PathLine {
+                    	relativeX: 0
+                    	relativeY: -corner.radius
+                    }
+
+                    PathLine {
+                        relativeX: mirror ? corner.radius : -corner.radius
+                    	relativeY: 0
+                    }
+                }
+            }
+
+            component Shadow: RectangularShadow {
+                z: -1
+                anchors.fill: clockWrapper
+                color: "black"
+                spread: root.isExpanded ? 0.2 : 1
+                bottomRightRadius: 6
+                bottomLeftRadius: 6
+                blur: root.isExpanded ? 30 : 50
+                offset.x: 0
+                offset.y: 1
+
+                Behavior on spread {
+                    NumberAnimation { duration: 180 }
+                }
+                Behavior on blur {
+                    NumberAnimation { duration: 180 }
+                }
+            }
+        }
+    }
+}
